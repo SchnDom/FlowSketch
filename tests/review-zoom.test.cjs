@@ -1,0 +1,24 @@
+const assert=require('node:assert/strict'),zoom=require('../src/PID2Process/ReviewZoom.js');
+const elements=Object.fromEntries(['viewport','stage','paper-size','page','zoom-in','zoom-out','zoom-fit','zoom-level'].map(id=>[id,{style:{},clientWidth:1000,clientHeight:800,scrollLeft:0,scrollTop:0}]));
+const v=elements.viewport,stage=elements.stage,events={};
+Object.assign(v,{addEventListener:(name,handler,options)=>{events[name]=handler;if(name==='wheel')assert.equal(options.passive,false);},getBoundingClientRect:()=>({left:50,top:80}),focus:()=>{},setPointerCapture:id=>{v.captured=id;},hasPointerCapture:id=>v.captured===id,releasePointerCapture:()=>{v.captured=null;},classList:{add:()=>{},remove:()=>{}}});
+elements.page.value='1';const nav=zoom.mount({getElementById:id=>elements[id]},{pageAspectRatios:[.75,1.4]});
+assert.equal(stage.style.width,'970px');assert.equal(stage.style.height,'727.5px');assert.equal(elements['zoom-level'].textContent,'100 %');
+elements['zoom-in'].onclick();assert.equal(stage.style.transform,'scale(1.25)');
+assert.equal(elements['paper-size'].style.width,'1212.5px');
+// The same sheet coordinate remains below an off-centre mouse position.
+const x=350,y=220,beforeX=(v.scrollLeft+x-15)/1.25,beforeY=(v.scrollTop+y-15)/1.25;
+let prevented=false;events.wheel({deltaY:-120,deltaMode:0,clientX:x+50,clientY:y+80,preventDefault:()=>{prevented=true;}});
+const scale=Number(stage.style.transform.match(/scale\((.*)\)/)[1]);assert.ok(prevented);
+assert.ok(Math.abs((v.scrollLeft+x-15)/scale-beforeX)<1e-9);assert.ok(Math.abs((v.scrollTop+y-15)/scale-beforeY)<1e-9);
+for(let i=0;i<100;i++)elements['zoom-in'].onclick();assert.equal(stage.style.transform,'scale(8)');assert.equal(elements['zoom-in'].disabled,true);
+for(let i=0;i<100;i++)elements['zoom-out'].onclick();assert.equal(stage.style.transform,'scale(0.25)');assert.equal(elements['zoom-out'].disabled,true);
+nav.fit();elements['zoom-in'].onclick();v.scrollLeft=100;v.scrollTop=70;
+v.onpointerdown({button:1,pointerId:3,clientX:300,clientY:200,target:{},preventDefault:()=>{}});
+v.onpointermove({pointerId:3,clientX:250,clientY:160});assert.equal(v.scrollLeft,150);assert.equal(v.scrollTop,110);
+v.onpointercancel({pointerId:3});v.onpointermove({pointerId:3,clientX:200,clientY:100});assert.equal(v.scrollLeft,150);assert.equal(v.captured,null);
+v.onpointerdown({button:0,pointerId:4,target:{closest:()=>true},preventDefault:()=>{throw Error('Device click intercepted');}});assert.equal(v.captured,null);
+elements.page.value='2';nav.fit();assert.ok(Math.abs(parseFloat(stage.style.height)-770)<1e-9);assert.equal(v.scrollLeft,0);assert.equal(v.scrollTop,0);
+v.onkeydown({target:v,key:'+',preventDefault:()=>{}});assert.equal(stage.style.transform,'scale(1.25)');
+v.onkeydown({target:v,key:'0',preventDefault:()=>{}});assert.equal(stage.style.transform,'scale(1)');
+console.log('PASS: Review-Zoom, Mausverankerung, Grenzen, Pan, Abbruch, Geräte-Klicks und Seitenformat');

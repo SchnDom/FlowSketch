@@ -1,0 +1,2593 @@
+{
+  "formatVersion": "2.1",
+  "name": "FlowSketch – Prozess-Demo",
+  "blankSheet": {
+    "format": "A2",
+    "landscape": true,
+    "widthMm": 594,
+    "heightMm": 420
+  },
+  "pdf": {
+    "filePath": "",
+    "fileName": "",
+    "pageCount": 1,
+    "pageAspectRatios": [
+      0.7070707070707071
+    ]
+  },
+  "media": [
+    {
+      "id": "5fe6e61e-4b39-5ef0-ae7f-7c7df41b37ba",
+      "name": "Wasser",
+      "type": "Liquid",
+      "color": "#0000FF"
+    },
+    {
+      "id": "9cb332c5-7f3a-5efd-bc71-802c0cb7f3b9",
+      "name": "Druckluft",
+      "type": "Gas",
+      "color": "#FFAA33"
+    },
+    {
+      "id": "967adcad-e218-57d8-9b21-17d8a27e1d18",
+      "name": "Granulat",
+      "type": "Solid",
+      "color": "#FF00FF"
+    },
+    {
+      "id": "b3c3906f-66a0-5945-bebf-a7ce91a15ebd",
+      "name": "Emulsion",
+      "type": "Mixed",
+      "color": "#8000FF"
+    }
+  ],
+  "equipment": [
+    {
+      "id": "746f0c93-2ae3-5aa2-a126-d553e85e3f21",
+      "tag": "DEMO-TITEL",
+      "type": "Drawing",
+      "variant": "Textfeld",
+      "page": 1,
+      "x": 0.025252525252525252,
+      "y": 0.011904761904761904,
+      "width": 0.6060606060606061,
+      "height": 0.03333333333333333,
+      "function": "Demo",
+      "installationLocation": "+DEMO",
+      "description": "DEMO-TITEL",
+      "actuator": "Manual",
+      "failPosition": "NC",
+      "color": "#203544",
+      "backgroundColor": "#FFFFFF",
+      "opacity": 1,
+      "mediumId": "5fe6e61e-4b39-5ef0-ae7f-7c7df41b37ba",
+      "mediaName": "Wasser",
+      "mediumType": "Liquid",
+      "textContent": "FlowSketch – Prozess-Demo",
+      "drawing": {
+        "fontSize": 28
+      }
+    },
+    {
+      "id": "fa10b66e-0db4-5391-88b4-f3abc1b19ef6",
+      "tag": "DEMO-STATUS",
+      "type": "Text",
+      "variant": "Textfeld",
+      "page": 1,
+      "x": 0.6565656565656566,
+      "y": 0.20714285714285716,
+      "width": 0.2946127946127946,
+      "height": 0.05238095238095238,
+      "function": "Demo",
+      "installationLocation": "+DEMO",
+      "description": "DEMO-STATUS",
+      "actuator": "Manual",
+      "failPosition": "NC",
+      "color": "#203544",
+      "backgroundColor": "#FFFFFF",
+      "opacity": 1,
+      "mediumId": "5fe6e61e-4b39-5ef0-ae7f-7c7df41b37ba",
+      "mediaName": "Wasser",
+      "mediumType": "Liquid",
+      "textContent": "Szenario und Schritt wählen",
+      "drawing": {
+        "fontSize": 18
+      }
+    },
+    {
+      "id": "bb152f6f-5d4f-51c0-b5a5-99b1f4a3862a",
+      "tag": "TITEL-40",
+      "type": "Drawing",
+      "variant": "Textfeld",
+      "page": 1,
+      "x": 0.28619528619528617,
+      "y": 0.09523809523809523,
+      "width": 0.40404040404040403,
+      "height": 0.016666666666666666,
+      "function": "Demo",
+      "installationLocation": "+DEMO",
+      "description": "TITEL-40",
+      "actuator": "Manual",
+      "failPosition": "NC",
+      "color": "#203544",
+      "backgroundColor": "#FFFFFF",
+      "opacity": 1,
+      "mediumId": "5fe6e61e-4b39-5ef0-ae7f-7c7df41b37ba",
+      "mediaName": "Wasser",
+      "mediumType": "Liquid",
+      "textContent": "1  Wasser: Pumpe, Filter, Dreiwegeventil, Behälter",
+      "drawing": {
+        "fontSize": 18
+      }
+    },
+    {
+      "id": "d238281a-8e35-50e0-85a9-860e97a7832f",
+      "tag": "TITEL-130",
+      "type": "Drawing",
+      "variant": "Textfeld",
+      "page": 1,
+      "x": 0.025252525252525252,
+      "y": 0.30952380952380953,
+      "width": 0.6397306397306397,
+      "height": 0.016666666666666666,
+      "function": "Demo",
+      "installationLocation": "+DEMO",
+      "description": "TITEL-130",
+      "actuator": "Manual",
+      "failPosition": "NC",
+      "color": "#203544",
+      "backgroundColor": "#FFFFFF",
+      "opacity": 1,
+      "mediumId": "5fe6e61e-4b39-5ef0-ae7f-7c7df41b37ba",
+      "mediaName": "Wasser",
+      "mediumType": "Liquid",
+      "textContent": "2  Druckluft: Verdichter, Rückschlag, Behälter, Ventilator",
+      "drawing": {
+        "fontSize": 18
+      }
+    },
+    {
+      "id": "ba3a73d3-b315-545a-b3bb-9b28ebfe822f",
+      "tag": "TITEL-215",
+      "type": "Drawing",
+      "variant": "Textfeld",
+      "page": 1,
+      "x": 0.025252525252525252,
+      "y": 0.5119047619047619,
+      "width": 0.6397306397306397,
+      "height": 0.016666666666666666,
+      "function": "Demo",
+      "installationLocation": "+DEMO",
+      "description": "TITEL-215",
+      "actuator": "Manual",
+      "failPosition": "NC",
+      "color": "#203544",
+      "backgroundColor": "#FFFFFF",
+      "opacity": 1,
+      "mediumId": "5fe6e61e-4b39-5ef0-ae7f-7c7df41b37ba",
+      "mediaName": "Wasser",
+      "mediumType": "Liquid",
+      "textContent": "3  Feststoff: Filter und Behälter",
+      "drawing": {
+        "fontSize": 18
+      }
+    },
+    {
+      "id": "85bac3b8-ed91-5d90-bc79-43dc148be711",
+      "tag": "TITEL-290",
+      "type": "Drawing",
+      "variant": "Textfeld",
+      "page": 1,
+      "x": 0.025252525252525252,
+      "y": 0.6904761904761905,
+      "width": 0.6397306397306397,
+      "height": 0.016666666666666666,
+      "function": "Demo",
+      "installationLocation": "+DEMO",
+      "description": "TITEL-290",
+      "actuator": "Manual",
+      "failPosition": "NC",
+      "color": "#203544",
+      "backgroundColor": "#FFFFFF",
+      "opacity": 1,
+      "mediumId": "5fe6e61e-4b39-5ef0-ae7f-7c7df41b37ba",
+      "mediaName": "Wasser",
+      "mediumType": "Liquid",
+      "textContent": "4  Wärmetauscher: unabhängiger Primär- und Sekundärkreis",
+      "drawing": {
+        "fontSize": 18
+      }
+    },
+    {
+      "id": "d61d6d31-ade6-5b0f-8221-673536d6835d",
+      "tag": "DEMO-HINWEIS",
+      "type": "Drawing",
+      "variant": "Textfeld",
+      "page": 1,
+      "x": 0.025252525252525252,
+      "y": 0.9523809523809523,
+      "width": 0.9427609427609428,
+      "height": 0.023809523809523808,
+      "function": "Demo",
+      "installationLocation": "+DEMO",
+      "description": "DEMO-HINWEIS",
+      "actuator": "Manual",
+      "failPosition": "NC",
+      "color": "#203544",
+      "backgroundColor": "#FFFFFF",
+      "opacity": 1,
+      "mediumId": "5fe6e61e-4b39-5ef0-ae7f-7c7df41b37ba",
+      "mediaName": "Wasser",
+      "mediumType": "Liquid",
+      "textContent": "Rechtwinklige Rohre · keine Anlagensteuerung · Zustände sind Vorgaben, keine Simulation",
+      "drawing": {
+        "fontSize": 18
+      }
+    },
+    {
+      "id": "77a0c20a-faa0-59ae-96ab-bd9ea8c54354",
+      "tag": "Q-WASSER",
+      "type": "MediaSource",
+      "variant": "",
+      "page": 1,
+      "x": 0.025252525252525252,
+      "y": 0.1523809523809524,
+      "width": 0.05387205387205387,
+      "height": 0.02857142857142857,
+      "function": "Wasser",
+      "installationLocation": "+DEMO",
+      "description": "Q-WASSER",
+      "actuator": "Manual",
+      "failPosition": "NC",
+      "color": "#0000FF",
+      "backgroundColor": "#FFFFFF",
+      "opacity": 1,
+      "mediumId": "5fe6e61e-4b39-5ef0-ae7f-7c7df41b37ba",
+      "mediaName": "Wasser",
+      "mediumType": "Liquid"
+    },
+    {
+      "id": "08d46b0f-952f-5720-abd9-231b4e84231e",
+      "tag": "XV-101",
+      "type": "IsolationValve",
+      "variant": "",
+      "page": 1,
+      "x": 0.12121212121212122,
+      "y": 0.1388095238095238,
+      "width": 0.030303030303030304,
+      "height": 0.04285714285714286,
+      "function": "Wasser",
+      "installationLocation": "+DEMO",
+      "description": "XV-101",
+      "actuator": "ElectricMotor",
+      "failPosition": "NC",
+      "color": "#007E87",
+      "backgroundColor": "#FFE4A8",
+      "opacity": 1,
+      "mediumId": "5fe6e61e-4b39-5ef0-ae7f-7c7df41b37ba",
+      "mediaName": "Wasser",
+      "mediumType": "Liquid"
+    },
+    {
+      "id": "dc5af262-258f-5753-9bb6-271980d25626",
+      "tag": "P-101",
+      "type": "PumpMotor",
+      "variant": "Pumpe",
+      "page": 1,
+      "x": 0.1936026936026936,
+      "y": 0.14523809523809525,
+      "width": 0.030303030303030304,
+      "height": 0.04285714285714286,
+      "function": "Wasser",
+      "installationLocation": "+DEMO",
+      "description": "P-101",
+      "actuator": "Manual",
+      "failPosition": "NC",
+      "color": "#007E87",
+      "backgroundColor": "#FFFFFF",
+      "opacity": 1,
+      "mediumId": "5fe6e61e-4b39-5ef0-ae7f-7c7df41b37ba",
+      "mediaName": "Wasser",
+      "mediumType": "Liquid"
+    },
+    {
+      "id": "9e686589-fa1a-5e02-aad3-b49696958325",
+      "tag": "F-101",
+      "type": "Filter",
+      "variant": "",
+      "page": 1,
+      "x": 0.28619528619528617,
+      "y": 0.14285714285714285,
+      "width": 0.02356902356902357,
+      "height": 0.047619047619047616,
+      "function": "Wasser",
+      "installationLocation": "+DEMO",
+      "description": "F-101",
+      "actuator": "Manual",
+      "failPosition": "NC",
+      "color": "#007E87",
+      "backgroundColor": "#FFFFFF",
+      "opacity": 1,
+      "mediumId": "5fe6e61e-4b39-5ef0-ae7f-7c7df41b37ba",
+      "mediaName": "Wasser",
+      "mediumType": "Liquid"
+    },
+    {
+      "id": "bd9f1b48-e0f5-5078-889b-68a29c2094c6",
+      "tag": "XV-102",
+      "type": "IsolationValve",
+      "variant": "3-Wege",
+      "page": 1,
+      "x": 0.3872053872053872,
+      "y": 0.1380952380952381,
+      "width": 0.03367003367003367,
+      "height": 0.047619047619047616,
+      "function": "Wasser",
+      "installationLocation": "+DEMO",
+      "description": "XV-102",
+      "actuator": "ElectricMotor",
+      "failPosition": "NC",
+      "color": "#007E87",
+      "backgroundColor": "#FFE4A8",
+      "opacity": 1,
+      "mediumId": "5fe6e61e-4b39-5ef0-ae7f-7c7df41b37ba",
+      "mediaName": "Wasser",
+      "mediumType": "Liquid"
+    },
+    {
+      "id": "f440c686-5cd9-57da-972b-9b7f98fa5b9e",
+      "tag": "B-101",
+      "type": "Vessel",
+      "variant": "",
+      "page": 1,
+      "x": 0.5976430976430976,
+      "y": 0.13680952380952383,
+      "width": 0.04713804713804714,
+      "height": 0.09047619047619047,
+      "function": "Wasser",
+      "installationLocation": "+DEMO",
+      "description": "B-101",
+      "actuator": "Manual",
+      "failPosition": "NC",
+      "color": "#007E87",
+      "backgroundColor": "#FFFFFF",
+      "opacity": 1,
+      "mediumId": "5fe6e61e-4b39-5ef0-ae7f-7c7df41b37ba",
+      "mediaName": "Wasser",
+      "mediumType": "Liquid"
+    },
+    {
+      "id": "4306b69e-5b7b-5177-babf-26b9551537f5",
+      "tag": "XV-103",
+      "type": "IsolationValve",
+      "variant": "",
+      "page": 1,
+      "x": 0.765993265993266,
+      "y": 0.1388095238095238,
+      "width": 0.030303030303030304,
+      "height": 0.04285714285714286,
+      "function": "Wasser",
+      "installationLocation": "+DEMO",
+      "description": "XV-103",
+      "actuator": "ElectricMotor",
+      "failPosition": "NC",
+      "color": "#007E87",
+      "backgroundColor": "#FFE4A8",
+      "opacity": 1,
+      "mediumId": "5fe6e61e-4b39-5ef0-ae7f-7c7df41b37ba",
+      "mediaName": "Wasser",
+      "mediumType": "Liquid"
+    },
+    {
+      "id": "912bf64f-256c-5cd4-b27e-22a65c77f1e4",
+      "tag": "XV-104",
+      "type": "IsolationValve",
+      "variant": "Kugelarmatur",
+      "page": 1,
+      "x": 0.45454545454545453,
+      "y": 0.215,
+      "width": 0.030303030303030304,
+      "height": 0.04285714285714286,
+      "function": "Wasser / Ablass",
+      "installationLocation": "+DEMO",
+      "description": "XV-104",
+      "actuator": "ElectricMotor",
+      "failPosition": "NC",
+      "color": "#007E87",
+      "backgroundColor": "#FFE4A8",
+      "opacity": 1,
+      "mediumId": "5fe6e61e-4b39-5ef0-ae7f-7c7df41b37ba",
+      "mediaName": "Wasser",
+      "mediumType": "Liquid"
+    },
+    {
+      "id": "cfb21174-1cf1-5e60-8e33-c50af5351385",
+      "tag": "Q-LUFT",
+      "type": "MediaSource",
+      "variant": "",
+      "page": 1,
+      "x": 0.025252525252525252,
+      "y": 0.36666666666666664,
+      "width": 0.05387205387205387,
+      "height": 0.02857142857142857,
+      "function": "Druckluft",
+      "installationLocation": "+DEMO",
+      "description": "Q-LUFT",
+      "actuator": "Manual",
+      "failPosition": "NC",
+      "color": "#FFAA33",
+      "backgroundColor": "#FFFFFF",
+      "opacity": 1,
+      "mediumId": "9cb332c5-7f3a-5efd-bc71-802c0cb7f3b9",
+      "mediaName": "Druckluft",
+      "mediumType": "Gas"
+    },
+    {
+      "id": "106b5ae9-aa63-5dac-a371-873d279f163e",
+      "tag": "K-201",
+      "type": "Compressor",
+      "variant": "",
+      "page": 1,
+      "x": 0.12626262626262627,
+      "y": 0.3595238095238095,
+      "width": 0.030303030303030304,
+      "height": 0.04285714285714286,
+      "function": "Druckluft",
+      "installationLocation": "+DEMO",
+      "description": "K-201",
+      "actuator": "Manual",
+      "failPosition": "NC",
+      "color": "#007E87",
+      "backgroundColor": "#FFFFFF",
+      "opacity": 1,
+      "mediumId": "9cb332c5-7f3a-5efd-bc71-802c0cb7f3b9",
+      "mediaName": "Druckluft",
+      "mediumType": "Gas"
+    },
+    {
+      "id": "a1e163e0-3e20-51b3-9fe9-3d4d14c8e0b7",
+      "tag": "XV-201",
+      "type": "IsolationValve",
+      "variant": "",
+      "page": 1,
+      "x": 0.21043771043771045,
+      "y": 0.35309523809523813,
+      "width": 0.030303030303030304,
+      "height": 0.04285714285714286,
+      "function": "Druckluft",
+      "installationLocation": "+DEMO",
+      "description": "XV-201",
+      "actuator": "ElectricMotor",
+      "failPosition": "NC",
+      "color": "#007E87",
+      "backgroundColor": "#FFE4A8",
+      "opacity": 1,
+      "mediumId": "9cb332c5-7f3a-5efd-bc71-802c0cb7f3b9",
+      "mediaName": "Druckluft",
+      "mediumType": "Gas"
+    },
+    {
+      "id": "19677d5a-e618-5124-a346-f8013e5cf517",
+      "tag": "RV-201",
+      "type": "IsolationValve",
+      "variant": "Rückschlagarmatur",
+      "page": 1,
+      "x": 0.30303030303030304,
+      "y": 0.3595238095238095,
+      "width": 0.030303030303030304,
+      "height": 0.04285714285714286,
+      "function": "Druckluft",
+      "installationLocation": "+DEMO",
+      "description": "RV-201",
+      "actuator": "Unspecified",
+      "failPosition": "NC",
+      "color": "#007E87",
+      "backgroundColor": "#FFE4A8",
+      "opacity": 1,
+      "mediumId": "9cb332c5-7f3a-5efd-bc71-802c0cb7f3b9",
+      "mediaName": "Druckluft",
+      "mediumType": "Gas"
+    },
+    {
+      "id": "8ab4594a-a178-5f06-adb8-d675534f0e9d",
+      "tag": "B-201",
+      "type": "Vessel",
+      "variant": "",
+      "page": 1,
+      "x": 0.4377104377104377,
+      "y": 0.3510952380952381,
+      "width": 0.04713804713804714,
+      "height": 0.09047619047619047,
+      "function": "Druckluft",
+      "installationLocation": "+DEMO",
+      "description": "B-201",
+      "actuator": "Manual",
+      "failPosition": "NC",
+      "color": "#007E87",
+      "backgroundColor": "#FFFFFF",
+      "opacity": 1,
+      "mediumId": "9cb332c5-7f3a-5efd-bc71-802c0cb7f3b9",
+      "mediaName": "Druckluft",
+      "mediumType": "Gas"
+    },
+    {
+      "id": "4cbdf110-631f-5101-9032-d9c4786a32f5",
+      "tag": "V-201",
+      "type": "Fan",
+      "variant": "",
+      "page": 1,
+      "x": 0.5892255892255892,
+      "y": 0.3595238095238095,
+      "width": 0.030303030303030304,
+      "height": 0.04285714285714286,
+      "function": "Druckluft",
+      "installationLocation": "+DEMO",
+      "description": "V-201",
+      "actuator": "Manual",
+      "failPosition": "NC",
+      "color": "#007E87",
+      "backgroundColor": "#FFFFFF",
+      "opacity": 1,
+      "mediumId": "9cb332c5-7f3a-5efd-bc71-802c0cb7f3b9",
+      "mediaName": "Druckluft",
+      "mediumType": "Gas"
+    },
+    {
+      "id": "0f791242-881c-54d1-9700-43809ba270e7",
+      "tag": "XV-202",
+      "type": "IsolationValve",
+      "variant": "",
+      "page": 1,
+      "x": 0.7323232323232324,
+      "y": 0.35309523809523813,
+      "width": 0.030303030303030304,
+      "height": 0.04285714285714286,
+      "function": "Druckluft",
+      "installationLocation": "+DEMO",
+      "description": "XV-202",
+      "actuator": "ElectricMotor",
+      "failPosition": "NC",
+      "color": "#007E87",
+      "backgroundColor": "#FFE4A8",
+      "opacity": 1,
+      "mediumId": "9cb332c5-7f3a-5efd-bc71-802c0cb7f3b9",
+      "mediaName": "Druckluft",
+      "mediumType": "Gas"
+    },
+    {
+      "id": "671f7c9b-f967-58e7-a3eb-7cc422558af3",
+      "tag": "Q-GRANULAT",
+      "type": "MediaSource",
+      "variant": "",
+      "page": 1,
+      "x": 0.025252525252525252,
+      "y": 0.569047619047619,
+      "width": 0.05387205387205387,
+      "height": 0.02857142857142857,
+      "function": "Feststoff",
+      "installationLocation": "+DEMO",
+      "description": "Q-GRANULAT",
+      "actuator": "Manual",
+      "failPosition": "NC",
+      "color": "#FF00FF",
+      "backgroundColor": "#FFFFFF",
+      "opacity": 1,
+      "mediumId": "967adcad-e218-57d8-9b21-17d8a27e1d18",
+      "mediaName": "Granulat",
+      "mediumType": "Solid"
+    },
+    {
+      "id": "bfa808c3-4718-5e08-a77a-c174fbacfe6e",
+      "tag": "XV-301",
+      "type": "IsolationValve",
+      "variant": "",
+      "page": 1,
+      "x": 0.12626262626262627,
+      "y": 0.5554761904761905,
+      "width": 0.030303030303030304,
+      "height": 0.04285714285714286,
+      "function": "Feststoff",
+      "installationLocation": "+DEMO",
+      "description": "XV-301",
+      "actuator": "ElectricMotor",
+      "failPosition": "NC",
+      "color": "#007E87",
+      "backgroundColor": "#FFE4A8",
+      "opacity": 1,
+      "mediumId": "967adcad-e218-57d8-9b21-17d8a27e1d18",
+      "mediaName": "Granulat",
+      "mediumType": "Solid"
+    },
+    {
+      "id": "c04a7f46-6793-55a2-8b2d-f5b3ac4a5dbd",
+      "tag": "F-301",
+      "type": "Filter",
+      "variant": "",
+      "page": 1,
+      "x": 0.2441077441077441,
+      "y": 0.5595238095238095,
+      "width": 0.02356902356902357,
+      "height": 0.047619047619047616,
+      "function": "Feststoff",
+      "installationLocation": "+DEMO",
+      "description": "F-301",
+      "actuator": "Manual",
+      "failPosition": "NC",
+      "color": "#007E87",
+      "backgroundColor": "#FFFFFF",
+      "opacity": 1,
+      "mediumId": "967adcad-e218-57d8-9b21-17d8a27e1d18",
+      "mediaName": "Granulat",
+      "mediumType": "Solid"
+    },
+    {
+      "id": "b66b1cd9-0e9d-5685-8c5a-0fba400a019a",
+      "tag": "B-301",
+      "type": "Vessel",
+      "variant": "",
+      "page": 1,
+      "x": 0.4713804713804714,
+      "y": 0.5534761904761905,
+      "width": 0.04713804713804714,
+      "height": 0.09047619047619047,
+      "function": "Feststoff",
+      "installationLocation": "+DEMO",
+      "description": "B-301",
+      "actuator": "Manual",
+      "failPosition": "NC",
+      "color": "#007E87",
+      "backgroundColor": "#FFFFFF",
+      "opacity": 1,
+      "mediumId": "967adcad-e218-57d8-9b21-17d8a27e1d18",
+      "mediaName": "Granulat",
+      "mediumType": "Solid"
+    },
+    {
+      "id": "4cfb3ff3-b276-56b7-8d45-4bca3956a305",
+      "tag": "XV-302",
+      "type": "IsolationValve",
+      "variant": "",
+      "page": 1,
+      "x": 0.6734006734006734,
+      "y": 0.5554761904761905,
+      "width": 0.030303030303030304,
+      "height": 0.04285714285714286,
+      "function": "Feststoff",
+      "installationLocation": "+DEMO",
+      "description": "XV-302",
+      "actuator": "ElectricMotor",
+      "failPosition": "NC",
+      "color": "#007E87",
+      "backgroundColor": "#FFE4A8",
+      "opacity": 1,
+      "mediumId": "967adcad-e218-57d8-9b21-17d8a27e1d18",
+      "mediaName": "Granulat",
+      "mediumType": "Solid"
+    },
+    {
+      "id": "a811d518-96b6-5f5e-bbb2-145a38c67563",
+      "tag": "Q-PRIMAER",
+      "type": "MediaSource",
+      "variant": "",
+      "page": 1,
+      "x": 0.025252525252525252,
+      "y": 0.7833333333333333,
+      "width": 0.05387205387205387,
+      "height": 0.02857142857142857,
+      "function": "Wärmetauscher",
+      "installationLocation": "+DEMO",
+      "description": "Q-PRIMAER",
+      "actuator": "Manual",
+      "failPosition": "NC",
+      "color": "#0000FF",
+      "backgroundColor": "#FFFFFF",
+      "opacity": 1,
+      "mediumId": "5fe6e61e-4b39-5ef0-ae7f-7c7df41b37ba",
+      "mediaName": "Wasser",
+      "mediumType": "Liquid"
+    },
+    {
+      "id": "f93c773d-2d44-5944-9867-27775d4ce7c9",
+      "tag": "P-401",
+      "type": "PumpMotor",
+      "variant": "Pumpe",
+      "page": 1,
+      "x": 0.12626262626262627,
+      "y": 0.7761904761904762,
+      "width": 0.030303030303030304,
+      "height": 0.04285714285714286,
+      "function": "Wärmetauscher / Primär",
+      "installationLocation": "+DEMO",
+      "description": "P-401",
+      "actuator": "Manual",
+      "failPosition": "NC",
+      "color": "#007E87",
+      "backgroundColor": "#FFFFFF",
+      "opacity": 1,
+      "mediumId": "5fe6e61e-4b39-5ef0-ae7f-7c7df41b37ba",
+      "mediaName": "Wasser",
+      "mediumType": "Liquid"
+    },
+    {
+      "id": "79e01c4b-eeed-5685-8217-26513b9c923d",
+      "tag": "XV-401",
+      "type": "IsolationValve",
+      "variant": "",
+      "page": 1,
+      "x": 0.21043771043771045,
+      "y": 0.7697619047619048,
+      "width": 0.030303030303030304,
+      "height": 0.04285714285714286,
+      "function": "Wärmetauscher / Primär",
+      "installationLocation": "+DEMO",
+      "description": "XV-401",
+      "actuator": "ElectricMotor",
+      "failPosition": "NC",
+      "color": "#007E87",
+      "backgroundColor": "#FFE4A8",
+      "opacity": 1,
+      "mediumId": "5fe6e61e-4b39-5ef0-ae7f-7c7df41b37ba",
+      "mediaName": "Wasser",
+      "mediumType": "Liquid"
+    },
+    {
+      "id": "4b792e8e-c992-560a-8db9-6b2f0d82c618",
+      "tag": "WT-401",
+      "type": "HeatExchanger",
+      "variant": "Kondensator",
+      "page": 1,
+      "x": 0.31986531986531985,
+      "y": 0.7547619047619047,
+      "width": 0.06060606060606061,
+      "height": 0.08571428571428572,
+      "function": "Wärmetauscher",
+      "installationLocation": "+DEMO",
+      "description": "WT-401",
+      "actuator": "Manual",
+      "failPosition": "NC",
+      "color": "#007E87",
+      "backgroundColor": "#FFFFFF",
+      "opacity": 1,
+      "mediumId": "5fe6e61e-4b39-5ef0-ae7f-7c7df41b37ba",
+      "mediaName": "Wasser",
+      "mediumType": "Liquid"
+    },
+    {
+      "id": "063ad186-4e6d-5640-848f-c4215cc57a08",
+      "tag": "XV-402",
+      "type": "IsolationValve",
+      "variant": "",
+      "page": 1,
+      "x": 0.4377104377104377,
+      "y": 0.7697619047619048,
+      "width": 0.030303030303030304,
+      "height": 0.04285714285714286,
+      "function": "Wärmetauscher / Primär",
+      "installationLocation": "+DEMO",
+      "description": "XV-402",
+      "actuator": "ElectricMotor",
+      "failPosition": "NC",
+      "color": "#007E87",
+      "backgroundColor": "#FFE4A8",
+      "opacity": 1,
+      "mediumId": "5fe6e61e-4b39-5ef0-ae7f-7c7df41b37ba",
+      "mediaName": "Wasser",
+      "mediumType": "Liquid"
+    },
+    {
+      "id": "ff0b021b-19b1-5b10-aa5d-74b37886aec1",
+      "tag": "Q-SEKUNDAER",
+      "type": "MediaSource",
+      "variant": "",
+      "page": 1,
+      "x": 0.15993265993265993,
+      "y": 0.7119047619047619,
+      "width": 0.05387205387205387,
+      "height": 0.02857142857142857,
+      "function": "Wärmetauscher / Sekundär",
+      "installationLocation": "+DEMO",
+      "description": "Q-SEKUNDAER",
+      "actuator": "Manual",
+      "failPosition": "NC",
+      "color": "#FFAA33",
+      "backgroundColor": "#FFFFFF",
+      "opacity": 1,
+      "mediumId": "9cb332c5-7f3a-5efd-bc71-802c0cb7f3b9",
+      "mediaName": "Druckluft",
+      "mediumType": "Gas"
+    },
+    {
+      "id": "e54788a8-21f7-5cc4-a1e4-7125a893a9dc",
+      "tag": "XV-403",
+      "type": "IsolationValve",
+      "variant": "",
+      "page": 1,
+      "x": 0.4377104377104377,
+      "y": 0.865,
+      "width": 0.030303030303030304,
+      "height": 0.04285714285714286,
+      "function": "Wärmetauscher / Sekundär",
+      "installationLocation": "+DEMO",
+      "description": "XV-403",
+      "actuator": "ElectricMotor",
+      "failPosition": "NC",
+      "color": "#007E87",
+      "backgroundColor": "#FFE4A8",
+      "opacity": 1,
+      "mediumId": "9cb332c5-7f3a-5efd-bc71-802c0cb7f3b9",
+      "mediaName": "Druckluft",
+      "mediumType": "Gas"
+    },
+    {
+      "id": "2e0659ab-8558-5a32-9f5d-f6242adfa73f",
+      "tag": "PE-101",
+      "type": "Instrument",
+      "variant": "",
+      "page": 1,
+      "x": 0.15151515151515152,
+      "y": 0.05,
+      "width": 0.020202020202020204,
+      "height": 0.02857142857142857,
+      "function": "Sensorik",
+      "installationLocation": "+DEMO",
+      "description": "PE-101",
+      "actuator": "Manual",
+      "failPosition": "NC",
+      "color": "#000000",
+      "backgroundColor": "#FFFFFF",
+      "opacity": 1,
+      "mediumId": "5fe6e61e-4b39-5ef0-ae7f-7c7df41b37ba",
+      "mediaName": "Wasser",
+      "mediumType": "Liquid",
+      "sensor": {
+        "signal": "PE",
+        "number": "101",
+        "rawMin": 0,
+        "rawMax": 27648,
+        "scaledMin": 0,
+        "scaledMax": 100,
+        "unit": "%",
+        "limits": [
+          {
+            "name": "High-High",
+            "enabled": true,
+            "value": 99
+          },
+          {
+            "name": "High",
+            "enabled": true,
+            "value": 95
+          },
+          {
+            "name": "Low",
+            "enabled": true,
+            "value": 5
+          },
+          {
+            "name": "Low-Low",
+            "enabled": true,
+            "value": 1
+          }
+        ],
+        "connectionSide": "Bottom",
+        "connection": {
+          "pipeId": "f3abce47-8334-5366-9046-477b65683d9a",
+          "segment": 0,
+          "fraction": 0.24
+        },
+        "connectionEnd": {
+          "x": 0.16161616161616163,
+          "y": 0.16666666666666666
+        }
+      }
+    },
+    {
+      "id": "bf56a0aa-72a9-53d3-beb1-0a60b6a913c0",
+      "tag": "TE-401",
+      "type": "Instrument",
+      "variant": "",
+      "page": 1,
+      "x": 0.5387205387205387,
+      "y": 0.7119047619047619,
+      "width": 0.020202020202020204,
+      "height": 0.02857142857142857,
+      "function": "Sensorik",
+      "installationLocation": "+DEMO",
+      "description": "TE-401",
+      "actuator": "Manual",
+      "failPosition": "NC",
+      "color": "#000000",
+      "backgroundColor": "#FFFFFF",
+      "opacity": 1,
+      "mediumId": "5fe6e61e-4b39-5ef0-ae7f-7c7df41b37ba",
+      "mediaName": "Wasser",
+      "mediumType": "Liquid",
+      "sensor": {
+        "signal": "TE",
+        "number": "401",
+        "rawMin": 0,
+        "rawMax": 27648,
+        "scaledMin": 0,
+        "scaledMax": 100,
+        "unit": "%",
+        "limits": [
+          {
+            "name": "High-High",
+            "enabled": true,
+            "value": 99
+          },
+          {
+            "name": "High",
+            "enabled": true,
+            "value": 95
+          },
+          {
+            "name": "Low",
+            "enabled": true,
+            "value": 5
+          },
+          {
+            "name": "Low-Low",
+            "enabled": true,
+            "value": 1
+          }
+        ],
+        "connectionSide": "Bottom",
+        "connection": {
+          "pipeId": "22726065-3a6b-51a2-8c10-7fb3b54568e6",
+          "segment": 0,
+          "fraction": 0.1797752808988764
+        },
+        "connectionEnd": {
+          "x": 0.5488215488215489,
+          "y": 0.7976190476190477
+        }
+      }
+    },
+    {
+      "id": "4d1cd792-0429-5e01-b636-0a209d7de05c",
+      "tag": "LEGENDE",
+      "type": "Legend",
+      "variant": "",
+      "page": 1,
+      "x": 0.7070707070707071,
+      "y": 0.04285714285714286,
+      "width": 0.2356902356902357,
+      "height": 0.08095238095238096,
+      "function": "Demo",
+      "installationLocation": "+DEMO",
+      "description": "LEGENDE",
+      "actuator": "Manual",
+      "failPosition": "NC",
+      "color": "#007E87",
+      "backgroundColor": "#FFFFFF",
+      "opacity": 1,
+      "mediumId": "5fe6e61e-4b39-5ef0-ae7f-7c7df41b37ba",
+      "mediaName": "Wasser",
+      "mediumType": "Liquid",
+      "automaticLegend": true,
+      "legendTitle": "Medien",
+      "legendEntries": [
+        {
+          "mediumId": "5fe6e61e-4b39-5ef0-ae7f-7c7df41b37ba",
+          "text": "Wasser",
+          "color": "#0000FF"
+        },
+        {
+          "mediumId": "9cb332c5-7f3a-5efd-bc71-802c0cb7f3b9",
+          "text": "Druckluft",
+          "color": "#FFAA33"
+        },
+        {
+          "mediumId": "967adcad-e218-57d8-9b21-17d8a27e1d18",
+          "text": "Granulat",
+          "color": "#FF00FF"
+        },
+        {
+          "mediumId": "b3c3906f-66a0-5945-bebf-a7ce91a15ebd",
+          "text": "Emulsion",
+          "color": "#8000FF"
+        }
+      ]
+    }
+  ],
+  "pipes": [
+    {
+      "id": "df511dbe-b7cb-5c84-a9b8-c5efeab86b87",
+      "tag": "L-001",
+      "page": 1,
+      "points": [
+        {
+          "x": 0.07912457912457913,
+          "y": 0.1666666666666667
+        },
+        {
+          "x": 0.12121212121212122,
+          "y": 0.16666666666666666
+        }
+      ],
+      "startConnection": {
+        "equipmentId": "77a0c20a-faa0-59ae-96ab-bd9ea8c54354",
+        "port": "Right"
+      },
+      "endConnection": {
+        "equipmentId": "08d46b0f-952f-5720-abd9-231b4e84231e",
+        "port": "Left"
+      }
+    },
+    {
+      "id": "f3abce47-8334-5366-9046-477b65683d9a",
+      "tag": "L-002",
+      "page": 1,
+      "points": [
+        {
+          "x": 0.15151515151515152,
+          "y": 0.16666666666666666
+        },
+        {
+          "x": 0.1936026936026936,
+          "y": 0.1666666666666667
+        }
+      ],
+      "startConnection": {
+        "equipmentId": "08d46b0f-952f-5720-abd9-231b4e84231e",
+        "port": "Right"
+      },
+      "endConnection": {
+        "equipmentId": "dc5af262-258f-5753-9bb6-271980d25626",
+        "port": "Left"
+      }
+    },
+    {
+      "id": "e66a62ff-120a-5d69-b737-1cbd3a138510",
+      "tag": "L-003",
+      "page": 1,
+      "points": [
+        {
+          "x": 0.2239057239057239,
+          "y": 0.1666666666666667
+        },
+        {
+          "x": 0.25252525252525254,
+          "y": 0.16666666666666666
+        },
+        {
+          "x": 0.25252525252525254,
+          "y": 0.11904761904761904
+        },
+        {
+          "x": 0.29797979797979796,
+          "y": 0.11904761904761904
+        },
+        {
+          "x": 0.29797979797979796,
+          "y": 0.14285714285714285
+        }
+      ],
+      "startConnection": {
+        "equipmentId": "dc5af262-258f-5753-9bb6-271980d25626",
+        "port": "Right"
+      },
+      "endConnection": {
+        "equipmentId": "9e686589-fa1a-5e02-aad3-b49696958325",
+        "port": "Top"
+      }
+    },
+    {
+      "id": "7e0463fd-d80a-5f9d-8f01-38439b317394",
+      "tag": "L-004",
+      "page": 1,
+      "points": [
+        {
+          "x": 0.29797979797979796,
+          "y": 0.19047619047619047
+        },
+        {
+          "x": 0.29797979797979796,
+          "y": 0.21428571428571427
+        },
+        {
+          "x": 0.3501683501683502,
+          "y": 0.21428571428571427
+        },
+        {
+          "x": 0.3501683501683502,
+          "y": 0.16666666666666666
+        },
+        {
+          "x": 0.3872053872053872,
+          "y": 0.1666666666666667
+        }
+      ],
+      "startConnection": {
+        "equipmentId": "9e686589-fa1a-5e02-aad3-b49696958325",
+        "port": "Bottom"
+      },
+      "endConnection": {
+        "equipmentId": "bd9f1b48-e0f5-5078-889b-68a29c2094c6",
+        "port": "Left"
+      }
+    },
+    {
+      "id": "c233d8df-3355-5164-b265-06d79c2f874f",
+      "tag": "L-005",
+      "page": 1,
+      "points": [
+        {
+          "x": 0.4208754208754209,
+          "y": 0.1666666666666667
+        },
+        {
+          "x": 0.5976430976430976,
+          "y": 0.1666666666666667
+        }
+      ],
+      "startConnection": {
+        "equipmentId": "bd9f1b48-e0f5-5078-889b-68a29c2094c6",
+        "port": "Right"
+      },
+      "endConnection": {
+        "equipmentId": "f440c686-5cd9-57da-972b-9b7f98fa5b9e",
+        "port": "Left1"
+      }
+    },
+    {
+      "id": "8fed473a-850d-5373-9633-e5c5cc9be5e0",
+      "tag": "L-006",
+      "page": 1,
+      "points": [
+        {
+          "x": 0.6447811447811448,
+          "y": 0.1666666666666667
+        },
+        {
+          "x": 0.765993265993266,
+          "y": 0.16666666666666666
+        }
+      ],
+      "startConnection": {
+        "equipmentId": "f440c686-5cd9-57da-972b-9b7f98fa5b9e",
+        "port": "Right1"
+      },
+      "endConnection": {
+        "equipmentId": "4306b69e-5b7b-5177-babf-26b9551537f5",
+        "port": "Left"
+      }
+    },
+    {
+      "id": "5441d2e8-7c82-5fee-b8ba-dd6e577eca0e",
+      "tag": "L-007",
+      "page": 1,
+      "points": [
+        {
+          "x": 0.7962962962962963,
+          "y": 0.16666666666666666
+        },
+        {
+          "x": 0.9175084175084175,
+          "y": 0.16666666666666666
+        }
+      ],
+      "startConnection": {
+        "equipmentId": "4306b69e-5b7b-5177-babf-26b9551537f5",
+        "port": "Right"
+      }
+    },
+    {
+      "id": "1beb23b1-fdfa-5a15-9aa5-2f0f757b348e",
+      "tag": "L-008",
+      "page": 1,
+      "points": [
+        {
+          "x": 0.40404040404040403,
+          "y": 0.18571428571428572
+        },
+        {
+          "x": 0.40404040404040403,
+          "y": 0.24285714285714285
+        },
+        {
+          "x": 0.45454545454545453,
+          "y": 0.24285714285714285
+        }
+      ],
+      "startConnection": {
+        "equipmentId": "bd9f1b48-e0f5-5078-889b-68a29c2094c6",
+        "port": "Bottom"
+      },
+      "endConnection": {
+        "equipmentId": "912bf64f-256c-5cd4-b27e-22a65c77f1e4",
+        "port": "Left"
+      }
+    },
+    {
+      "id": "8cf6090a-7faa-5f23-b0ad-28720e65b972",
+      "tag": "L-009",
+      "page": 1,
+      "points": [
+        {
+          "x": 0.48484848484848486,
+          "y": 0.24285714285714285
+        },
+        {
+          "x": 0.5555555555555556,
+          "y": 0.24285714285714285
+        }
+      ],
+      "startConnection": {
+        "equipmentId": "912bf64f-256c-5cd4-b27e-22a65c77f1e4",
+        "port": "Right"
+      }
+    },
+    {
+      "id": "11c5d415-cd5d-55d0-bccb-2d4f2953d552",
+      "tag": "L-010",
+      "page": 1,
+      "points": [
+        {
+          "x": 0.07912457912457913,
+          "y": 0.38095238095238093
+        },
+        {
+          "x": 0.12626262626262627,
+          "y": 0.38095238095238093
+        }
+      ],
+      "startConnection": {
+        "equipmentId": "cfb21174-1cf1-5e60-8e33-c50af5351385",
+        "port": "Right"
+      },
+      "endConnection": {
+        "equipmentId": "106b5ae9-aa63-5dac-a371-873d279f163e",
+        "port": "Left"
+      }
+    },
+    {
+      "id": "71145a51-6830-5abe-ac42-90e4339ee3c1",
+      "tag": "L-011",
+      "page": 1,
+      "points": [
+        {
+          "x": 0.15656565656565657,
+          "y": 0.38095238095238093
+        },
+        {
+          "x": 0.21043771043771045,
+          "y": 0.38095238095238104
+        }
+      ],
+      "startConnection": {
+        "equipmentId": "106b5ae9-aa63-5dac-a371-873d279f163e",
+        "port": "Right"
+      },
+      "endConnection": {
+        "equipmentId": "a1e163e0-3e20-51b3-9fe9-3d4d14c8e0b7",
+        "port": "Left"
+      }
+    },
+    {
+      "id": "f4834af7-e98e-5291-b0d0-28bdb8c97eaf",
+      "tag": "L-012",
+      "page": 1,
+      "points": [
+        {
+          "x": 0.24074074074074073,
+          "y": 0.38095238095238104
+        },
+        {
+          "x": 0.30303030303030304,
+          "y": 0.38095238095238093
+        }
+      ],
+      "startConnection": {
+        "equipmentId": "a1e163e0-3e20-51b3-9fe9-3d4d14c8e0b7",
+        "port": "Right"
+      },
+      "endConnection": {
+        "equipmentId": "19677d5a-e618-5124-a346-f8013e5cf517",
+        "port": "Left"
+      }
+    },
+    {
+      "id": "01a27b53-dc08-5e9d-8255-44b557772884",
+      "tag": "L-013",
+      "page": 1,
+      "points": [
+        {
+          "x": 0.33333333333333337,
+          "y": 0.38095238095238093
+        },
+        {
+          "x": 0.4377104377104377,
+          "y": 0.38095238095238104
+        }
+      ],
+      "startConnection": {
+        "equipmentId": "19677d5a-e618-5124-a346-f8013e5cf517",
+        "port": "Right"
+      },
+      "endConnection": {
+        "equipmentId": "8ab4594a-a178-5f06-adb8-d675534f0e9d",
+        "port": "Left1"
+      }
+    },
+    {
+      "id": "818be7b3-940e-57ea-8352-73ad8979dd1c",
+      "tag": "L-014",
+      "page": 1,
+      "points": [
+        {
+          "x": 0.48484848484848486,
+          "y": 0.38095238095238104
+        },
+        {
+          "x": 0.5892255892255892,
+          "y": 0.38095238095238093
+        }
+      ],
+      "startConnection": {
+        "equipmentId": "8ab4594a-a178-5f06-adb8-d675534f0e9d",
+        "port": "Right1"
+      },
+      "endConnection": {
+        "equipmentId": "4cbdf110-631f-5101-9032-d9c4786a32f5",
+        "port": "Left"
+      }
+    },
+    {
+      "id": "67801814-e46f-5eed-bf64-af35f9d04ad2",
+      "tag": "L-015",
+      "page": 1,
+      "points": [
+        {
+          "x": 0.6195286195286195,
+          "y": 0.38095238095238093
+        },
+        {
+          "x": 0.7323232323232324,
+          "y": 0.38095238095238104
+        }
+      ],
+      "startConnection": {
+        "equipmentId": "4cbdf110-631f-5101-9032-d9c4786a32f5",
+        "port": "Right"
+      },
+      "endConnection": {
+        "equipmentId": "0f791242-881c-54d1-9700-43809ba270e7",
+        "port": "Left"
+      }
+    },
+    {
+      "id": "aeb5b28d-4e04-5ec0-bdc6-8ca855ee6f0c",
+      "tag": "L-016",
+      "page": 1,
+      "points": [
+        {
+          "x": 0.7626262626262627,
+          "y": 0.38095238095238104
+        },
+        {
+          "x": 0.9175084175084175,
+          "y": 0.38095238095238093
+        }
+      ],
+      "startConnection": {
+        "equipmentId": "0f791242-881c-54d1-9700-43809ba270e7",
+        "port": "Right"
+      }
+    },
+    {
+      "id": "80080f54-7b1f-5549-b3c6-7615965c22a3",
+      "tag": "L-017",
+      "page": 1,
+      "points": [
+        {
+          "x": 0.07912457912457913,
+          "y": 0.5833333333333333
+        },
+        {
+          "x": 0.12626262626262627,
+          "y": 0.5833333333333333
+        }
+      ],
+      "startConnection": {
+        "equipmentId": "671f7c9b-f967-58e7-a3eb-7cc422558af3",
+        "port": "Right"
+      },
+      "endConnection": {
+        "equipmentId": "bfa808c3-4718-5e08-a77a-c174fbacfe6e",
+        "port": "Left"
+      }
+    },
+    {
+      "id": "7e489769-a6c8-5f13-bcb6-39d6314e9f4a",
+      "tag": "L-018",
+      "page": 1,
+      "points": [
+        {
+          "x": 0.15656565656565657,
+          "y": 0.5833333333333333
+        },
+        {
+          "x": 0.21043771043771045,
+          "y": 0.5833333333333334
+        },
+        {
+          "x": 0.21043771043771045,
+          "y": 0.5357142857142857
+        },
+        {
+          "x": 0.2558922558922559,
+          "y": 0.5357142857142857
+        },
+        {
+          "x": 0.2558922558922559,
+          "y": 0.5595238095238095
+        }
+      ],
+      "startConnection": {
+        "equipmentId": "bfa808c3-4718-5e08-a77a-c174fbacfe6e",
+        "port": "Right"
+      },
+      "endConnection": {
+        "equipmentId": "c04a7f46-6793-55a2-8b2d-f5b3ac4a5dbd",
+        "port": "Top"
+      }
+    },
+    {
+      "id": "258f19ee-5bc0-56d6-9fcf-dc37e1bad388",
+      "tag": "L-019",
+      "page": 1,
+      "points": [
+        {
+          "x": 0.2558922558922559,
+          "y": 0.6071428571428572
+        },
+        {
+          "x": 0.2558922558922559,
+          "y": 0.6428571428571429
+        },
+        {
+          "x": 0.3367003367003367,
+          "y": 0.6428571428571429
+        },
+        {
+          "x": 0.3367003367003367,
+          "y": 0.5833333333333334
+        },
+        {
+          "x": 0.4713804713804714,
+          "y": 0.5833333333333333
+        }
+      ],
+      "startConnection": {
+        "equipmentId": "c04a7f46-6793-55a2-8b2d-f5b3ac4a5dbd",
+        "port": "Bottom"
+      },
+      "endConnection": {
+        "equipmentId": "b66b1cd9-0e9d-5685-8c5a-0fba400a019a",
+        "port": "Left1"
+      }
+    },
+    {
+      "id": "229f3d10-540b-5724-b310-074919c5cf5d",
+      "tag": "L-020",
+      "page": 1,
+      "points": [
+        {
+          "x": 0.5185185185185185,
+          "y": 0.5833333333333333
+        },
+        {
+          "x": 0.6734006734006734,
+          "y": 0.5833333333333333
+        }
+      ],
+      "startConnection": {
+        "equipmentId": "b66b1cd9-0e9d-5685-8c5a-0fba400a019a",
+        "port": "Right1"
+      },
+      "endConnection": {
+        "equipmentId": "4cfb3ff3-b276-56b7-8d45-4bca3956a305",
+        "port": "Left"
+      }
+    },
+    {
+      "id": "e5d4cbd8-9a1a-5b4f-918f-af6798c280fa",
+      "tag": "L-021",
+      "page": 1,
+      "points": [
+        {
+          "x": 0.7037037037037037,
+          "y": 0.5833333333333333
+        },
+        {
+          "x": 0.9175084175084175,
+          "y": 0.5833333333333334
+        }
+      ],
+      "startConnection": {
+        "equipmentId": "4cfb3ff3-b276-56b7-8d45-4bca3956a305",
+        "port": "Right"
+      }
+    },
+    {
+      "id": "91667092-54ed-5877-964d-2b3e3ba06967",
+      "tag": "L-022",
+      "page": 1,
+      "points": [
+        {
+          "x": 0.07912457912457913,
+          "y": 0.7976190476190477
+        },
+        {
+          "x": 0.12626262626262627,
+          "y": 0.7976190476190477
+        }
+      ],
+      "startConnection": {
+        "equipmentId": "a811d518-96b6-5f5e-bbb2-145a38c67563",
+        "port": "Right"
+      },
+      "endConnection": {
+        "equipmentId": "f93c773d-2d44-5944-9867-27775d4ce7c9",
+        "port": "Left"
+      }
+    },
+    {
+      "id": "ae9b7aa7-6150-5844-80a3-d90048e4f207",
+      "tag": "L-023",
+      "page": 1,
+      "points": [
+        {
+          "x": 0.15656565656565657,
+          "y": 0.7976190476190477
+        },
+        {
+          "x": 0.21043771043771045,
+          "y": 0.7976190476190477
+        }
+      ],
+      "startConnection": {
+        "equipmentId": "f93c773d-2d44-5944-9867-27775d4ce7c9",
+        "port": "Right"
+      },
+      "endConnection": {
+        "equipmentId": "79e01c4b-eeed-5685-8217-26513b9c923d",
+        "port": "Left"
+      }
+    },
+    {
+      "id": "25aff2f6-4bb0-5059-ba20-c6782191842e",
+      "tag": "L-024",
+      "page": 1,
+      "points": [
+        {
+          "x": 0.24074074074074073,
+          "y": 0.7976190476190477
+        },
+        {
+          "x": 0.31986531986531985,
+          "y": 0.7976190476190477
+        }
+      ],
+      "startConnection": {
+        "equipmentId": "79e01c4b-eeed-5685-8217-26513b9c923d",
+        "port": "Right"
+      },
+      "endConnection": {
+        "equipmentId": "4b792e8e-c992-560a-8db9-6b2f0d82c618",
+        "port": "PrimaryIn"
+      }
+    },
+    {
+      "id": "2114634c-be15-5a03-a5e6-543cfd66bb37",
+      "tag": "L-025",
+      "page": 1,
+      "points": [
+        {
+          "x": 0.38047138047138046,
+          "y": 0.7976190476190477
+        },
+        {
+          "x": 0.4377104377104377,
+          "y": 0.7976190476190477
+        }
+      ],
+      "startConnection": {
+        "equipmentId": "4b792e8e-c992-560a-8db9-6b2f0d82c618",
+        "port": "PrimaryOut"
+      },
+      "endConnection": {
+        "equipmentId": "063ad186-4e6d-5640-848f-c4215cc57a08",
+        "port": "Left"
+      }
+    },
+    {
+      "id": "22726065-3a6b-51a2-8c10-7fb3b54568e6",
+      "tag": "L-026",
+      "page": 1,
+      "points": [
+        {
+          "x": 0.468013468013468,
+          "y": 0.7976190476190477
+        },
+        {
+          "x": 0.9175084175084175,
+          "y": 0.7976190476190477
+        }
+      ],
+      "startConnection": {
+        "equipmentId": "063ad186-4e6d-5640-848f-c4215cc57a08",
+        "port": "Right"
+      }
+    },
+    {
+      "id": "3ea185e7-9e34-5768-8bf2-46ec25be69e0",
+      "tag": "L-027",
+      "page": 1,
+      "points": [
+        {
+          "x": 0.2138047138047138,
+          "y": 0.7261904761904762
+        },
+        {
+          "x": 0.3501683501683502,
+          "y": 0.7261904761904762
+        },
+        {
+          "x": 0.35016835016835013,
+          "y": 0.7547619047619047
+        }
+      ],
+      "startConnection": {
+        "equipmentId": "ff0b021b-19b1-5b10-aa5d-74b37886aec1",
+        "port": "Right"
+      },
+      "endConnection": {
+        "equipmentId": "4b792e8e-c992-560a-8db9-6b2f0d82c618",
+        "port": "SecondaryIn"
+      }
+    },
+    {
+      "id": "e783b371-d8bc-5142-bb78-39015b5ab800",
+      "tag": "L-028",
+      "page": 1,
+      "points": [
+        {
+          "x": 0.35016835016835013,
+          "y": 0.8404761904761905
+        },
+        {
+          "x": 0.3501683501683502,
+          "y": 0.8928571428571429
+        },
+        {
+          "x": 0.4377104377104377,
+          "y": 0.8928571428571429
+        }
+      ],
+      "startConnection": {
+        "equipmentId": "4b792e8e-c992-560a-8db9-6b2f0d82c618",
+        "port": "SecondaryOut"
+      },
+      "endConnection": {
+        "equipmentId": "e54788a8-21f7-5cc4-a1e4-7125a893a9dc",
+        "port": "Left"
+      }
+    },
+    {
+      "id": "36f74279-9566-5e4c-9b0c-9ac675880ec6",
+      "tag": "L-029",
+      "page": 1,
+      "points": [
+        {
+          "x": 0.468013468013468,
+          "y": 0.8928571428571429
+        },
+        {
+          "x": 0.9175084175084175,
+          "y": 0.8928571428571429
+        }
+      ],
+      "startConnection": {
+        "equipmentId": "e54788a8-21f7-5cc4-a1e4-7125a893a9dc",
+        "port": "Right"
+      }
+    }
+  ],
+  "signalLines": [
+    {
+      "id": "b64ddb91-1d25-541b-a6ee-8ad056444e51",
+      "tag": "Wirk-PE-101",
+      "page": 1,
+      "color": "#FF0000",
+      "points": [
+        {
+          "x": 0.16161616161616163,
+          "y": 0.05
+        },
+        {
+          "x": 0.16161616161616163,
+          "y": 0.04047619047619048
+        },
+        {
+          "x": 0.13636363636363635,
+          "y": 0.04047619047619048
+        },
+        {
+          "x": 0.13636363636363635,
+          "y": 0.1388095238095238
+        }
+      ],
+      "startConnection": {
+        "equipmentId": "2e0659ab-8558-5a32-9f5d-f6242adfa73f",
+        "port": "Top",
+        "fraction": 0.5
+      },
+      "endConnection": {
+        "equipmentId": "08d46b0f-952f-5720-abd9-231b4e84231e",
+        "port": "Top",
+        "fraction": 0.5
+      }
+    },
+    {
+      "id": "67bde5e7-f24e-57ee-bc8f-124b6f312189",
+      "tag": "Wirk-TE-401",
+      "page": 1,
+      "color": "#FF0000",
+      "points": [
+        {
+          "x": 0.5488215488215489,
+          "y": 0.7119047619047619
+        },
+        {
+          "x": 0.5488215488215489,
+          "y": 0.7023809523809523
+        },
+        {
+          "x": 0.45286195286195285,
+          "y": 0.7023809523809523
+        },
+        {
+          "x": 0.45286195286195285,
+          "y": 0.7697619047619048
+        }
+      ],
+      "startConnection": {
+        "equipmentId": "bf56a0aa-72a9-53d3-beb1-0a60b6a913c0",
+        "port": "Top",
+        "fraction": 0.5
+      },
+      "endConnection": {
+        "equipmentId": "063ad186-4e6d-5640-848f-c4215cc57a08",
+        "port": "Top",
+        "fraction": 0.5
+      }
+    }
+  ],
+  "scenarios": [
+    {
+      "id": "de768e63-22d4-5771-ac8d-c159d86ac6f4",
+      "name": "01 Sicherer Stillstand",
+      "description": "Eigenständiger Demoablauf – rechts im Szenarioeditor öffnen.",
+      "equipmentStates": {
+        "77a0c20a-faa0-59ae-96ab-bd9ea8c54354": "Inaktiv",
+        "08d46b0f-952f-5720-abd9-231b4e84231e": "Geschlossen",
+        "dc5af262-258f-5753-9bb6-271980d25626": "Aus",
+        "9e686589-fa1a-5e02-aad3-b49696958325": "Durchlässig",
+        "bd9f1b48-e0f5-5078-889b-68a29c2094c6": "Geschlossen",
+        "f440c686-5cd9-57da-972b-9b7f98fa5b9e": "Leer",
+        "4306b69e-5b7b-5177-babf-26b9551537f5": "Geschlossen",
+        "912bf64f-256c-5cd4-b27e-22a65c77f1e4": "Geschlossen",
+        "cfb21174-1cf1-5e60-8e33-c50af5351385": "Inaktiv",
+        "106b5ae9-aa63-5dac-a371-873d279f163e": "Aus",
+        "a1e163e0-3e20-51b3-9fe9-3d4d14c8e0b7": "Geschlossen",
+        "19677d5a-e618-5124-a346-f8013e5cf517": "Durchlässig",
+        "8ab4594a-a178-5f06-adb8-d675534f0e9d": "Leer",
+        "4cbdf110-631f-5101-9032-d9c4786a32f5": "Aus",
+        "0f791242-881c-54d1-9700-43809ba270e7": "Geschlossen",
+        "671f7c9b-f967-58e7-a3eb-7cc422558af3": "Inaktiv",
+        "bfa808c3-4718-5e08-a77a-c174fbacfe6e": "Geschlossen",
+        "c04a7f46-6793-55a2-8b2d-f5b3ac4a5dbd": "Durchlässig",
+        "b66b1cd9-0e9d-5685-8c5a-0fba400a019a": "Leer",
+        "4cfb3ff3-b276-56b7-8d45-4bca3956a305": "Geschlossen",
+        "a811d518-96b6-5f5e-bbb2-145a38c67563": "Inaktiv",
+        "f93c773d-2d44-5944-9867-27775d4ce7c9": "Aus",
+        "79e01c4b-eeed-5685-8217-26513b9c923d": "Geschlossen",
+        "063ad186-4e6d-5640-848f-c4215cc57a08": "Geschlossen",
+        "ff0b021b-19b1-5b10-aa5d-74b37886aec1": "Inaktiv",
+        "e54788a8-21f7-5cc4-a1e4-7125a893a9dc": "Geschlossen"
+      },
+      "textValues": {
+        "fa10b66e-0db4-5391-88b4-f3abc1b19ef6": "Sicherer Stillstand"
+      },
+      "tankStates": {},
+      "sensorValues": {}
+    },
+    {
+      "id": "b36091a7-b3b3-511e-aad9-97aead55573d",
+      "name": "02 Wasserbehälter füllen",
+      "description": "Eigenständiger Demoablauf – rechts im Szenarioeditor öffnen.",
+      "equipmentStates": {
+        "77a0c20a-faa0-59ae-96ab-bd9ea8c54354": "Aktiv",
+        "08d46b0f-952f-5720-abd9-231b4e84231e": "Offen",
+        "dc5af262-258f-5753-9bb6-271980d25626": "Ein",
+        "9e686589-fa1a-5e02-aad3-b49696958325": "Durchlässig",
+        "bd9f1b48-e0f5-5078-889b-68a29c2094c6": "A-B",
+        "f440c686-5cd9-57da-972b-9b7f98fa5b9e": "Leer",
+        "4306b69e-5b7b-5177-babf-26b9551537f5": "Geschlossen",
+        "912bf64f-256c-5cd4-b27e-22a65c77f1e4": "Geschlossen",
+        "cfb21174-1cf1-5e60-8e33-c50af5351385": "Inaktiv",
+        "106b5ae9-aa63-5dac-a371-873d279f163e": "Aus",
+        "a1e163e0-3e20-51b3-9fe9-3d4d14c8e0b7": "Geschlossen",
+        "19677d5a-e618-5124-a346-f8013e5cf517": "Durchlässig",
+        "8ab4594a-a178-5f06-adb8-d675534f0e9d": "Leer",
+        "4cbdf110-631f-5101-9032-d9c4786a32f5": "Aus",
+        "0f791242-881c-54d1-9700-43809ba270e7": "Geschlossen",
+        "671f7c9b-f967-58e7-a3eb-7cc422558af3": "Inaktiv",
+        "bfa808c3-4718-5e08-a77a-c174fbacfe6e": "Geschlossen",
+        "c04a7f46-6793-55a2-8b2d-f5b3ac4a5dbd": "Durchlässig",
+        "b66b1cd9-0e9d-5685-8c5a-0fba400a019a": "Leer",
+        "4cfb3ff3-b276-56b7-8d45-4bca3956a305": "Geschlossen",
+        "a811d518-96b6-5f5e-bbb2-145a38c67563": "Inaktiv",
+        "f93c773d-2d44-5944-9867-27775d4ce7c9": "Aus",
+        "79e01c4b-eeed-5685-8217-26513b9c923d": "Geschlossen",
+        "063ad186-4e6d-5640-848f-c4215cc57a08": "Geschlossen",
+        "ff0b021b-19b1-5b10-aa5d-74b37886aec1": "Inaktiv",
+        "e54788a8-21f7-5cc4-a1e4-7125a893a9dc": "Geschlossen"
+      },
+      "textValues": {
+        "fa10b66e-0db4-5391-88b4-f3abc1b19ef6": "Wasserbehälter füllen"
+      },
+      "tankStates": {},
+      "sensorValues": {}
+    },
+    {
+      "id": "b4802fb6-b4aa-5979-995b-a5e9790f9fbf",
+      "name": "03 Behälter als Versorgung",
+      "description": "Eigenständiger Demoablauf – rechts im Szenarioeditor öffnen.",
+      "equipmentStates": {
+        "77a0c20a-faa0-59ae-96ab-bd9ea8c54354": "Inaktiv",
+        "08d46b0f-952f-5720-abd9-231b4e84231e": "Geschlossen",
+        "dc5af262-258f-5753-9bb6-271980d25626": "Aus",
+        "9e686589-fa1a-5e02-aad3-b49696958325": "Durchlässig",
+        "bd9f1b48-e0f5-5078-889b-68a29c2094c6": "Geschlossen",
+        "f440c686-5cd9-57da-972b-9b7f98fa5b9e": "Befüllt",
+        "4306b69e-5b7b-5177-babf-26b9551537f5": "Offen",
+        "912bf64f-256c-5cd4-b27e-22a65c77f1e4": "Geschlossen",
+        "cfb21174-1cf1-5e60-8e33-c50af5351385": "Inaktiv",
+        "106b5ae9-aa63-5dac-a371-873d279f163e": "Aus",
+        "a1e163e0-3e20-51b3-9fe9-3d4d14c8e0b7": "Geschlossen",
+        "19677d5a-e618-5124-a346-f8013e5cf517": "Durchlässig",
+        "8ab4594a-a178-5f06-adb8-d675534f0e9d": "Leer",
+        "4cbdf110-631f-5101-9032-d9c4786a32f5": "Aus",
+        "0f791242-881c-54d1-9700-43809ba270e7": "Geschlossen",
+        "671f7c9b-f967-58e7-a3eb-7cc422558af3": "Inaktiv",
+        "bfa808c3-4718-5e08-a77a-c174fbacfe6e": "Geschlossen",
+        "c04a7f46-6793-55a2-8b2d-f5b3ac4a5dbd": "Durchlässig",
+        "b66b1cd9-0e9d-5685-8c5a-0fba400a019a": "Leer",
+        "4cfb3ff3-b276-56b7-8d45-4bca3956a305": "Geschlossen",
+        "a811d518-96b6-5f5e-bbb2-145a38c67563": "Inaktiv",
+        "f93c773d-2d44-5944-9867-27775d4ce7c9": "Aus",
+        "79e01c4b-eeed-5685-8217-26513b9c923d": "Geschlossen",
+        "063ad186-4e6d-5640-848f-c4215cc57a08": "Geschlossen",
+        "ff0b021b-19b1-5b10-aa5d-74b37886aec1": "Inaktiv",
+        "e54788a8-21f7-5cc4-a1e4-7125a893a9dc": "Geschlossen"
+      },
+      "textValues": {
+        "fa10b66e-0db4-5391-88b4-f3abc1b19ef6": "Behälter als Versorgung"
+      },
+      "tankStates": {},
+      "sensorValues": {}
+    },
+    {
+      "id": "9190688a-1e5b-5311-8af6-0fd972ccca92",
+      "name": "04 Druckluft und Ventilator",
+      "description": "Eigenständiger Demoablauf – rechts im Szenarioeditor öffnen.",
+      "equipmentStates": {
+        "77a0c20a-faa0-59ae-96ab-bd9ea8c54354": "Inaktiv",
+        "08d46b0f-952f-5720-abd9-231b4e84231e": "Geschlossen",
+        "dc5af262-258f-5753-9bb6-271980d25626": "Aus",
+        "9e686589-fa1a-5e02-aad3-b49696958325": "Durchlässig",
+        "bd9f1b48-e0f5-5078-889b-68a29c2094c6": "Geschlossen",
+        "f440c686-5cd9-57da-972b-9b7f98fa5b9e": "Leer",
+        "4306b69e-5b7b-5177-babf-26b9551537f5": "Geschlossen",
+        "912bf64f-256c-5cd4-b27e-22a65c77f1e4": "Geschlossen",
+        "cfb21174-1cf1-5e60-8e33-c50af5351385": "Aktiv",
+        "106b5ae9-aa63-5dac-a371-873d279f163e": "Ein",
+        "a1e163e0-3e20-51b3-9fe9-3d4d14c8e0b7": "Offen",
+        "19677d5a-e618-5124-a346-f8013e5cf517": "Durchlässig",
+        "8ab4594a-a178-5f06-adb8-d675534f0e9d": "Leer",
+        "4cbdf110-631f-5101-9032-d9c4786a32f5": "Ein",
+        "0f791242-881c-54d1-9700-43809ba270e7": "Offen",
+        "671f7c9b-f967-58e7-a3eb-7cc422558af3": "Inaktiv",
+        "bfa808c3-4718-5e08-a77a-c174fbacfe6e": "Geschlossen",
+        "c04a7f46-6793-55a2-8b2d-f5b3ac4a5dbd": "Durchlässig",
+        "b66b1cd9-0e9d-5685-8c5a-0fba400a019a": "Leer",
+        "4cfb3ff3-b276-56b7-8d45-4bca3956a305": "Geschlossen",
+        "a811d518-96b6-5f5e-bbb2-145a38c67563": "Inaktiv",
+        "f93c773d-2d44-5944-9867-27775d4ce7c9": "Aus",
+        "79e01c4b-eeed-5685-8217-26513b9c923d": "Geschlossen",
+        "063ad186-4e6d-5640-848f-c4215cc57a08": "Geschlossen",
+        "ff0b021b-19b1-5b10-aa5d-74b37886aec1": "Inaktiv",
+        "e54788a8-21f7-5cc4-a1e4-7125a893a9dc": "Geschlossen"
+      },
+      "textValues": {
+        "fa10b66e-0db4-5391-88b4-f3abc1b19ef6": "Druckluft und Ventilator"
+      },
+      "tankStates": {},
+      "sensorValues": {}
+    },
+    {
+      "id": "1415959d-3f5f-5cd2-8f01-dd01b53526d0",
+      "name": "05 Filter und Ablass",
+      "description": "Eigenständiger Demoablauf – rechts im Szenarioeditor öffnen.",
+      "equipmentStates": {
+        "77a0c20a-faa0-59ae-96ab-bd9ea8c54354": "Aktiv",
+        "08d46b0f-952f-5720-abd9-231b4e84231e": "Offen",
+        "dc5af262-258f-5753-9bb6-271980d25626": "Ein",
+        "9e686589-fa1a-5e02-aad3-b49696958325": "Durchlässig",
+        "bd9f1b48-e0f5-5078-889b-68a29c2094c6": "A-B",
+        "f440c686-5cd9-57da-972b-9b7f98fa5b9e": "Leer",
+        "4306b69e-5b7b-5177-babf-26b9551537f5": "Geschlossen",
+        "912bf64f-256c-5cd4-b27e-22a65c77f1e4": "Geschlossen",
+        "cfb21174-1cf1-5e60-8e33-c50af5351385": "Inaktiv",
+        "106b5ae9-aa63-5dac-a371-873d279f163e": "Aus",
+        "a1e163e0-3e20-51b3-9fe9-3d4d14c8e0b7": "Geschlossen",
+        "19677d5a-e618-5124-a346-f8013e5cf517": "Durchlässig",
+        "8ab4594a-a178-5f06-adb8-d675534f0e9d": "Leer",
+        "4cbdf110-631f-5101-9032-d9c4786a32f5": "Aus",
+        "0f791242-881c-54d1-9700-43809ba270e7": "Geschlossen",
+        "671f7c9b-f967-58e7-a3eb-7cc422558af3": "Aktiv",
+        "bfa808c3-4718-5e08-a77a-c174fbacfe6e": "Offen",
+        "c04a7f46-6793-55a2-8b2d-f5b3ac4a5dbd": "Durchlässig",
+        "b66b1cd9-0e9d-5685-8c5a-0fba400a019a": "Leer",
+        "4cfb3ff3-b276-56b7-8d45-4bca3956a305": "Geschlossen",
+        "a811d518-96b6-5f5e-bbb2-145a38c67563": "Inaktiv",
+        "f93c773d-2d44-5944-9867-27775d4ce7c9": "Aus",
+        "79e01c4b-eeed-5685-8217-26513b9c923d": "Geschlossen",
+        "063ad186-4e6d-5640-848f-c4215cc57a08": "Geschlossen",
+        "ff0b021b-19b1-5b10-aa5d-74b37886aec1": "Inaktiv",
+        "e54788a8-21f7-5cc4-a1e4-7125a893a9dc": "Geschlossen"
+      },
+      "textValues": {
+        "fa10b66e-0db4-5391-88b4-f3abc1b19ef6": "Filter und Ablass"
+      },
+      "tankStates": {},
+      "sensorValues": {}
+    },
+    {
+      "id": "3d441e3a-6374-5dc4-b9c4-7fbd4ecf45a0",
+      "name": "06 Wärmetauscherkreise",
+      "description": "Eigenständiger Demoablauf – rechts im Szenarioeditor öffnen.",
+      "equipmentStates": {
+        "77a0c20a-faa0-59ae-96ab-bd9ea8c54354": "Inaktiv",
+        "08d46b0f-952f-5720-abd9-231b4e84231e": "Geschlossen",
+        "dc5af262-258f-5753-9bb6-271980d25626": "Aus",
+        "9e686589-fa1a-5e02-aad3-b49696958325": "Durchlässig",
+        "bd9f1b48-e0f5-5078-889b-68a29c2094c6": "Geschlossen",
+        "f440c686-5cd9-57da-972b-9b7f98fa5b9e": "Leer",
+        "4306b69e-5b7b-5177-babf-26b9551537f5": "Geschlossen",
+        "912bf64f-256c-5cd4-b27e-22a65c77f1e4": "Geschlossen",
+        "cfb21174-1cf1-5e60-8e33-c50af5351385": "Inaktiv",
+        "106b5ae9-aa63-5dac-a371-873d279f163e": "Aus",
+        "a1e163e0-3e20-51b3-9fe9-3d4d14c8e0b7": "Geschlossen",
+        "19677d5a-e618-5124-a346-f8013e5cf517": "Durchlässig",
+        "8ab4594a-a178-5f06-adb8-d675534f0e9d": "Leer",
+        "4cbdf110-631f-5101-9032-d9c4786a32f5": "Aus",
+        "0f791242-881c-54d1-9700-43809ba270e7": "Geschlossen",
+        "671f7c9b-f967-58e7-a3eb-7cc422558af3": "Inaktiv",
+        "bfa808c3-4718-5e08-a77a-c174fbacfe6e": "Geschlossen",
+        "c04a7f46-6793-55a2-8b2d-f5b3ac4a5dbd": "Durchlässig",
+        "b66b1cd9-0e9d-5685-8c5a-0fba400a019a": "Leer",
+        "4cfb3ff3-b276-56b7-8d45-4bca3956a305": "Geschlossen",
+        "a811d518-96b6-5f5e-bbb2-145a38c67563": "Aktiv",
+        "f93c773d-2d44-5944-9867-27775d4ce7c9": "Ein",
+        "79e01c4b-eeed-5685-8217-26513b9c923d": "Offen",
+        "063ad186-4e6d-5640-848f-c4215cc57a08": "Offen",
+        "ff0b021b-19b1-5b10-aa5d-74b37886aec1": "Aktiv",
+        "e54788a8-21f7-5cc4-a1e4-7125a893a9dc": "Offen"
+      },
+      "textValues": {
+        "fa10b66e-0db4-5391-88b4-f3abc1b19ef6": "Wärmetauscherkreise"
+      },
+      "tankStates": {},
+      "sensorValues": {}
+    },
+    {
+      "id": "7c04153c-3fb2-5955-89f3-49c3c2d46f92",
+      "name": "07 Sensorwerte und Alarme",
+      "description": "Eigenständiger Demoablauf – rechts im Szenarioeditor öffnen.",
+      "equipmentStates": {
+        "77a0c20a-faa0-59ae-96ab-bd9ea8c54354": "Inaktiv",
+        "08d46b0f-952f-5720-abd9-231b4e84231e": "Geschlossen",
+        "dc5af262-258f-5753-9bb6-271980d25626": "Aus",
+        "9e686589-fa1a-5e02-aad3-b49696958325": "Durchlässig",
+        "bd9f1b48-e0f5-5078-889b-68a29c2094c6": "Geschlossen",
+        "f440c686-5cd9-57da-972b-9b7f98fa5b9e": "Leer",
+        "4306b69e-5b7b-5177-babf-26b9551537f5": "Geschlossen",
+        "912bf64f-256c-5cd4-b27e-22a65c77f1e4": "Geschlossen",
+        "cfb21174-1cf1-5e60-8e33-c50af5351385": "Inaktiv",
+        "106b5ae9-aa63-5dac-a371-873d279f163e": "Aus",
+        "a1e163e0-3e20-51b3-9fe9-3d4d14c8e0b7": "Geschlossen",
+        "19677d5a-e618-5124-a346-f8013e5cf517": "Durchlässig",
+        "8ab4594a-a178-5f06-adb8-d675534f0e9d": "Leer",
+        "4cbdf110-631f-5101-9032-d9c4786a32f5": "Aus",
+        "0f791242-881c-54d1-9700-43809ba270e7": "Geschlossen",
+        "671f7c9b-f967-58e7-a3eb-7cc422558af3": "Inaktiv",
+        "bfa808c3-4718-5e08-a77a-c174fbacfe6e": "Geschlossen",
+        "c04a7f46-6793-55a2-8b2d-f5b3ac4a5dbd": "Durchlässig",
+        "b66b1cd9-0e9d-5685-8c5a-0fba400a019a": "Leer",
+        "4cfb3ff3-b276-56b7-8d45-4bca3956a305": "Geschlossen",
+        "a811d518-96b6-5f5e-bbb2-145a38c67563": "Inaktiv",
+        "f93c773d-2d44-5944-9867-27775d4ce7c9": "Aus",
+        "79e01c4b-eeed-5685-8217-26513b9c923d": "Geschlossen",
+        "063ad186-4e6d-5640-848f-c4215cc57a08": "Geschlossen",
+        "ff0b021b-19b1-5b10-aa5d-74b37886aec1": "Inaktiv",
+        "e54788a8-21f7-5cc4-a1e4-7125a893a9dc": "Geschlossen"
+      },
+      "textValues": {
+        "fa10b66e-0db4-5391-88b4-f3abc1b19ef6": "Sensorwerte und Alarme"
+      },
+      "tankStates": {},
+      "sensorValues": {}
+    }
+  ],
+  "controlSteps": [
+    {
+      "id": "7f796781-50f1-534a-83ff-c51fc1a94d71",
+      "scenarioId": "de768e63-22d4-5771-ac8d-c159d86ac6f4",
+      "name": "01 Grundstellung prüfen",
+      "description": "Grundstellung prüfen",
+      "preconditions": "Vorherigen Schritt fachlich prüfen; dies ist eine manuelle Zustandsvorgabe.",
+      "actions": "Grundstellung prüfen",
+      "transition": "Nächsten Schritt im Editor auswählen.",
+      "tags": [],
+      "equipmentStates": {},
+      "textValues": {
+        "fa10b66e-0db4-5391-88b4-f3abc1b19ef6": "01 Sicherer Stillstand / Grundstellung prüfen"
+      },
+      "tankStates": {},
+      "sensorValues": {}
+    },
+    {
+      "id": "dce5871d-f3ae-5190-9474-ab9ae237a393",
+      "scenarioId": "de768e63-22d4-5771-ac8d-c159d86ac6f4",
+      "name": "02 Medien und Armaturen prüfen",
+      "description": "Medien und Armaturen prüfen",
+      "preconditions": "Vorherigen Schritt fachlich prüfen; dies ist eine manuelle Zustandsvorgabe.",
+      "actions": "Medien und Armaturen prüfen",
+      "transition": "Nächsten Schritt im Editor auswählen.",
+      "tags": [],
+      "equipmentStates": {},
+      "textValues": {
+        "fa10b66e-0db4-5391-88b4-f3abc1b19ef6": "01 Sicherer Stillstand / Medien und Armaturen prüfen"
+      },
+      "tankStates": {},
+      "sensorValues": {}
+    },
+    {
+      "id": "1ff355e4-ceba-54a6-bcf4-f255dc25da5d",
+      "scenarioId": "de768e63-22d4-5771-ac8d-c159d86ac6f4",
+      "name": "03 Bereit für Betrieb",
+      "description": "Bereit für Betrieb",
+      "preconditions": "Vorherigen Schritt fachlich prüfen; dies ist eine manuelle Zustandsvorgabe.",
+      "actions": "Bereit für Betrieb",
+      "transition": "Nächsten Schritt im Editor auswählen.",
+      "tags": [],
+      "equipmentStates": {},
+      "textValues": {
+        "fa10b66e-0db4-5391-88b4-f3abc1b19ef6": "01 Sicherer Stillstand / Bereit für Betrieb"
+      },
+      "tankStates": {},
+      "sensorValues": {}
+    },
+    {
+      "id": "8d002e9a-bfdf-5c4b-afbe-4ff55dc6d000",
+      "scenarioId": "b36091a7-b3b3-511e-aad9-97aead55573d",
+      "name": "01 Einlass öffnen",
+      "description": "Einlass öffnen",
+      "preconditions": "Vorherigen Schritt fachlich prüfen; dies ist eine manuelle Zustandsvorgabe.",
+      "actions": "Einlass öffnen",
+      "transition": "Nächsten Schritt im Editor auswählen.",
+      "tags": [
+        "P-101"
+      ],
+      "equipmentStates": {
+        "dc5af262-258f-5753-9bb6-271980d25626": "Aus"
+      },
+      "textValues": {
+        "fa10b66e-0db4-5391-88b4-f3abc1b19ef6": "02 Wasserbehälter füllen / Einlass öffnen"
+      },
+      "tankStates": {},
+      "sensorValues": {}
+    },
+    {
+      "id": "77dbb7af-7a51-5827-85e9-b07667938323",
+      "scenarioId": "b36091a7-b3b3-511e-aad9-97aead55573d",
+      "name": "02 Füllen mit freiem Zufluss",
+      "description": "Füllen mit freiem Zufluss",
+      "preconditions": "Vorherigen Schritt fachlich prüfen; dies ist eine manuelle Zustandsvorgabe.",
+      "actions": "Füllen mit freiem Zufluss",
+      "transition": "Nächsten Schritt im Editor auswählen.",
+      "tags": [],
+      "equipmentStates": {},
+      "textValues": {
+        "fa10b66e-0db4-5391-88b4-f3abc1b19ef6": "02 Wasserbehälter füllen / Füllen mit freiem Zufluss"
+      },
+      "tankStates": {},
+      "sensorValues": {}
+    },
+    {
+      "id": "73224cfc-7549-5e94-997a-c6dee00320c7",
+      "scenarioId": "b36091a7-b3b3-511e-aad9-97aead55573d",
+      "name": "03 Füllung beenden",
+      "description": "Füllung beenden",
+      "preconditions": "Vorherigen Schritt fachlich prüfen; dies ist eine manuelle Zustandsvorgabe.",
+      "actions": "Füllung beenden",
+      "transition": "Nächsten Schritt im Editor auswählen.",
+      "tags": [
+        "P-101",
+        "XV-101",
+        "B-101"
+      ],
+      "equipmentStates": {
+        "dc5af262-258f-5753-9bb6-271980d25626": "Aus",
+        "08d46b0f-952f-5720-abd9-231b4e84231e": "Geschlossen",
+        "f440c686-5cd9-57da-972b-9b7f98fa5b9e": "Befüllt"
+      },
+      "textValues": {
+        "fa10b66e-0db4-5391-88b4-f3abc1b19ef6": "02 Wasserbehälter füllen / Füllung beenden"
+      },
+      "tankStates": {},
+      "sensorValues": {}
+    },
+    {
+      "id": "048db030-c146-59e5-ae46-5e8a7436b8e1",
+      "scenarioId": "b4802fb6-b4aa-5979-995b-a5e9790f9fbf",
+      "name": "01 Auslass vorbereiten",
+      "description": "Auslass vorbereiten",
+      "preconditions": "Vorherigen Schritt fachlich prüfen; dies ist eine manuelle Zustandsvorgabe.",
+      "actions": "Auslass vorbereiten",
+      "transition": "Nächsten Schritt im Editor auswählen.",
+      "tags": [
+        "XV-103"
+      ],
+      "equipmentStates": {
+        "4306b69e-5b7b-5177-babf-26b9551537f5": "Geschlossen"
+      },
+      "textValues": {
+        "fa10b66e-0db4-5391-88b4-f3abc1b19ef6": "03 Behälter als Versorgung / Auslass vorbereiten"
+      },
+      "tankStates": {},
+      "sensorValues": {}
+    },
+    {
+      "id": "8c680ab5-3e58-5379-93ee-8623779b1f8f",
+      "scenarioId": "b4802fb6-b4aa-5979-995b-a5e9790f9fbf",
+      "name": "02 Aus Tank fördern",
+      "description": "Aus Tank fördern",
+      "preconditions": "Vorherigen Schritt fachlich prüfen; dies ist eine manuelle Zustandsvorgabe.",
+      "actions": "Aus Tank fördern",
+      "transition": "Nächsten Schritt im Editor auswählen.",
+      "tags": [],
+      "equipmentStates": {},
+      "textValues": {
+        "fa10b66e-0db4-5391-88b4-f3abc1b19ef6": "03 Behälter als Versorgung / Aus Tank fördern"
+      },
+      "tankStates": {},
+      "sensorValues": {}
+    },
+    {
+      "id": "c58729fe-450b-5baa-8d54-092ed3257973",
+      "scenarioId": "b4802fb6-b4aa-5979-995b-a5e9790f9fbf",
+      "name": "03 Tank leer",
+      "description": "Tank leer",
+      "preconditions": "Vorherigen Schritt fachlich prüfen; dies ist eine manuelle Zustandsvorgabe.",
+      "actions": "Tank leer",
+      "transition": "Nächsten Schritt im Editor auswählen.",
+      "tags": [
+        "B-101"
+      ],
+      "equipmentStates": {
+        "f440c686-5cd9-57da-972b-9b7f98fa5b9e": "Leer"
+      },
+      "textValues": {
+        "fa10b66e-0db4-5391-88b4-f3abc1b19ef6": "03 Behälter als Versorgung / Tank leer"
+      },
+      "tankStates": {},
+      "sensorValues": {}
+    },
+    {
+      "id": "df71bb67-0baa-5bd8-bc39-2c2860eb8f16",
+      "scenarioId": "b4802fb6-b4aa-5979-995b-a5e9790f9fbf",
+      "name": "04 Mediumwechsel auf Emulsion",
+      "description": "Mediumwechsel auf Emulsion",
+      "preconditions": "Vorherigen Schritt fachlich prüfen; dies ist eine manuelle Zustandsvorgabe.",
+      "actions": "Mediumwechsel auf Emulsion",
+      "transition": "Nächsten Schritt im Editor auswählen.",
+      "tags": [],
+      "equipmentStates": {},
+      "textValues": {
+        "fa10b66e-0db4-5391-88b4-f3abc1b19ef6": "03 Behälter als Versorgung / Mediumwechsel auf Emulsion"
+      },
+      "tankStates": {
+        "f440c686-5cd9-57da-972b-9b7f98fa5b9e": {
+          "mediumId": "b3c3906f-66a0-5945-bebf-a7ce91a15ebd"
+        }
+      },
+      "sensorValues": {}
+    },
+    {
+      "id": "4efdc2b8-70f6-50db-93bd-85a08b6d710f",
+      "scenarioId": "9190688a-1e5b-5311-8af6-0fd972ccca92",
+      "name": "01 Verdichter vorbereiten",
+      "description": "Verdichter vorbereiten",
+      "preconditions": "Vorherigen Schritt fachlich prüfen; dies ist eine manuelle Zustandsvorgabe.",
+      "actions": "Verdichter vorbereiten",
+      "transition": "Nächsten Schritt im Editor auswählen.",
+      "tags": [
+        "K-201",
+        "V-201"
+      ],
+      "equipmentStates": {
+        "106b5ae9-aa63-5dac-a371-873d279f163e": "Aus",
+        "4cbdf110-631f-5101-9032-d9c4786a32f5": "Aus"
+      },
+      "textValues": {
+        "fa10b66e-0db4-5391-88b4-f3abc1b19ef6": "04 Druckluft und Ventilator / Verdichter vorbereiten"
+      },
+      "tankStates": {},
+      "sensorValues": {}
+    },
+    {
+      "id": "4136fcd1-9ec9-5a94-bbd1-9ef7741e8974",
+      "scenarioId": "9190688a-1e5b-5311-8af6-0fd972ccca92",
+      "name": "02 Druckluft bereitstellen",
+      "description": "Druckluft bereitstellen",
+      "preconditions": "Vorherigen Schritt fachlich prüfen; dies ist eine manuelle Zustandsvorgabe.",
+      "actions": "Druckluft bereitstellen",
+      "transition": "Nächsten Schritt im Editor auswählen.",
+      "tags": [],
+      "equipmentStates": {},
+      "textValues": {
+        "fa10b66e-0db4-5391-88b4-f3abc1b19ef6": "04 Druckluft und Ventilator / Druckluft bereitstellen"
+      },
+      "tankStates": {},
+      "sensorValues": {}
+    },
+    {
+      "id": "45d1652d-24bd-56df-b138-7f0a290b0c86",
+      "scenarioId": "9190688a-1e5b-5311-8af6-0fd972ccca92",
+      "name": "03 Behälter versorgt Ventilator",
+      "description": "Behälter versorgt Ventilator",
+      "preconditions": "Vorherigen Schritt fachlich prüfen; dies ist eine manuelle Zustandsvorgabe.",
+      "actions": "Behälter versorgt Ventilator",
+      "transition": "Nächsten Schritt im Editor auswählen.",
+      "tags": [
+        "Q-LUFT",
+        "K-201",
+        "B-201"
+      ],
+      "equipmentStates": {
+        "cfb21174-1cf1-5e60-8e33-c50af5351385": "Inaktiv",
+        "106b5ae9-aa63-5dac-a371-873d279f163e": "Aus",
+        "8ab4594a-a178-5f06-adb8-d675534f0e9d": "Befüllt"
+      },
+      "textValues": {
+        "fa10b66e-0db4-5391-88b4-f3abc1b19ef6": "04 Druckluft und Ventilator / Behälter versorgt Ventilator"
+      },
+      "tankStates": {},
+      "sensorValues": {}
+    },
+    {
+      "id": "e2a59a62-8ce3-5857-a83a-efe7615b3000",
+      "scenarioId": "9190688a-1e5b-5311-8af6-0fd972ccca92",
+      "name": "04 Ungeeignetes Medium am Ventilator",
+      "description": "Ungeeignetes Medium am Ventilator",
+      "preconditions": "Vorherigen Schritt fachlich prüfen; dies ist eine manuelle Zustandsvorgabe.",
+      "actions": "Ungeeignetes Medium am Ventilator",
+      "transition": "Nächsten Schritt im Editor auswählen.",
+      "tags": [
+        "Q-LUFT",
+        "K-201",
+        "B-201"
+      ],
+      "equipmentStates": {
+        "cfb21174-1cf1-5e60-8e33-c50af5351385": "Inaktiv",
+        "106b5ae9-aa63-5dac-a371-873d279f163e": "Aus",
+        "8ab4594a-a178-5f06-adb8-d675534f0e9d": "Befüllt"
+      },
+      "textValues": {
+        "fa10b66e-0db4-5391-88b4-f3abc1b19ef6": "04 Druckluft und Ventilator / Ungeeignetes Medium am Ventilator"
+      },
+      "tankStates": {
+        "8ab4594a-a178-5f06-adb8-d675534f0e9d": {
+          "mediumId": "5fe6e61e-4b39-5ef0-ae7f-7c7df41b37ba"
+        }
+      },
+      "sensorValues": {}
+    },
+    {
+      "id": "5c5b2657-e4c3-5882-b3ab-9290bd9eadfc",
+      "scenarioId": "1415959d-3f5f-5cd2-8f01-dd01b53526d0",
+      "name": "01 Filter verstopft",
+      "description": "Filter verstopft",
+      "preconditions": "Vorherigen Schritt fachlich prüfen; dies ist eine manuelle Zustandsvorgabe.",
+      "actions": "Filter verstopft",
+      "transition": "Nächsten Schritt im Editor auswählen.",
+      "tags": [
+        "F-101",
+        "F-301"
+      ],
+      "equipmentStates": {
+        "9e686589-fa1a-5e02-aad3-b49696958325": "Verstopft",
+        "c04a7f46-6793-55a2-8b2d-f5b3ac4a5dbd": "Verstopft"
+      },
+      "textValues": {
+        "fa10b66e-0db4-5391-88b4-f3abc1b19ef6": "05 Filter und Ablass / Filter verstopft"
+      },
+      "tankStates": {},
+      "sensorValues": {}
+    },
+    {
+      "id": "fbbea01a-41b2-5b62-9d42-543a6129f4d2",
+      "scenarioId": "1415959d-3f5f-5cd2-8f01-dd01b53526d0",
+      "name": "02 Filter durchlässig",
+      "description": "Filter durchlässig",
+      "preconditions": "Vorherigen Schritt fachlich prüfen; dies ist eine manuelle Zustandsvorgabe.",
+      "actions": "Filter durchlässig",
+      "transition": "Nächsten Schritt im Editor auswählen.",
+      "tags": [],
+      "equipmentStates": {},
+      "textValues": {
+        "fa10b66e-0db4-5391-88b4-f3abc1b19ef6": "05 Filter und Ablass / Filter durchlässig"
+      },
+      "tankStates": {},
+      "sensorValues": {}
+    },
+    {
+      "id": "59c1fad2-8f2e-54ad-9811-08d4b6f3c931",
+      "scenarioId": "1415959d-3f5f-5cd2-8f01-dd01b53526d0",
+      "name": "03 Wasser zum Ablass",
+      "description": "Wasser zum Ablass",
+      "preconditions": "Vorherigen Schritt fachlich prüfen; dies ist eine manuelle Zustandsvorgabe.",
+      "actions": "Wasser zum Ablass",
+      "transition": "Nächsten Schritt im Editor auswählen.",
+      "tags": [
+        "XV-102",
+        "XV-104"
+      ],
+      "equipmentStates": {
+        "bd9f1b48-e0f5-5078-889b-68a29c2094c6": "A-C",
+        "912bf64f-256c-5cd4-b27e-22a65c77f1e4": "Offen"
+      },
+      "textValues": {
+        "fa10b66e-0db4-5391-88b4-f3abc1b19ef6": "05 Filter und Ablass / Wasser zum Ablass"
+      },
+      "tankStates": {},
+      "sensorValues": {}
+    },
+    {
+      "id": "666e54c4-2c7a-5bd7-844d-c861e553739b",
+      "scenarioId": "1415959d-3f5f-5cd2-8f01-dd01b53526d0",
+      "name": "04 Granulat aus Behälter",
+      "description": "Granulat aus Behälter",
+      "preconditions": "Vorherigen Schritt fachlich prüfen; dies ist eine manuelle Zustandsvorgabe.",
+      "actions": "Granulat aus Behälter",
+      "transition": "Nächsten Schritt im Editor auswählen.",
+      "tags": [
+        "Q-GRANULAT",
+        "B-301",
+        "XV-302"
+      ],
+      "equipmentStates": {
+        "671f7c9b-f967-58e7-a3eb-7cc422558af3": "Inaktiv",
+        "b66b1cd9-0e9d-5685-8c5a-0fba400a019a": "Befüllt",
+        "4cfb3ff3-b276-56b7-8d45-4bca3956a305": "Offen"
+      },
+      "textValues": {
+        "fa10b66e-0db4-5391-88b4-f3abc1b19ef6": "05 Filter und Ablass / Granulat aus Behälter"
+      },
+      "tankStates": {},
+      "sensorValues": {}
+    },
+    {
+      "id": "c34c88c3-658d-5128-a890-6a3781dd834e",
+      "scenarioId": "3d441e3a-6374-5dc4-b9c4-7fbd4ecf45a0",
+      "name": "01 Nur Primärkreis",
+      "description": "Nur Primärkreis",
+      "preconditions": "Vorherigen Schritt fachlich prüfen; dies ist eine manuelle Zustandsvorgabe.",
+      "actions": "Nur Primärkreis",
+      "transition": "Nächsten Schritt im Editor auswählen.",
+      "tags": [
+        "Q-SEKUNDAER"
+      ],
+      "equipmentStates": {
+        "ff0b021b-19b1-5b10-aa5d-74b37886aec1": "Inaktiv"
+      },
+      "textValues": {
+        "fa10b66e-0db4-5391-88b4-f3abc1b19ef6": "06 Wärmetauscherkreise / Nur Primärkreis"
+      },
+      "tankStates": {},
+      "sensorValues": {}
+    },
+    {
+      "id": "621821f7-1d88-5ed7-b3b0-b6249a9a0362",
+      "scenarioId": "3d441e3a-6374-5dc4-b9c4-7fbd4ecf45a0",
+      "name": "02 Beide Kreise unabhängig",
+      "description": "Beide Kreise unabhängig",
+      "preconditions": "Vorherigen Schritt fachlich prüfen; dies ist eine manuelle Zustandsvorgabe.",
+      "actions": "Beide Kreise unabhängig",
+      "transition": "Nächsten Schritt im Editor auswählen.",
+      "tags": [],
+      "equipmentStates": {},
+      "textValues": {
+        "fa10b66e-0db4-5391-88b4-f3abc1b19ef6": "06 Wärmetauscherkreise / Beide Kreise unabhängig"
+      },
+      "tankStates": {},
+      "sensorValues": {}
+    },
+    {
+      "id": "bbc22009-a730-551e-acd3-7efe48599459",
+      "scenarioId": "3d441e3a-6374-5dc4-b9c4-7fbd4ecf45a0",
+      "name": "03 Nur Sekundärkreis",
+      "description": "Nur Sekundärkreis",
+      "preconditions": "Vorherigen Schritt fachlich prüfen; dies ist eine manuelle Zustandsvorgabe.",
+      "actions": "Nur Sekundärkreis",
+      "transition": "Nächsten Schritt im Editor auswählen.",
+      "tags": [
+        "Q-PRIMAER",
+        "P-401"
+      ],
+      "equipmentStates": {
+        "a811d518-96b6-5f5e-bbb2-145a38c67563": "Inaktiv",
+        "f93c773d-2d44-5944-9867-27775d4ce7c9": "Aus"
+      },
+      "textValues": {
+        "fa10b66e-0db4-5391-88b4-f3abc1b19ef6": "06 Wärmetauscherkreise / Nur Sekundärkreis"
+      },
+      "tankStates": {},
+      "sensorValues": {}
+    },
+    {
+      "id": "df4527e0-6763-54b3-8efe-ea807118f109",
+      "scenarioId": "3d441e3a-6374-5dc4-b9c4-7fbd4ecf45a0",
+      "name": "04 Beide Kreise aus",
+      "description": "Beide Kreise aus",
+      "preconditions": "Vorherigen Schritt fachlich prüfen; dies ist eine manuelle Zustandsvorgabe.",
+      "actions": "Beide Kreise aus",
+      "transition": "Nächsten Schritt im Editor auswählen.",
+      "tags": [
+        "Q-PRIMAER",
+        "P-401",
+        "Q-SEKUNDAER"
+      ],
+      "equipmentStates": {
+        "a811d518-96b6-5f5e-bbb2-145a38c67563": "Inaktiv",
+        "f93c773d-2d44-5944-9867-27775d4ce7c9": "Aus",
+        "ff0b021b-19b1-5b10-aa5d-74b37886aec1": "Inaktiv"
+      },
+      "textValues": {
+        "fa10b66e-0db4-5391-88b4-f3abc1b19ef6": "06 Wärmetauscherkreise / Beide Kreise aus"
+      },
+      "tankStates": {},
+      "sensorValues": {}
+    },
+    {
+      "id": "b0c53cba-42b7-5ac9-9382-ce6bcd5959f8",
+      "scenarioId": "7c04153c-3fb2-5955-89f3-49c3c2d46f92",
+      "name": "01 Low und Low-Low",
+      "description": "Low und Low-Low",
+      "preconditions": "Vorherigen Schritt fachlich prüfen; dies ist eine manuelle Zustandsvorgabe.",
+      "actions": "Low und Low-Low",
+      "transition": "Nächsten Schritt im Editor auswählen.",
+      "tags": [],
+      "equipmentStates": {},
+      "textValues": {
+        "fa10b66e-0db4-5391-88b4-f3abc1b19ef6": "07 Sensorwerte und Alarme / Low und Low-Low"
+      },
+      "tankStates": {},
+      "sensorValues": {
+        "2e0659ab-8558-5a32-9f5d-f6242adfa73f": 0,
+        "bf56a0aa-72a9-53d3-beb1-0a60b6a913c0": 0
+      }
+    },
+    {
+      "id": "1863acec-50c3-5012-af07-19bc8e6e5120",
+      "scenarioId": "7c04153c-3fb2-5955-89f3-49c3c2d46f92",
+      "name": "02 Normalwert",
+      "description": "Normalwert",
+      "preconditions": "Vorherigen Schritt fachlich prüfen; dies ist eine manuelle Zustandsvorgabe.",
+      "actions": "Normalwert",
+      "transition": "Nächsten Schritt im Editor auswählen.",
+      "tags": [],
+      "equipmentStates": {},
+      "textValues": {
+        "fa10b66e-0db4-5391-88b4-f3abc1b19ef6": "07 Sensorwerte und Alarme / Normalwert"
+      },
+      "tankStates": {},
+      "sensorValues": {
+        "2e0659ab-8558-5a32-9f5d-f6242adfa73f": 13824,
+        "bf56a0aa-72a9-53d3-beb1-0a60b6a913c0": 13824
+      }
+    },
+    {
+      "id": "1b12e684-f6e9-56c0-9a26-63b80b84debe",
+      "scenarioId": "7c04153c-3fb2-5955-89f3-49c3c2d46f92",
+      "name": "03 High",
+      "description": "High",
+      "preconditions": "Vorherigen Schritt fachlich prüfen; dies ist eine manuelle Zustandsvorgabe.",
+      "actions": "High",
+      "transition": "Nächsten Schritt im Editor auswählen.",
+      "tags": [],
+      "equipmentStates": {},
+      "textValues": {
+        "fa10b66e-0db4-5391-88b4-f3abc1b19ef6": "07 Sensorwerte und Alarme / High"
+      },
+      "tankStates": {},
+      "sensorValues": {
+        "2e0659ab-8558-5a32-9f5d-f6242adfa73f": 26542,
+        "bf56a0aa-72a9-53d3-beb1-0a60b6a913c0": 26542
+      }
+    },
+    {
+      "id": "527073da-2cc9-5bfc-bd0e-ceb886a6b6f4",
+      "scenarioId": "7c04153c-3fb2-5955-89f3-49c3c2d46f92",
+      "name": "04 High und High-High",
+      "description": "High und High-High",
+      "preconditions": "Vorherigen Schritt fachlich prüfen; dies ist eine manuelle Zustandsvorgabe.",
+      "actions": "High und High-High",
+      "transition": "Nächsten Schritt im Editor auswählen.",
+      "tags": [],
+      "equipmentStates": {},
+      "textValues": {
+        "fa10b66e-0db4-5391-88b4-f3abc1b19ef6": "07 Sensorwerte und Alarme / High und High-High"
+      },
+      "tankStates": {},
+      "sensorValues": {
+        "2e0659ab-8558-5a32-9f5d-f6242adfa73f": 27648,
+        "bf56a0aa-72a9-53d3-beb1-0a60b6a913c0": 27648
+      }
+    }
+  ],
+  "alarms": [
+    {
+      "id": "4cd44d07-1f08-52c9-b67b-0d3c1904f7ac",
+      "tag": "P-101",
+      "name": "Trockenlauf prüfen",
+      "priority": "Warning",
+      "trigger": "Pumpe Ein ohne Eingangsmedium",
+      "impact": "Förderweg unterbrochen",
+      "operatorAction": "Versorgung und Schrittvorgaben prüfen.",
+      "scenarioIds": [
+        "b36091a7-b3b3-511e-aad9-97aead55573d"
+      ]
+    },
+    {
+      "id": "44561abe-4fed-5cd6-893a-fb6d8fe645f5",
+      "tag": "F-101",
+      "name": "Filterwartung",
+      "priority": "Warning",
+      "trigger": "Filter Verstopft",
+      "impact": "Förderweg unterbrochen",
+      "operatorAction": "Versorgung und Schrittvorgaben prüfen.",
+      "scenarioIds": [
+        "1415959d-3f5f-5cd2-8f01-dd01b53526d0"
+      ]
+    },
+    {
+      "id": "666008ea-74a6-5882-b1e2-4e62bea0f1cb",
+      "tag": "V-201",
+      "name": "Medium ungeeignet",
+      "priority": "Warning",
+      "trigger": "Ventilator mit Flüssigkeit statt Gas",
+      "impact": "Förderweg unterbrochen",
+      "operatorAction": "Versorgung und Schrittvorgaben prüfen.",
+      "scenarioIds": [
+        "9190688a-1e5b-5311-8af6-0fd972ccca92"
+      ]
+    }
+  ]
+}

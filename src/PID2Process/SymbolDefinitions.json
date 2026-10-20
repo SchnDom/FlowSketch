@@ -1,0 +1,678 @@
+{
+  "Legend": {"ports": {}, "shapes": []},
+  "Vessel": {
+    "ports": {
+      "Top1": [
+        0.33,
+        0
+      ],
+      "Top2": [
+        0.67,
+        0
+      ],
+      "Bottom1": [
+        0.33,
+        1
+      ],
+      "Bottom2": [
+        0.67,
+        1
+      ],
+      "Left1": [
+        0,
+        0.33
+      ],
+      "Left2": [
+        0,
+        0.67
+      ],
+      "Right1": [
+        1,
+        0.33
+      ],
+      "Right2": [
+        1,
+        0.67
+      ]
+    },
+    "shapes": [
+      {
+        "path": "M 0,0 L 100,0 100,100 0,100 Z",
+        "dash": false
+      }
+    ]
+  },
+  "Filter": {
+    "ports": {
+      "Top": [
+        0.5,
+        0
+      ],
+      "Bottom": [
+        0.5,
+        1
+      ]
+    },
+    "shapes": [
+      {
+        "path": "M 30,0 L 70,0 70,100 30,100 Z",
+        "dash": false
+      },
+      {
+        "path": "M 30,50 L 70,50",
+        "dash": true
+      }
+    ]
+  },
+  "PumpMotor|Pumpe": {
+    "ports": {
+      "Left": [
+        0,
+        0.5
+      ],
+      "Right": [
+        1,
+        0.5
+      ]
+    },
+    "shapes": [
+      {
+        "ellipse": [
+          20,
+          20,
+          60,
+          60
+        ],
+        "part": "State"
+      },
+      {
+        "path": "M 0,50 L 20,50 M 80,50 L 100,50 M 50,20 L 80,50 50,80",
+        "dash": false
+      }
+    ]
+  },
+  "PumpMotor": {
+    "ports": {
+      "Left": [
+        0,
+        0.5
+      ],
+      "Right": [
+        1,
+        0.5
+      ]
+    },
+    "shapes": [
+      {
+        "ellipse": [
+          20,
+          20,
+          60,
+          60
+        ],
+        "part": "State"
+      },
+      {
+        "path": "M 0,50 L 20,50 M 80,50 L 100,50",
+        "dash": false
+      },
+      {
+        "text": "M",
+        "x": 50,
+        "y": 50
+      }
+    ]
+  },
+  "Compressor": {
+    "ports": {
+      "Left": [
+        0,
+        0.5
+      ],
+      "Right": [
+        1,
+        0.5
+      ]
+    },
+    "shapes": [
+      {
+        "ellipse": [
+          20,
+          20,
+          60,
+          60
+        ],
+        "part": "State"
+      },
+      {
+        "path": "M 0,50 L 20,50 M 80,50 L 100,50 M 35,24 L 77,35 M 35,76 L 77,65",
+        "dash": false
+      }
+    ]
+  },
+  "Fan": {
+    "ports": {
+      "Left": [
+        0,
+        0.5
+      ],
+      "Right": [
+        1,
+        0.5
+      ]
+    },
+    "shapes": [
+      {
+        "ellipse": [
+          20,
+          20,
+          60,
+          60
+        ],
+        "part": "State"
+      },
+      {
+        "path": "M 0,50 L 20,50 M 80,50 L 100,50 M 50,50 C 24,22 60,20 50,50 C 84,34 88,70 50,50 C 48,88 18,70 50,50 Z",
+        "dash": false
+      }
+    ]
+  },
+  "HeatExchanger": {
+    "ports": {
+      "PrimaryIn": [
+        0,
+        0.5
+      ],
+      "PrimaryOut": [
+        1,
+        0.5
+      ],
+      "SecondaryIn": [
+        0.5,
+        0
+      ],
+      "SecondaryOut": [
+        0.5,
+        1
+      ]
+    },
+    "shapes": [
+      {
+        "ellipse": [
+          10,
+          10,
+          80,
+          80
+        ]
+      },
+      {
+        "path": "M 0,50 L 30,50 50,30 50,70 70,50 100,50 M 50,0 L 50,10 M 50,90 L 50,100",
+        "dash": false
+      }
+    ]
+  },
+  "HeatExchanger|M-Form": {
+    "ports": {
+      "PrimaryIn": [
+        1,
+        0.35
+      ],
+      "PrimaryOut": [
+        1,
+        0.65
+      ],
+      "SecondaryIn": [
+        0.5,
+        0
+      ],
+      "SecondaryOut": [
+        0.5,
+        1
+      ]
+    },
+    "shapes": [
+      {
+        "ellipse": [
+          10,
+          10,
+          80,
+          80
+        ]
+      },
+      {
+        "path": "M 100,35 L 30,35 50,50 30,65 100,65 M 50,0 L 50,10 M 50,90 L 50,100",
+        "dash": false
+      }
+    ]
+  },
+  "IsolationValve": {
+    "ports": {
+      "Left": [
+        0,
+        0.65
+      ],
+      "Right": [
+        1,
+        0.65
+      ]
+    },
+    "shapes": [
+      {
+        "path": "M 0,65 L 20,65 M 80,65 L 100,65 M 50,15 L 50,65"
+      },
+      {
+        "path": "M 20,45 L 50,65 20,85 Z",
+        "part": "Left"
+      },
+      {
+        "path": "M 80,45 L 50,65 80,85 Z",
+        "part": "Right"
+      }
+    ]
+  },
+  "ControlValve": {
+    "ports": {
+      "Left": [
+        0,
+        0.65
+      ],
+      "Right": [
+        1,
+        0.65
+      ]
+    },
+    "shapes": [
+      {
+        "path": "M 0,65 L 20,65 M 80,65 L 100,65 M 50,15 L 50,65"
+      },
+      {
+        "path": "M 20,45 L 50,65 20,85 Z",
+        "part": "Left"
+      },
+      {
+        "path": "M 80,45 L 50,65 80,85 Z",
+        "part": "Right"
+      }
+    ]
+  },
+  "IsolationValve|Kugelarmatur": {
+    "ports": {
+      "Left": [
+        0,
+        0.65
+      ],
+      "Right": [
+        1,
+        0.65
+      ]
+    },
+    "shapes": [
+      {
+        "path": "M 0,65 L 20,65 M 80,65 L 100,65 M 50,15 L 50,65"
+      },
+      {
+        "path": "M 20,45 L 50,65 20,85 Z",
+        "part": "Left"
+      },
+      {
+        "path": "M 80,45 L 50,65 80,85 Z",
+        "part": "Right"
+      },
+      {
+        "ellipse": [
+          36,
+          51,
+          28,
+          28
+        ],
+        "part": "State"
+      }
+    ]
+  },
+  "IsolationValve|Eckform": {
+    "ports": {
+      "Left": [
+        0,
+        0.6
+      ],
+      "Bottom": [
+        0.5,
+        1
+      ]
+    },
+    "shapes": [
+      {
+        "path": "M 0,60 L 20,60 M 50,90 L 50,100 M 50,45 L 50,60"
+      },
+      {
+        "path": "M 20,40 L 50,60 20,80 Z",
+        "part": "Left"
+      },
+      {
+        "path": "M 35,90 L 50,60 65,90 Z",
+        "part": "Bottom"
+      }
+    ]
+  },
+  "IsolationValve|Kugelarmatur in Eckform": {
+    "ports": {
+      "Left": [
+        0,
+        0.6
+      ],
+      "Bottom": [
+        0.5,
+        1
+      ]
+    },
+    "shapes": [
+      {
+        "path": "M 0,60 L 20,60 M 50,90 L 50,100 M 50,45 L 50,60"
+      },
+      {
+        "path": "M 20,40 L 50,60 20,80 Z",
+        "part": "Left"
+      },
+      {
+        "path": "M 35,90 L 50,60 65,90 Z",
+        "part": "Bottom"
+      },
+      {
+        "ellipse": [
+          38,
+          48,
+          24,
+          24
+        ],
+        "part": "State"
+      }
+    ]
+  },
+  "IsolationValve|3-Wege": {
+    "ports": {
+      "Left": [
+        0,
+        0.6
+      ],
+      "Right": [
+        1,
+        0.6
+      ],
+      "Bottom": [
+        0.5,
+        1
+      ]
+    },
+    "shapes": [
+      {
+        "path": "M 0,60 L 20,60 M 80,60 L 100,60 M 50,90 L 50,100 M 50,45 L 50,60"
+      },
+      {
+        "path": "M 20,40 L 50,60 20,80 Z",
+        "part": "Left"
+      },
+      {
+        "path": "M 80,40 L 50,60 80,80 Z",
+        "part": "Right"
+      },
+      {
+        "path": "M 35,90 L 50,60 65,90 Z",
+        "part": "Bottom"
+      }
+    ]
+  },
+  "IsolationValve|Dreiwegekugelhahn": {
+    "ports": {
+      "Left": [
+        0,
+        0.6
+      ],
+      "Right": [
+        1,
+        0.6
+      ],
+      "Bottom": [
+        0.5,
+        1
+      ]
+    },
+    "shapes": [
+      {
+        "path": "M 0,60 L 20,60 M 80,60 L 100,60 M 50,90 L 50,100 M 50,45 L 50,60"
+      },
+      {
+        "path": "M 20,40 L 50,60 20,80 Z",
+        "part": "Left"
+      },
+      {
+        "path": "M 80,40 L 50,60 80,80 Z",
+        "part": "Right"
+      },
+      {
+        "path": "M 35,90 L 50,60 65,90 Z",
+        "part": "Bottom"
+      },
+      {
+        "ellipse": [
+          38,
+          48,
+          24,
+          24
+        ],
+        "part": "State"
+      }
+    ]
+  },
+  "IsolationValve|Rückschlagarmatur": {
+    "ports": {
+      "Left": [
+        0,
+        0.5
+      ],
+      "Right": [
+        1,
+        0.5
+      ]
+    },
+    "shapes": [
+      {
+        "path": "M 0,50 L 20,50 M 80,50 L 100,50"
+      },
+      {
+        "path": "M 20,30 L 50,50 20,70 Z",
+        "part": "Left"
+      },
+      {
+        "path": "M 80,30 L 50,50 80,70 Z",
+        "part": "Right"
+      },
+      {
+        "ellipse": [
+          15,
+          25,
+          10,
+          10
+        ],
+        "fill": "stroke"
+      }
+    ]
+  },
+  "IsolationValve|Rückschlagklappe": {
+    "ports": {
+      "Left": [
+        0,
+        0.5
+      ],
+      "Right": [
+        1,
+        0.5
+      ]
+    },
+    "shapes": [
+      {
+        "path": "M 0,50 L 20,50 M 80,50 L 100,50"
+      },
+      {
+        "path": "M 20,30 L 80,30 80,70 20,70 Z",
+        "part": "State"
+      },
+      {
+        "path": "M 20,30 L 80,70"
+      },
+      {
+        "ellipse": [
+          15,
+          25,
+          10,
+          10
+        ],
+        "fill": "stroke"
+      }
+    ]
+  },
+  "Instrument": {
+    "ports": {
+      "Left": [
+        0,
+        0.5
+      ],
+      "Right": [
+        1,
+        0.5
+      ],
+      "Top": [
+        0.5,
+        0
+      ],
+      "Bottom": [
+        0.5,
+        1
+      ]
+    },
+    "shapes": [
+      {
+        "ellipse": [
+          2,
+          2,
+          96,
+          96
+        ]
+      }
+    ]
+  },
+  "Generic": {
+    "ports": {
+      "Left": [
+        0,
+        0.5
+      ],
+      "Right": [
+        1,
+        0.5
+      ],
+      "Top": [
+        0.5,
+        0
+      ],
+      "Bottom": [
+        0.5,
+        1
+      ]
+    },
+    "shapes": [
+      {
+        "path": "M 0,0 L 100,0 100,100 0,100 Z",
+        "dash": false
+      }
+    ]
+  },
+  "MediaSource": {
+    "ports": {
+      "Right": [
+        1,
+        0.5
+      ]
+    },
+    "shapes": [
+      {
+        "path": "M 0,0 L 100,0 100,100 0,100 Z",
+        "dash": false
+      }
+    ]
+  },
+  "Text": {
+    "ports": {},
+    "shapes": []
+  },
+  "Actuator|Manual": {
+    "ports": {},
+    "shapes": [
+      {
+        "path": "M 50,45 L 50,15 M 35,15 L 65,15",
+        "dash": false
+      }
+    ]
+  },
+  "Actuator|ElectricMotor": {
+    "ports": {},
+    "shapes": [
+      {
+        "path": "M 50,45 L 50,30",
+        "dash": false
+      },
+      {
+        "ellipse": [
+          38,
+          6,
+          24,
+          24
+        ],
+        "part": "State"
+      },
+      {
+        "text": "M",
+        "x": 50,
+        "y": 18
+      }
+    ]
+  },
+  "Actuator|Piston": {
+    "ports": {},
+    "shapes": [
+      {
+        "path": "M 50,45 L 50,30"
+      },
+      {
+        "path": "M 41,8 L 59,8 59,30 41,30 Z",
+        "part": "State"
+      },
+      {
+        "path": "M 50,8 L 50,30 M 41,19 L 59,19"
+      }
+    ]
+  },
+  "Actuator|Diaphragm": {
+    "ports": {},
+    "shapes": [
+      {
+        "path": "M 50,45 L 50,25 M 35,25 C 35,5 65,5 65,25 Z",
+        "dash": false,
+        "part": "State"
+      }
+    ]
+  },
+  "Actuator|Unspecified": {
+    "ports": {},
+    "shapes": [
+      {
+        "path": "M 50,45 L 50,25",
+        "dash": false
+      },
+      {
+        "text": "?",
+        "x": 50,
+        "y": 15
+      }
+    ]
+  }
+}

@@ -1,0 +1,21 @@
+const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path');
+const projectFile=fs.readFileSync('src/PID2Process/PID2Process.csproj','utf8');
+const version=projectFile.match(/<Version>([^<]+)<\/Version>/)[1];
+const directory=path.join('bin',version,'Dokumentation');
+const markdown=fs.readFileSync('docs/Hilfe.md','utf8'),html=fs.readFileSync(path.join(directory,'Hilfe.html'),'utf8');
+assert.ok(markdown.includes(version));
+const chapters=[...markdown.matchAll(/^## (.+)$/gm)];
+assert.equal(chapters.length,19);
+assert.equal([...html.matchAll(/<section id=/g)].length,chapters.length);
+assert.equal([...html.matchAll(/href='#kapitel-/g)].length,chapters.length);
+const pictures=[...markdown.matchAll(/!\[[^\]]+\]\((images\/[^)]+)\)/g)].map(x=>x[1]);
+assert.equal(pictures.length,14);
+for(const picture of pictures){assert.ok(fs.statSync(path.join(directory,picture)).size>0);assert.ok(html.includes("src='"+picture+"'"));}
+const decodedHtml=html.replace(/&#(\d+);/g,(_,n)=>String.fromCodePoint(Number(n))).replace(/&amp;/g,"&");
+for(const chapter of chapters)assert.ok(decodedHtml.includes(chapter[1]));
+assert.ok(html.includes('toLocaleLowerCase'));
+for(const text of ['Szenario- und Schrittauswahl in aktueller Ansicht anzeigen','Aktoren als Excel-Tabelle','Im Szenario','Gasförmig']) assert.ok(decodedHtml.includes(text));
+assert.ok(decodedHtml.includes('<title>FlowSketch – Hilfe</title>'));
+assert.ok(html.includes('src="images/company-logo.png"'));
+assert.deepEqual(fs.readFileSync(path.join(directory,'images/company-logo.png')),fs.readFileSync('_media/CS26001-1-Logo-4c.png'));
+console.log('PASS: Offline-Hilfe mit 19 Kapiteln, Inhaltsverzeichnis, Suche und vierzehn vorhandenen Bildern');

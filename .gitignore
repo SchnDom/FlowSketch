@@ -1,0 +1,11 @@
+bin/
+obj/
+.vs/
+*.user
+*.pid2process.json
+!examples/FlowSketch-Demo.pid2process.json
+test-results/
+_PIDs/
+*.log
+*.tmp
+*.bak
