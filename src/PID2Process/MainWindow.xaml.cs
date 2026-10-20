@@ -43,7 +43,7 @@ public partial class MainWindow : Window
     private readonly string _recentPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "FlowSketch", "recent.json");
     public MainWindow()
     {
-        InitializeComponent();StateChanged+=(_,_)=>UpdateChrome();UpdateChrome();Icon=InformationWindow.IconImage();Title=BuildInfo.Name+" · v"+BuildInfo.Version; Loaded += (_, _) => RefreshRecent();
+        InitializeComponent();InitializeWorkAreaBounds();StateChanged+=(_,_)=>UpdateChrome();UpdateChrome();Icon=InformationWindow.IconImage();Title=BuildInfo.Name+" · v"+BuildInfo.Version; Loaded += (_, _) => RefreshRecent();
         InitializeInspector();InitializeLibrary();Viewport.PreviewMouseLeftButtonDown+=(_,e)=>{if(e.OriginalSource is DependencyObject source&&!Sheet.IsAncestorOf(source)&&source!=Sheet)ClearSelection();};Viewport.ContextMenu=new ContextMenu();Viewport.ContextMenuOpening+=(_,_)=>Viewport.ContextMenu=PlanMenu();Viewport.ScrollChanged+=(_,_)=>UpdateOverview();Viewport.SizeChanged+=(_,_)=>UpdateOverview();
         Sheet.PreviewMouseLeftButtonDown+=(_,e)=>{if(_selectExportWindow)Sheet_Down(Sheet,e);};
         PreviewKeyDown+=Window_KeyDown;

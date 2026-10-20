@@ -1,7 +1,40 @@
 using System.Windows;
+using System.Windows.Interop;
+using System.Runtime.InteropServices;
 namespace PID2Process;
 public partial class MainWindow
 {
+    private void InitializeWorkAreaBounds()
+    {
+        SourceInitialized += (_, _) => HwndSource.FromHwnd(new WindowInteropHelper(this).Handle)?.AddHook(WorkAreaHook);
+    }
+
+    private IntPtr WorkAreaHook(IntPtr hwnd,int message,IntPtr wParam,IntPtr lParam,ref bool handled)
+    {
+        if(message!=0x0024)return IntPtr.Zero; // WM_GETMINMAXINFO, physical screen pixels (also at mixed DPI).
+        var monitor=MonitorFromWindow(hwnd,2); // MONITOR_DEFAULTTONEAREST
+        var info=new MonitorInfo{Size=Marshal.SizeOf<MonitorInfo>()};
+        if(monitor==IntPtr.Zero||!GetMonitorInfo(monitor,ref info))return IntPtr.Zero;
+        var bounds=Marshal.PtrToStructure<MinMaxInfo>(lParam);
+        (bounds.MaxPosition,bounds.MaxSize)=WorkAreaBounds(info.Monitor,info.Work);
+        Marshal.StructureToPtr(bounds,lParam,false);
+        handled=true;
+        return IntPtr.Zero;
+    }
+
+    // Monitor-relative origin preserves taskbars on any edge and negative desktop coordinates.
+    internal static (NativePoint Position,NativePoint Size) WorkAreaBounds(NativeRect monitor,NativeRect work)
+        =>(new NativePoint{X=work.Left-monitor.Left,Y=work.Top-monitor.Top},
+           new NativePoint{X=work.Right-work.Left,Y=work.Bottom-work.Top});
+
+    [StructLayout(LayoutKind.Sequential)] internal struct NativePoint { public int X,Y; }
+    [StructLayout(LayoutKind.Sequential)] internal struct NativeRect { public int Left,Top,Right,Bottom; }
+    [StructLayout(LayoutKind.Sequential)] private struct MinMaxInfo { public NativePoint Reserved,MaxSize,MaxPosition,MinTrackSize,MaxTrackSize; }
+    [StructLayout(LayoutKind.Sequential)] private struct MonitorInfo { public int Size; public NativeRect Monitor,Work; public uint Flags; }
+    [DllImport("user32.dll")] private static extern IntPtr MonitorFromWindow(IntPtr hwnd,uint flags);
+    [DllImport("user32.dll",CharSet=CharSet.Unicode)] [return:MarshalAs(UnmanagedType.Bool)]
+    private static extern bool GetMonitorInfo(IntPtr monitor,ref MonitorInfo info);
+
     private void TitleBar_SizeChanged(object sender,SizeChangedEventArgs e)
     {
         ProjectTitle.MaxWidth=Math.Max(0,TitleBar.ActualWidth-2*Math.Max(TitleActions.ActualWidth,CaptionActions.ActualWidth)-20);
@@ -18,8 +51,8 @@ public partial class MainWindow
     }
     private void UpdateChrome()
     {
-        // Keep content within the work area when Windows maximizes the custom frame.
-        ShellRoot.Margin=WindowState==WindowState.Maximized?SystemParameters.WindowResizeBorderThickness:new Thickness(0);
+        // Native bounds already exclude the taskbar; no guessed resize-border padding.
+        ShellRoot.Margin=new Thickness(0);
         MaximizeButton.Content=WindowState==WindowState.Maximized?"\uE923":"\uE922";
         MaximizeButton.ToolTip=WindowState==WindowState.Maximized?"Wiederherstellen":"Maximieren";
     }

@@ -1,6 +1,6 @@
 # FlowSketch – Hilfe
 
-Version 0.7.0 · cs-systems GmbH
+Version 0.7.1 · cs-systems GmbH
 
 FlowSketch zeichnet funktionelle Prozessdarstellungen auf leeren Blättern oder auf R&I-/P&ID-PDFs. Symbole, Rohrleitungen, Wirklinien, Szenarien und Schritte werden in einer eigenen Projektdatei gespeichert. Die importierte PDF bleibt unverändert. Diese Hilfe ist im Programm unter Hilfe → Bedienhilfe und offline als Hilfe.html im Dokumentationsordner verfügbar.
 

@@ -1,6 +1,13 @@
 # Projektzustand FlowSketch
 
-Stand: 20.10.2026. Neue Ausgabe **0.7.0**, `bin/0.7.0/FlowSketch.exe`. Der vom Nutzer gewählte Programmname ersetzt PID2Process; Projektdateien und frühere Versionsordner bleiben erhalten.
+Stand: 20.10.2026. Neue Ausgabe **0.7.1**, `bin/0.7.1/FlowSketch.exe`. Der vom Nutzer gewählte Programmname ersetzt PID2Process; Projektdateien und frühere Versionsordner bleiben erhalten.
+
+## Aktueller Stand – 0.7.1
+
+- Maximierung des rahmenlosen Hauptfensters verwendet über WM_GETMINMAXINFO den Arbeitsbereich des aktuellen Monitors in physischen Pixeln. Taskleisten an allen vier Rändern und Monitore mit negativen Desktopkoordinaten werden berücksichtigt; geschätzter Innenabstand entfernt. Ziel: untere Statusleiste bleibt innerhalb des Arbeitsbereichs.
+- Datei/Projekt/Hilfe sowie Dropdown-/Kontextmenüzeilen haben transparente Grundflächen auf gemeinsamem dunklen Hintergrund. Vorhandene Hover-/Tastaturmarkierung und Markierung geöffneter Untermenüs bleiben erhalten. Orientierung an den Microsoft-Menübeispielen: https://learn.microsoft.com/windows/win32/uxguide/cmd-menus.
+- Auslieferung `bin/0.7.1/FlowSketch.exe`, EXE-Dateiversion 0.7.1.0. Build/Publish erfolgreich, keine Compilerfehler; NU1900 wegen nicht erreichbarer NuGet-Sicherheitsdaten. Ausgelieferte EXE: **422 PASS, kein FAIL, Rückgabecode 0**, darunter Arbeitsbereichsberechnung für vier Taskleistenränder auf zwei Monitorgeometrien und transparente Menügrundflächen. Erster Sandbox-Lauf scheiterte am Zugriff der Windows-PDF-API; bildschirmfreie Wiederholung außerhalb der Sandbox erfolgreich. Node-Viewer-/Zoomtests und Offline-Hilfe bestanden.
+- Gespeicherte Bilder `test-results/context-menu-0.7.1.png` und `test-results/desktop-chrome-0.7.1.png` betrachtet: gemeinsame dunkle Menüfläche, schlichte Textmenüs und vollständig gezeichnete Statusleiste. Kein sichtbarer Testlauf und keine Bildschirmübernahme; echte Maximierungs-/Taskleistenprüfung einschließlich Monitor-/DPI-Wechsel bleibt separat offen. Frühere Ausgaben, Nutzerprojekte und Referenz-PDFs erhalten.
 
 ## Repository und Projektablage
 
