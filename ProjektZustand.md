@@ -7,6 +7,8 @@ Stand: 20.10.2026. Neue Ausgabe **0.7.0**, `bin/0.7.0/FlowSketch.exe`. Der vom N
 - Projektordner auf Nutzerauftrag nach `C:\01_Files\03_Repositories\FlowSketch` umgezogen; bisheriger Name `PID2Process` bleibt nur in internen Solution-/Quellpfaden und dem bestehenden Dateiformat erhalten.
 - GitHub: `https://github.com/SchnDom/FlowSketch`, Hauptzweig `main`. Quellen, Dokumentation, Markenbilder und eingebettete Demo werden versioniert. Referenz-PDFs und persönliche Projekte unter `_PIDs`, Buildausgaben und Testartefakte bleiben lokal erhalten und sind ausgeschlossen.
 - README als Repository-Einstieg mit Einrichtung, Funktionen, Build-/Prüfbefehlen, Verzeichnisstruktur und Grenzen aktualisiert. Anwendungsversion bleibt 0.7.0; dieser Umzug ändert keine Programmfunktionen.
+- Umzug geprüft: 1.863 Dateien mit identischen relativen Pfaden und Größen sowie 26 SHA-256-Prüfsummen für Nutzerprojekte, Referenzdateien und Markenbilder unverändert. Am alten Pfad verbleiben nur durch die laufende Codex-Sitzung gesperrte leere Ordner; sämtliche Projektdateien liegen am neuen Pfad. Diese leeren Reste können nach Schließen der alten Sitzung entfernt werden.
+- Erster Quellstand auf `origin/main` veröffentlicht; README-Verweise und Git-Ausschlüsse geprüft. Release-Quellbuild am neuen Pfad erfolgreich (0 Fehler, NU1900 wegen nicht erreichbarer NuGet-Sicherheitsdaten). Node-Viewer-, Zoom- und Offline-Hilfeprüfungen am neuen Pfad bestanden. Keine erneute Mausprüfung und kein neuer funktioneller Release für den reinen Umzug.
 
 ## Aktueller Stand – 0.7.0
 
