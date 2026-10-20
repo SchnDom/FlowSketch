@@ -32,7 +32,7 @@ internal static class OverlaySelection
     internal static void Apply(EngineeringProject p,ISet<Guid> ids,SelectionPatch patch)
     {
         foreach(var x in p.Equipment.Where(x=>ids.Contains(x.Id))){if(patch.Function is not null)x.Function=patch.Function;if(patch.Location is not null)x.InstallationLocation=patch.Location;if(patch.Color is not null)x.Color=patch.Color;if(patch.Opacity is double o)x.Opacity=Math.Clamp(o,0,1);if(patch.Width is double w)x.Width=Math.Clamp(w,.001,1-x.X);if(patch.Height is double h)x.Height=Math.Clamp(h,.001,1-x.Y);}
-        foreach(var x in p.Pipes.Where(x=>ids.Contains(x.Id))){if(patch.Function is not null)x.Function=patch.Function;if(patch.Location is not null)x.InstallationLocation=patch.Location;if(patch.Color is not null)x.Color=patch.Color;if(patch.Opacity is double o)x.Opacity=Math.Clamp(o,0,1);}
+        foreach(var x in p.Pipes.Where(x=>ids.Contains(x.Id))){if(patch.Function is not null)x.Function=patch.Function;if(patch.Location is not null)x.InstallationLocation=patch.Location;if(patch.Color is not null){x.Color=patch.Color;x.EmptyColor=null;x.FilledColor=null;}if(patch.Opacity is double o)x.Opacity=Math.Clamp(o,0,1);}
         foreach(var x in p.SignalLines.Where(x=>ids.Contains(x.Id))){if(patch.Function is not null)x.Function=patch.Function;if(patch.Location is not null)x.InstallationLocation=patch.Location;if(patch.Color is not null)x.Color=patch.Color;if(patch.Opacity is double o)x.Opacity=Math.Clamp(o,0,1);}
     }
     internal static void Delete(EngineeringProject p,ISet<Guid> ids)

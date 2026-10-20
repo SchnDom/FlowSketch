@@ -1,6 +1,10 @@
 const checkCases=JSON.parse(require('node:fs').readFileSync('test-results/check-valve-cases.json','utf8'));
 const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/strict');
 const scene=require('../src/PID2Process/ReviewScene.js');
+const pipeStyleCases=JSON.parse(fs.readFileSync('test-results/pipe-style-cases.json','utf8'));
+for(const c of pipeStyleCases.cases){const actual=scene.pipeAppearance(pipeStyleCases.project,c.pipe,{state:c.state,mediumType:'Liquid',mediumName:'Wasser'});assert.equal(actual.color,c.color);assert.equal(actual.width,c.width);assert.deepEqual(actual.dash,c.dash);assert.equal(actual.scaled,true);}
+assert.deepEqual(scene.pipeAppearance({mediaColors:{empty:'#808080'}},{color:'#123456'},{state:'Leer'}),{color:'#123456',width:5,dash:[10,10],scaled:false});
+console.log('PASS: Alle neuen Rohrstrichtypen und Zustandsfarben stimmen mit C# überein; Altstil bleibt erhalten');
 for(const c of JSON.parse(fs.readFileSync('test-results/drawing-geometry-cases.json','utf8'))){const numbers=path=>(path.match(/-?\d+(?:\.\d+)?/g)||[]).map(Number),actual=numbers(scene.drawingGeometry(c.item,c.width,c.height)),expected=numbers(c.path);assert.equal(actual.length,expected.length);for(let i=0;i<actual.length;i++)assert.ok(Math.abs(actual[i]-expected[i])<.000002,c.item.variant+' geometry '+i);}
 console.log('PASS: Richtungsunabhängige Pfeilspitzen und tatsächliche Zeichengeometrie stimmen mit C# überein');
 const sensorDrawing=JSON.parse(fs.readFileSync('test-results/sensor-drawing-cases.json','utf8'));
@@ -131,3 +135,17 @@ console.log('PASS: Reine Zeichenobjekte im tatsächlich exportierten SVG-Viewer 
 
 for(const test of checkCases){const n=scene.evaluateScene(test.project,test.values),x=test.project.equipment.find(x=>x.id===test.id);assert.equal(n.checkValves[test.id],test.expected);const status=scene.status(x,test.values,n);assert.equal(status,test.expected?'Durchflossen':'Gesperrt');assert.equal(scene.fillColor(x,{part:'State'},status),test.expected?'#00FF00':'#808080');}
 console.log('PASS: Gespiegelte Rückschlagarmaturen: Richtung, gesperrte Wege und echte Durchflussfarben stimmen mit C# überein');
+for(const c of pipeStyleCases.cases){
+ const project=JSON.parse(JSON.stringify(pipeStyleCases.project)),water=project.media.find(m=>m.name==='Wasser');
+ const source=project.equipment.find(x=>x.type==='MediaSource');Object.assign(source,{mediumId:water.id,mediaName:water.name,mediumType:water.type});
+ const pipe=JSON.parse(JSON.stringify(c.pipe));pipe.startConnection={equipmentId:source.id,port:'Right'};pipe.endConnection=null;
+ project.equipment=[source];project.pipes=[pipe];project.signalLines=[];project.alarms=[];project.controlSteps=[];
+ project.scenarios=[{id:'pipe-style',name:'Rohrstil',equipmentStates:{[source.id]:c.state==='Leer'?'Inaktiv':'Aktiv'},pipeStates:{},textValues:{},sensorValues:{},tankStates:{}}];
+ const pipeScript=script.replace(/const PROJECT=[\s\S]*?;\s*const SYMBOLS=/,'const PROJECT='+JSON.stringify(project)+';\nconst SYMBOLS=');
+ for(const element of Object.values(elements))element.replaceChildren();elements.stage.append(elements.background);
+ vm.runInNewContext(pipeScript,{document,Option:class{constructor(text,value){this.text=text;this.value=value;}},console});
+ elements.scenario.value='pipe-style';elements.scenario.onchange();
+ const line=elements.stage.children.find(x=>x.name==='svg').children.find(x=>x.name==='polyline');
+ assert.equal(line.attrs.stroke,c.color);assert.equal(line.attrs['stroke-width'],c.width);assert.equal(line.attrs['stroke-dasharray'],c.dash?.join(' '));assert.equal(line.attrs['vector-effect'],undefined);
+}
+console.log('PASS: Tatsächlich exportiertes SVG verwendet neue Rohrfarben, Breiten und Strichtypen in beiden Zuständen');

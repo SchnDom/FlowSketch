@@ -138,6 +138,10 @@ public sealed class PipeSegment
     public string Function {get;set;} = "";
     public string InstallationLocation {get;set;} = "";
     public string? Color {get;set;}
+    public double? LineWidth {get;set;}
+    public string? LineStyle {get;set;}
+    public string? EmptyColor {get;set;}
+    public string? FilledColor {get;set;}
     public double Opacity {get;set;} = 1;
 }
 

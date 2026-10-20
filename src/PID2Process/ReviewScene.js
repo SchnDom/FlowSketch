@@ -1,5 +1,12 @@
 /* Shared symbols, availability and source-to-target flow. No physical simulation. */
 const ReviewScene = (() => {
+  function pipeAppearance(p,x,a){
+    const color=(a.state==='Leer'?x.emptyColor:x.filledColor)||x.color||mediaColor(p,a.mediumType,a.mediumName);
+    const width=Number.isFinite(x.lineWidth)&&x.lineWidth>0&&x.lineWidth<1?x.lineWidth*1000:5;
+    const styles={'Durchgezogen':null,'Punktiert':[1,2],'Gestrichelt':[4,3],'Strichpunkt':[4,2,1,2],'Strichpunktpunkt':[4,2,1,2,1,2]};
+    const dash=Object.hasOwn(styles,x.lineStyle)?styles[x.lineStyle]:(a.state==='Leer'?[2,2]:null);
+    return {color,width,dash:dash?.map(n=>n*width)??null,scaled:Number.isFinite(x.lineWidth)&&x.lineWidth>0&&x.lineWidth<1};
+  }
   const catalog=typeof SYMBOLS!=='undefined'?SYMBOLS:require('./SymbolDefinitions.json');
   const definition=x=>x.type==='Drawing'?{ports:{},shapes:[]}:catalog[x.type+'|'+x.variant]||catalog[x.type]||catalog.Generic;
   const ports=x=>Object.keys(definition(x).ports);
@@ -74,7 +81,7 @@ const ReviewScene = (() => {
   const evaluate=(p,v)=>evaluateScene(p,v).pipes;
   function status(x,v,network){if(check(x))return network.checkValves?.[x.id]?'Durchflossen':'Gesperrt';if(x.type==='Instrument')return sensorDisplay(x,v).text;if(network.errors[x.id])return network.errors[x.id];if(x.type==='Vessel'){const t=v.tankStates[x.id];return(['Befüllt','Leer'].includes(v.equipmentStates[x.id])?v.equipmentStates[x.id]:t?.filled||t?.pressurized?'Befüllt':'Leer');}if(x.type==='HeatExchanger'){const h=network.heatExchangers[x.id];return 'Primär: '+(h.primary?'durchflossen':'kein Durchfluss')+' · Sekundär: '+(h.secondary?'durchflossen':'kein Durchfluss');}return valve(x)||conveyor(x)||x.type==='Filter'?state(x,v):'';}
   function drawingGeometry(x,width,height){const d=x.drawing||{},a=d.start||{x:x.x+x.width*(d.vertical?.5:d.reverseX?1:0),y:x.y+x.height*(d.horizontal?.5:d.reverseY?1:0)},b=d.end||{x:x.x+x.width*(d.vertical?.5:d.reverseX?0:1),y:x.y+x.height*(d.horizontal?.5:d.reverseY?0:1)},n=v=>Number(v.toFixed(6));let path='M '+n((a.x-x.x)*width)+','+n((a.y-x.y)*height)+' L '+n((b.x-x.x)*width)+','+n((b.y-x.y)*height);function head(tip,tail){let dx=(tip.x-tail.x)*width,dy=(tip.y-tail.y)*height,l=Math.hypot(dx,dy);if(l<.001)return;dx/=l;dy/=l;const size=Math.min((d.arrowSize||14)*width/(d.pageWidth||2000),l*.45),tx=(tip.x-x.x)*width,ty=(tip.y-x.y)*height;path+=' M '+n(tx-dx*size-dy*size*.45)+','+n(ty-dy*size+dx*size*.45)+' L '+n(tx)+','+n(ty)+' L '+n(tx-dx*size+dy*size*.45)+','+n(ty-dy*size-dx*size*.45);}if(['Pfeil','Doppelpfeil'].includes(x.variant))head(b,a);if(x.variant==='Doppelpfeil')head(a,b);return path;}
-  return {drawingGeometry,values,closed,resolve,evaluate,evaluateScene,ports,port,state,definition,catalog,valve,check,conveyor,colored,fillColor,status,slice,signalResolve,signalMarkers,mediaColor,sensorAlarms,sensorDisplay,sensorConnection,drawingPath};
+  return {pipeAppearance,drawingGeometry,values,closed,resolve,evaluate,evaluateScene,ports,port,state,definition,catalog,valve,check,conveyor,colored,fillColor,status,slice,signalResolve,signalMarkers,mediaColor,sensorAlarms,sensorDisplay,sensorConnection,drawingPath};
 })();
 if(typeof module!=='undefined')module.exports=ReviewScene;
 
@@ -94,8 +101,8 @@ if(typeof document!=='undefined'){
     el('background').src='page-'+page+'.png';el('name').textContent=(s?.name||p.name)+(t?' · '+t.name:'');el('description').textContent=s?.description||'';el('details').replaceChildren();stage.querySelectorAll('.device,svg').forEach(x=>x.remove());
     const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');svg.setAttribute('viewBox','0 0 1000 1000');svg.setAttribute('preserveAspectRatio','none');
     for(const x of p.pipes.filter(x=>x.page===page)){
-      const a=network[x.id],line=document.createElementNS(svg.namespaceURI,'polyline');line.setAttribute('points',ReviewScene.resolve(p,x).map(q=>q.x*1000+','+q.y*1000).join(' '));line.setAttribute('fill','none');line.setAttribute('stroke',x.color||ReviewScene.mediaColor(p,a.mediumType,a.mediumName));line.setAttribute('opacity',x.opacity??1);line.setAttribute('stroke-width',5);line.setAttribute('vector-effect','non-scaling-stroke');if(a.state==='Leer')line.setAttribute('stroke-dasharray','10 10');svg.append(line);
-      for(const span of a.spans.filter(x=>x.flowing)){const mark=document.createElementNS(svg.namespaceURI,'polyline');mark.setAttribute('points',ReviewScene.slice(ReviewScene.resolve(p,x),span.start,span.end).map(q=>q.x*1000+','+q.y*1000).join(' '));mark.setAttribute('fill','none');mark.setAttribute('stroke','white');mark.setAttribute('stroke-width',2.5);mark.setAttribute('opacity',.8);mark.setAttribute('vector-effect','non-scaling-stroke');mark.setAttribute('class','flow');mark.style.animationDirection=span.direction<0?'reverse':'normal';svg.append(mark);}
+      const a=network[x.id],style=ReviewScene.pipeAppearance(p,x,a),line=document.createElementNS(svg.namespaceURI,'polyline');line.setAttribute('points',ReviewScene.resolve(p,x).map(q=>q.x*1000+','+q.y*1000).join(' '));line.setAttribute('fill','none');line.setAttribute('stroke',style.color);line.setAttribute('opacity',x.opacity??1);line.setAttribute('stroke-width',style.width);if(!style.scaled)line.setAttribute('vector-effect','non-scaling-stroke');if(style.dash)line.setAttribute('stroke-dasharray',style.dash.join(' '));svg.append(line);
+      for(const span of a.spans.filter(x=>x.flowing)){const mark=document.createElementNS(svg.namespaceURI,'polyline');mark.setAttribute('points',ReviewScene.slice(ReviewScene.resolve(p,x),span.start,span.end).map(q=>q.x*1000+','+q.y*1000).join(' '));mark.setAttribute('fill','none');mark.setAttribute('stroke','white');mark.setAttribute('stroke-width',style.width/2);mark.setAttribute('opacity',(x.opacity??1)*.8);if(!style.scaled)mark.setAttribute('vector-effect','non-scaling-stroke');mark.setAttribute('class','flow');mark.style.animationDirection=span.direction<0?'reverse':'normal';svg.append(mark);}
       const path=ReviewScene.resolve(p,x);for(const[c,q]of [[x.startConnection,path[0]],[x.endConnection,path.at(-1)]])if(c?.needsReview){const marker=document.createElementNS(svg.namespaceURI,'rect');marker.setAttribute('x',q.x*1000-4);marker.setAttribute('y',q.y*1000-4);marker.setAttribute('width',8);marker.setAttribute('height',8);marker.setAttribute('fill','darkorange');marker.setAttribute('stroke','darkred');svg.append(marker);}
     }
     for(const signal of (p.signalLines||[]).filter(x=>x.page===page)){

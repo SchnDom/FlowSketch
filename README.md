@@ -6,7 +6,7 @@
 
 FlowSketch ist ein deutschsprachiger Windows-Editor mit WPF und .NET 10. Zeichnungen entstehen auf einem leeren Blatt oder als funktionelles Overlay auf einem R&I-/P&ID-PDF. Die Referenz-PDF bleibt unverändert; Verbindungen und Zustände werden in einer separaten Projektdatei gespeichert.
 
-**Version 0.7.1** · [Bedienhilfe](docs/Hilfe.md) · [Projektstand und Prüfnachweise](ProjektZustand.md)
+**Version 0.8.1** · [Bedienhilfe](docs/Hilfe.md) · [Projektstand und Prüfnachweise](ProjektZustand.md)
 
 ![Editor mit Ablaufverwaltung und Planübersicht](_media/help/blank-editor.png)
 
@@ -54,7 +54,7 @@ Die internen Solution-/Quellnamen `PID2Process` und die Dateiendung `.pid2proces
 ./scripts/Publish-Release.ps1
 ```
 
-Die Version stammt aus [PID2Process.csproj](src/PID2Process/PID2Process.csproj). Die Ausgabe liegt unter `bin/<Version>/FlowSketch.exe`, aktuell `bin/0.7.1/FlowSketch.exe`. Beispiele, Dokumentation und Diagnoseinformationen besitzen eigene Unterordner. Frühere Versionsordner bleiben erhalten; Builds sind nicht Bestandteil des Git-Repositories.
+Die Version stammt aus [PID2Process.csproj](src/PID2Process/PID2Process.csproj). Die Ausgabe liegt unter `bin/<Version>/FlowSketch.exe`, aktuell `bin/0.8.1/FlowSketch.exe`. Beispiele, Dokumentation und Diagnoseinformationen besitzen eigene Unterordner. Frühere Versionsordner bleiben erhalten; Builds sind nicht Bestandteil des Git-Repositories.
 
 ## Prüfen
 

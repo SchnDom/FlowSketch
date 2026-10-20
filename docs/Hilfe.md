@@ -1,6 +1,6 @@
 # FlowSketch – Hilfe
 
-Version 0.7.1 · cs-systems GmbH
+Version 0.8.1 · cs-systems GmbH
 
 FlowSketch zeichnet funktionelle Prozessdarstellungen auf leeren Blättern oder auf R&I-/P&ID-PDFs. Symbole, Rohrleitungen, Wirklinien, Szenarien und Schritte werden in einer eigenen Projektdatei gespeichert. Die importierte PDF bleibt unverändert. Diese Hilfe ist im Programm unter Hilfe → Bedienhilfe und offline als Hilfe.html im Dokumentationsordner verfügbar.
 
@@ -79,7 +79,7 @@ Symboltyp links wählen und die Vorschau auf dem Blatt positionieren. Der erste 
 
 Ein vorhandenes Symbol per Doppelklick öffnen. Die verfügbaren Felder richten sich nach dem Gerätetyp: Tag, Beschreibung, Funktion, Einbauort, Bauform, Antrieb, Rückmeldungen und weitere gerätespezifische Angaben. Tags müssen eindeutig sein. Ungültige Eingaben werden vor der Übernahme gemeldet.
 
-Funktion beschreibt den Prozesszweck, Einbauort (+) die Zuordnung in der Anlage. Medienquellen und Behälter wählen ein unter Projekt → Medien definiertes Medium. Zuerst den Mediumtyp wählen (Gasförmig, Flüssig, Fest oder Gemisch), anschließend den passenden Mediennamen. Neue Mediennamen werden im Projekt-Medienfenster angelegt. An Medienquellen können Beschreibung und vorgegebene Temperatur, Druck und Durchflussgeschwindigkeit dargestellt werden.
+Funktion beschreibt den Prozesszweck, Einbauort (+) die Zuordnung in der Anlage. Medienquellen wählen ein unter Projekt → Medien definiertes Medium direkt über seinen Namen. Die schreibgeschützte Zusammenfassung darunter zeigt Mediumtyp, Temperatur, Druck und Durchflussgeschwindigkeit. Betriebswerte… bearbeitet die drei Werte individuell je Quelle. Medien verwalten… öffnet die zentrale Medienverwaltung. Erst Übernehmen im äußeren Gerätedialog übernimmt alle Änderungen; Abbrechen verwirft auch Änderungen aus den Unterdialogen. Behälter wählen weiterhin zuerst den Mediumtyp und anschließend den passenden Mediennamen.
 
 Die Kategorie Zeichnen enthält Linie, Kreis / Ellipse, Rechteck, Textfeld, Pfeil und Doppelpfeil. Per Rechtsklick auf einen Bibliothekseintrag die Zeicheneigenschaften für neue Objekte dieser Form einstellen. Schnellfarben, frei wählbare Farbe, Strichstärken-Vorgaben und – passend zur Form – Füllung, Text und Pfeilspitzengröße sind verfügbar. Übernehmen gilt für nachfolgende Platzierungen in dieser Sitzung, Abbrechen verwirft die Änderung. Werkzeug wählen und mit gedrückter linker Maustaste die Grafik aufziehen. Ein kurzer Klick verwendet eine Standardgröße; beim Textfeld anschließend den Text eingeben. SHIFT beim Aufziehen von Rechteck oder Ellipse hält gleiche Seitenlängen.
 
@@ -92,6 +92,8 @@ Zeichenobjekte dienen nur zur Anzeige. Sie erscheinen nicht als Betriebsmittel, 
 Breite und Höhe werden in logischen Pixeln (px) eingegeben und intern weiterhin normiert gespeichert. Die Größe ist damit vom aktuellen Zoom unabhängig.
 
 Farbe, Hintergrund, Deckkraft und Größe lassen sich in den Eigenschaften ändern. Semantische Zustandsfarben haben Vorrang. Zustandstext anzeigen schaltet bei Armaturen und Ein/Aus-Geräten einen kompakten Zustandstext zu; standardmäßig ist er ausgeblendet. Der Zustand bleibt auch ohne Text in den Detailinformationen verfügbar.
+
+Alle Farbfelder bieten eine Farbvorschau, den Hexwert und Farbrad…. Im Farbrad stehen Farbton, Sättigung, Helligkeit und eine editierbare Hexfarbe zur Verfügung. Pipette blendet den Dialog vorübergehend aus. Ein kontrastreiches Fadenkreuz markiert den Abtastpunkt; ein kleines Fenster daneben zeigt die aktuelle Farbe als große Farbfläche und ergänzenden Hexwert. Die Farbfläche folgt dem Fadenkreuz; am Bildschirmrand weicht das Fenster nach innen aus. Linksklick wählt die Farbe, Esc bricht ab. Erst Übernehmen im Farbrad bestätigt die Auswahl; Abbrechen lässt das ursprüngliche Farbfeld unverändert. Bildschirmaufnahmen werden nur vorübergehend im Arbeitsspeicher verwendet.
 
 ## 7. Auswählen, verschieben, skalieren und kopieren
 
@@ -133,6 +135,8 @@ Rohr auswählen: Orange Griffe zeigen die End- und Eckpunkte. Einen Griff ziehen
 
 Wird ein angeschlossenes Objekt gelöscht, bleibt die letzte Rohrgeometrie erhalten und die betreffende Bindung wird gelöst. Orange markierte Altanschlüsse müssen fachlich geprüft und neu verbunden werden; sie werden bis zur Korrektur nicht als Medienverbindung ausgewertet.
 
+Doppelklick auf ein Rohr öffnet Rohrdaten mit Bezeichnung, Breite, Strichtyp und getrennten Farben für Leer und Befüllt. Breite wird in Pixeln bei Referenz-Seitenbreite 2000 angegeben und zoomunabhängig gespeichert; leer erhält die bisherige Breite. Durchgezogen, Punktiert, Gestrichelt, Strichpunkt und Strichpunktpunkt gelten in beiden Zuständen. Bisherige Darstellung erhält das Verhalten älterer Projekte. Automatische Leerfarbe folgt den Standardfarben; automatische Befülltfarbe folgt dem Medium. Individuelle Farben werden über Farbrad… ausgewählt.
+
 ## 10. Wirklinien / Regellinien
 
 Wirklinie / Regellinie in der Bibliothek oder Wirklinie einfügen im Kontextmenü wählen. Die dünne Linie mit Klammerzeichen zeigt, welcher Sensor welchem Gerät zugeordnet ist.
@@ -147,11 +151,11 @@ Eine Wirklinie auswählen, um ihre Punktgriffe zu bearbeiten. Doppelklick öffne
 
 ## 11. Gerätetypen, Zustände und Farben
 
-Unter Projekt → Medien werden Bezeichnung, Typ und Farbe aller Medien gepflegt. Standardfarben: Leer grau, Flüssig #0000FF, Fest #FF00FF, Gasförmig #FFAA33; Gemisch ist separat einstellbar. Änderungen werden erst mit Übernehmen wirksam und aktualisieren zugeordnete Medienquellen, Rohrfarben und Legenden. Eine eigene Rohrfarbe hat weiterhin Vorrang. In Gerätedaten steht Mediumtyp über Name des Mediums; die Namensauswahl enthält nur Medien des ausgewählten Typs. Fehlt ein Eintrag, Projekt → Medien öffnen, ihn dort mit richtigem Typ anlegen und Übernehmen wählen. Ein Typ ohne definierte Medien hat eine leere Namensauswahl; der vorherige Name wird nicht weiterverwendet.
+Unter Projekt → Medien werden Bezeichnung, Typ und Farbe aller Medien gepflegt. Standardfarben: Leer grau, Flüssig #0000FF, Fest #FF00FF, Gasförmig #FFAA33; Gemisch ist separat einstellbar. Änderungen werden erst mit Übernehmen wirksam und aktualisieren zugeordnete Medienquellen, Rohrfarben und Legenden. Eine eigene Rohrfarbe hat weiterhin Vorrang. Medienquellen wählen alle definierten Medien direkt nach Namen. Typ und Betriebswerte erscheinen schreibgeschützt; Betriebswerte… bearbeitet die Werte individuell je Quelle. Medien verwalten… öffnet die Definitionen innerhalb des Gerätedialogs. Bei Behältern bleibt die Typfilterung erhalten.
 
-Beispiel: Wasser ist als Flüssig definiert und Druckluft als Gasförmig. Nach dem Wechsel zu Gasförmig ist nur Druckluft auswählbar, Wasser erscheint dort nicht. Entscheidend ist der im Medienfenster zugewiesene Typ.
+Beispiel: Wasser ist als Flüssig definiert und Druckluft als Gasförmig. Im Gerätedialog einer Medienquelle sind beide Namen auswählbar; der Mediumtyp erscheint automatisch in der Zusammenfassung. Bei Behältern bleibt die Namensauswahl nach dem ausgewählten Typ gefiltert.
 
-![Gerätedaten mit nach Gasförmig gefilterter Medienauswahl](images/media-filter.png)
+![Medienquelle mit Mediumauswahl und schreibgeschützten Betriebswerten](images/media-filter.png)
 
 Sensorik verwendet ein gemeinsames Kreissymbol mit waagrechter Teilung: Signalkennung oben, Tagnummer unten. Beide Texte sind frei editierbar. Die standardmäßig eingeklappten Bereiche Skalierung und Alarme enthalten die Tabellen. Vorgaben: Rohbereich 0 bis 27648, skalierter Bereich 0 bis 100, Einheit %. Die vier aktivierten Grenzen sind High-High 99, High 95, Low 5, Low-Low 1.
 
@@ -267,7 +271,7 @@ Symbol nach Formatwechsel verschwunden? Es kann außerhalb des kleineren Blatts 
 
 Plan und obere Auswahl wirken unterschiedlich? Im Szenarioeditor die Option Szenario- und Schrittauswahl in aktueller Ansicht anzeigen aktivieren. Ein Szenariowechsel muss den ersten vorhandenen Schritt anzeigen.
 
-Medium fehlt in der Auswahl? Den Typ des Eintrags unter Projekt → Medien prüfen und übernehmen; anschließend im Gerätedialog zuerst den passenden Typ wählen.
+Medium fehlt in der Auswahl? Unter Projekt → Medien oder Medien verwalten… einen Eintrag anlegen und übernehmen. Bei Behältern zusätzlich den passenden Mediumtyp wählen.
 
 Formfreier Export wird abgelehnt? Druck-/Exportfenster aufziehen und erneut exportieren.
 
@@ -283,7 +287,7 @@ Die historische PID-Vorlage enthält sechs Einträge. Neue Legenden verwenden au
 
 ![Medienlegende nach den bestehenden PIDs](images/legend.png)
 
-Doppelklick auf die Legende oder Projekt → Legende öffnet Legende bearbeiten. Tag und Legendentitel sind eigene Textfelder; Funktion, Einbauort und Beschreibung werden für Legenden nicht abgefragt. In der Tabelle jede Bezeichnung und ihre Hex-Farbe bearbeiten. Zeile hinzufügen ergänzt einen Eintrag, Zeile entfernen entfernt die markierte Zeile, Projektmedien laden übernimmt die definierten Medien. Medienquellen erstellen merkt die Anlage fehlender Quellen für Übernehmen vor. Bereits vorhandene Quellen desselben Mediums auf der Seite werden nicht doppelt erzeugt.
+Doppelklick auf die Legende oder Projekt → Legende öffnet Legende bearbeiten. Tag und Legendentitel sind eigene Textfelder; Funktion, Einbauort und Beschreibung werden für Legenden nicht abgefragt. In der Tabelle jede Bezeichnung und ihre Farbe mit Vorschau, Hexwert und Farbrad… bearbeiten. Zeile hinzufügen ergänzt einen Eintrag, Zeile entfernen entfernt die markierte Zeile, Projektmedien laden übernimmt die definierten Medien. Medienquellen erstellen merkt die Anlage fehlender Quellen für Übernehmen vor. Bereits vorhandene Quellen desselben Mediums auf der Seite werden nicht doppelt erzeugt.
 
 ![Bearbeitbare Textfenster und Farben der Legende](images/legend-editor.png)
 

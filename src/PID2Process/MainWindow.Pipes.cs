@@ -75,24 +75,26 @@ public partial class MainWindow
         foreach(var pipe in d.Project.Pipes.Where(p=>p.Page==d.Page+1))
         {
             var appearance=appearances[pipe.Id];var state=appearance.State;var line=new Polyline{Points=new PointCollection(PipeNetwork.Resolve(d.Project,pipe).Select(Pixel)),Stroke=Brush(MediaSettings.Color(d.Project,appearance.MediumType,appearance.MediumName)),StrokeThickness=6,StrokeLineJoin=PenLineJoin.Round,ToolTip=$"{pipe.Tag} · {appearance.MediumName} · {state}"+(appearance.Blocked?" · Verbindung gesperrt oder zu prüfen":"")};
-            if(state=="Leer")line.StrokeDashArray=new DoubleCollection([2,2]);
+            line.Stroke=Brush(PipeStyleResolver.Color(d.Project,pipe,state,appearance.MediumType,appearance.MediumName));
+            line.StrokeThickness=PipeStyleResolver.Width(pipe,Sheet.Width,6);
+            line.StrokeDashArray=PipeStyleResolver.Dash(pipe,state) is {} dash?new DoubleCollection(dash):null;
             var flows=new List<(Polyline Graphic,PipeSpan Span)>();_pipeFlowGraphics[pipe.Id]=flows;
             // Only the source-to-target sections animate; availability remains a static base line.
             foreach(var span in appearance.Spans.Where(x=>x.Flowing))
             {
-                var flow=new Polyline{Points=new PointCollection(PipeNetwork.Slice(PipeNetwork.Resolve(d.Project,pipe),span.Start,span.End).Select(Pixel)),Stroke=Brushes.White,StrokeThickness=3,StrokeDashArray=new DoubleCollection([3,2]),IsHitTestVisible=false,Opacity=pipe.Opacity*.8};
+                var flow=new Polyline{Points=new PointCollection(PipeNetwork.Slice(PipeNetwork.Resolve(d.Project,pipe),span.Start,span.End).Select(Pixel)),Stroke=Brushes.White,StrokeThickness=line.StrokeThickness/2,StrokeDashArray=new DoubleCollection([3,2]),IsHitTestVisible=false,Opacity=pipe.Opacity*.8};
 
                 flow.BeginAnimation(Shape.StrokeDashOffsetProperty,new DoubleAnimation(0,span.Direction<0?5:-5,TimeSpan.FromSeconds(1)){RepeatBehavior=RepeatBehavior.Forever});
                 flows.Add((flow,span));
             }
-            if(pipe.Color is not null)line.Stroke=Brush(pipe.Color);line.Opacity=pipe.Opacity;
+            line.Opacity=pipe.Opacity;
             var resolved=PipeNetwork.Resolve(d.Project,pipe);
             foreach(var endpoint in new[]{(pipe.StartConnection,resolved[0]),(pipe.EndConnection,resolved[^1])}.Where(x=>x.Item1?.NeedsReview==true))
             {
                 var marker=new Rectangle{Width=10,Height=10,Fill=Brushes.DarkOrange,Stroke=Brushes.DarkRed,IsHitTestVisible=false};Canvas.SetLeft(marker,endpoint.Item2.X*Sheet.Width-5);Canvas.SetTop(marker,endpoint.Item2.Y*Sheet.Height-5);Panel.SetZIndex(marker,2);Sheet.Children.Add(marker);
             }
             PipeSegment? branch=null;bool groupMoved=false;
-            var hitLine=new Polyline{Points=line.Points.Clone(),Stroke=Brushes.Transparent,StrokeThickness=18,ToolTip=line.ToolTip};
+            var hitLine=new Polyline{Points=line.Points.Clone(),Stroke=Brushes.Transparent,StrokeThickness=Math.Max(18,line.StrokeThickness+8),ToolTip=line.ToolTip};
             void Down(object sender,MouseButtonEventArgs e)
             {
                 if(_drawingPipe)return;e.Handled=true;SelectObject(pipe.Id);Sheet.Focus();

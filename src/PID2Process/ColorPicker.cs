@@ -3,17 +3,25 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Data;
 namespace PID2Process;
 
 internal sealed class ColorPicker : DockPanel
 {
     internal TextBox Hex {get;}=new(){MinWidth=100};
-    internal string Value=>Hex.Text.Trim();
-    internal ColorPicker(string value)
+    public static readonly DependencyProperty ValueProperty=DependencyProperty.Register(nameof(Value),typeof(string),typeof(ColorPicker),new FrameworkPropertyMetadata("#007E87",FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+    public string Value {get=>(string)GetValue(ValueProperty);set=>SetValue(ValueProperty,value);}
+    public ColorPicker():this(null){}
+    internal ColorPicker(string? value)
     {
-        var preview=new Border{Width=28,Margin=new Thickness(4),BorderBrush=Brushes.Gray,BorderThickness=new Thickness(1)};var choose=new Button{Content="Farbrad…"};DockPanel.SetDock(choose,Dock.Right);Children.Add(choose);DockPanel.SetDock(preview,Dock.Left);Children.Add(preview);Children.Add(Hex);Hex.Text=value;
+        var preview=new Border{Width=28,Margin=new Thickness(4),BorderBrush=Brushes.Gray,BorderThickness=new Thickness(1)};var choose=new Button{Content="Farbrad…"};DockPanel.SetDock(choose,Dock.Right);Children.Add(choose);DockPanel.SetDock(preview,Dock.Left);Children.Add(preview);Children.Add(Hex);if(value is not null)SetCurrentValue(ValueProperty,value);Hex.SetBinding(TextBox.TextProperty,new Binding(nameof(Value)){Source=this,Mode=BindingMode.TwoWay,UpdateSourceTrigger=UpdateSourceTrigger.PropertyChanged});
         void Update(){try{preview.Background=new SolidColorBrush(Parse(Hex.Text));}catch{preview.Background=Brushes.Transparent;}}Hex.TextChanged+=(_,_)=>Update();Update();
         choose.Click+=(_,_)=>{var owner=Window.GetWindow(this);var dialog=new ColorWheelDialog(owner,IsValid(Value)?Value:"#007E87");if(dialog.ShowDialog()==true)Hex.Text=dialog.Hex;};
+    }
+    internal static DataGridTemplateColumn Column(string header,string path="Color")
+    {
+        var factory=new FrameworkElementFactory(typeof(ColorPicker));factory.SetBinding(ValueProperty,new Binding(path){Mode=BindingMode.TwoWay,UpdateSourceTrigger=UpdateSourceTrigger.PropertyChanged});
+        var template=new DataTemplate{VisualTree=factory};return new DataGridTemplateColumn{Header=header,CellTemplate=template,CellEditingTemplate=template,Width=270};
     }
     internal static bool IsValid(string value)=>value.Length==7&&value[0]=='#'&&value.Skip(1).All(Uri.IsHexDigit);
     internal static Color Parse(string hex)=>IsValid(hex)?(Color)ColorConverter.ConvertFromString(hex):throw new FormatException("Farbe als #RRGGBB eingeben.");
@@ -55,10 +63,23 @@ internal sealed class ColorWheelDialog : Window
     internal string Hex=>"#"+_wheel.Selected.R.ToString("X2")+_wheel.Selected.G.ToString("X2")+_wheel.Selected.B.ToString("X2");
     internal ColorWheelDialog(Window? owner,string initial)
     {
-        if(owner is not null)Owner=owner;Title="Farbe wählen";Width=330;SizeToContent=SizeToContent.Height;ResizeMode=ResizeMode.NoResize;WindowStartupLocation=WindowStartupLocation.CenterOwner;
+        if(owner?.IsVisible==true)Owner=owner;Title="Farbe wählen";Width=360;SizeToContent=SizeToContent.Height;ResizeMode=ResizeMode.NoResize;WindowStartupLocation=WindowStartupLocation.CenterOwner;
         DialogTheme.Apply(this);_wheel.SetColor(ColorPicker.Parse(initial));var stack=new StackPanel{Margin=new Thickness(16)};stack.Children.Add(new TextBlock{Text="Farbton / Sättigung",Margin=new Thickness(0,0,0,8)});_wheel.HorizontalAlignment=HorizontalAlignment.Center;stack.Children.Add(_wheel);
         stack.Children.Add(new TextBlock{Text="Helligkeit",Margin=new Thickness(0,8,0,0)});var slider=new Slider{Minimum=0,Maximum=1,Value=_wheel.Brightness};slider.ValueChanged+=(_,_)=>_wheel.Brightness=slider.Value;stack.Children.Add(slider);
-        var swatch=new Border{Height=32,Margin=new Thickness(0,8,0,8)};var text=new TextBlock{HorizontalAlignment=HorizontalAlignment.Center,VerticalAlignment=VerticalAlignment.Center};swatch.Child=text;stack.Children.Add(swatch);void Update(){swatch.Background=new SolidColorBrush(_wheel.Selected);text.Text=Hex;text.Foreground=_wheel.Brightness<.5?Brushes.White:Brushes.Black;}_wheel.Changed+=Update;Update();
-        var buttons=new StackPanel{Orientation=Orientation.Horizontal,HorizontalAlignment=HorizontalAlignment.Right};var ok=new Button{Content="Übernehmen",IsDefault=true};ok.Click+=(_,_)=>DialogResult=true;buttons.Children.Add(ok);buttons.Children.Add(new Button{Content="Abbrechen",IsCancel=true});stack.Children.Add(buttons);Content=stack;
+        var swatch=new Border{Height=32,Margin=new Thickness(0,8,0,8)};var text=new TextBox{Text=Hex};stack.Children.Add(swatch);stack.Children.Add(new TextBlock{Text="Hexfarbe (#RRGGBB)"});stack.Children.Add(text);
+        var syncing=false;void Update(){if(syncing)return;syncing=true;try{swatch.Background=new SolidColorBrush(_wheel.Selected);text.Text=Hex;slider.Value=_wheel.Brightness;}finally{syncing=false;}}_wheel.Changed+=Update;
+        text.TextChanged+=(_,_)=>{if(syncing||!ColorPicker.IsValid(text.Text))return;_wheel.SetColor(ColorPicker.Parse(text.Text));Update();};Update();
+        var buttons=new WrapPanel{HorizontalAlignment=HorizontalAlignment.Right};var pipette=new Button{Content="Pipette"};pipette.Click+=async(_,_)=>
+        {
+            var opacity=Opacity;try
+            {
+                Opacity=0;IsEnabled=false;
+                await System.Windows.Threading.Dispatcher.Yield(System.Windows.Threading.DispatcherPriority.ApplicationIdle);
+                ScreenPipette.FlushDesktop();
+                var capture=ScreenPipette.Capture();if(ScreenPipette.Pick(capture) is {} color){_wheel.SetColor(color);Update();}
+            }
+            catch(Exception ex){MessageBox.Show("Die Bildschirmfarbe konnte nicht aufgenommen werden: "+ex.Message,"Pipette");}
+            finally{Opacity=opacity;IsEnabled=true;Activate();}
+        };buttons.Children.Add(pipette);var ok=new Button{Content="Übernehmen",IsDefault=true};ok.Click+=(_,_)=>{if(!ColorPicker.IsValid(text.Text)){MessageBox.Show(this,"Farbe als #RRGGBB eingeben.");return;}DialogResult=true;};buttons.Children.Add(ok);buttons.Children.Add(new Button{Content="Abbrechen",IsCancel=true});stack.Children.Add(buttons);Content=stack;
     }
 }

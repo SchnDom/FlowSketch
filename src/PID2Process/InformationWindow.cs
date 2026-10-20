@@ -33,7 +33,7 @@ internal sealed class InformationWindow : Window
         close.Click+=(_,_)=>Close();DockPanel.SetDock(close,Dock.Bottom);root.Children.Add(close);
         var tabs=new TabControl();
         if(help)tabs.Items.Add(new TabItem{Header="Bedienhilfe",Content=new HelpView()});
-        tabs.Items.Add(TextTab("Kontakt","cs-systems GmbH\nPlabutscherstrasse 115\n8051 Graz, Austria\n\nE-Mail: office@cs-systems.com\n\nFN 374959k\nUID: ATU67052805\n\nFirmenangaben aus der bereitgestellten companyInfo.txt."));
+        tabs.Items.Add(TextTab("Kontakt","cs-systems GmbH\nPlabutscherstrasse 115\n8051 Graz, Austria\n\nE-Mail: office@cs-systems.com\n\nFN 374959k\nUID: ATU67052805"));
         tabs.Items.Add(TextTab("Firmenangaben",ResourceText("CompanyInfo.txt")));
         root.Children.Add(tabs);Content=root;
     }

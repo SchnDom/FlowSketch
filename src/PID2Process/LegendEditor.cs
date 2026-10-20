@@ -35,7 +35,7 @@ internal sealed class LegendEditor : Window
         var ok=new Button{Content="Übernehmen",IsDefault=true};ok.Click+=(_,_)=>{_grid.CommitEdit(DataGridEditingUnit.Cell,true);_grid.CommitEdit(DataGridEditingUnit.Row,true);var reason=TryApply();if(reason is not null){MessageBox.Show(this,reason,"Legende prüfen");return;}if(_createSources)MediaSettings.CreateSources(_project,_item.Page);MediaSettings.Synchronize(_project);DialogResult=true;};
         buttons.Children.Add(ok);buttons.Children.Add(new Button{Content="Abbrechen",IsCancel=true});bottom.Children.Add(buttons);DockPanel.SetDock(bottom,Dock.Bottom);root.Children.Add(bottom);
         _grid.Columns.Add(new DataGridTextColumn{Header="Textfenster / Bezeichnung",Binding=new Binding("Text"),MinWidth=300,Width=new DataGridLength(1,DataGridLengthUnitType.Star)});
-        _grid.Columns.Add(new DataGridTextColumn{Header="Linienfarbe (#RRGGBB)",Binding=new Binding("Color"),Width=180});
+        _grid.Columns.Add(ColorPicker.Column("Linienfarbe (#RRGGBB)"));
         _grid.ItemsSource=Rows;root.Children.Add(_grid);Content=root;
     }
     internal string? TryApply()

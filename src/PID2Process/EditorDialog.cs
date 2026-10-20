@@ -8,7 +8,7 @@ using Button = System.Windows.Controls.Button;
 namespace PID2Process;
 
 // Edits are committed by the caller only after a successful dialog result.
-public sealed class EditorDialog : Window
+public class EditorDialog : Window
 {
     private readonly StackPanel _fields = new() { Margin = new Thickness(20) };
     private readonly Dictionary<string, FrameworkElement> _controls = [];
@@ -17,6 +17,7 @@ public sealed class EditorDialog : Window
     private readonly Dictionary<string,(GroupBox Box,Grid Grid)> _groups=[];
     private bool _device;
     internal Func<string?>? Validation {get;set;}
+    internal SourceMediaFields? SourceMedia {get;set;}
     public EditorDialog(Window? owner, string title)
     {
         DialogTheme.Apply(this);_device=title.StartsWith("Gerätedaten",StringComparison.Ordinal);if(owner?.IsVisible==true)Owner = owner; Title = title; Width = _device?740:570; SizeToContent = SizeToContent.Height; MaxHeight = Math.Min(850, SystemParameters.WorkArea.Height - 60); WindowStartupLocation = WindowStartupLocation.CenterOwner;
