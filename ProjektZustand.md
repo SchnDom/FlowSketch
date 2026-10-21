@@ -2,6 +2,13 @@
 
 Stand: 20.10.2026. Neue Ausgabe **0.8.1**, `bin/0.8.1/FlowSketch.exe`. Der vom Nutzer gewählte Programmname ersetzt PID2Process; Projektdateien und frühere Versionsordner bleiben erhalten.
 
+## Aktueller Arbeitsstand – nächstes Level
+
+- Arbeitspaket 1 („Anforderungen und Austauschfälle festlegen“) begonnen. Der neue Arbeitsbogen `ToDo/Anforderungen-und-Austauschfaelle.md` hält den belegten Repository-Ist-Stand, vier vorläufige Austauschfälle, Erhebungsfragen, den Demo-/Prüfkorpusstatus und die fachlichen Grenzen fest.
+- Keine Anwenderinterviews, Zielsystemauswahl, Rechtebestätigung oder fachliche Abnahme behauptet: Dafür fehlen repräsentative Anwender und belastbare Angaben. Referenzpläne oder vertrauliche Anlagenunterlagen wurden nicht hinzugefügt.
+- Nächster Schritt: Anwender und fachliche Abnehmende benennen lassen, Austauschfälle priorisieren und Quell-/Zielsysteme, Feldverantwortung sowie Fehlerverhalten gemeinsam festlegen. Arbeitspaket 1 bleibt bis zur Abnahme offen.
+- Nur Dokumentation geändert; keine Anwendung, Projektdateien oder Referenz-PDFs geändert. Build, Tests und UI-Prüfung nicht ausgeführt.
+
 ## Aktueller Stand – 0.8.1
 
 - Bildschirm-Pipette nach Nutzerreferenz überarbeitet: kontrastreiches schwarz-weißes Fadenkreuz mit freiem Zentrum am Abtastpunkt. Kleine dunkle Vorschau daneben mit großer Farbfläche, ergänzendem Hexwert und Klick-/Esc-Hinweis. Die Farbfläche zeigt exakt den abgetasteten RGB-Wert; Aktualisierung bei Mausbewegung sowie über Timer. Pixel-Lupe entfernt. Vorschaufenster weicht am rechten/unteren Rand nach innen aus.

@@ -14,6 +14,8 @@ Die folgenden Arbeitspakete bauen darauf auf. Sie sind nach Abhängigkeit und Nu
 
 ## Arbeitspaket 1 – Anforderungen und Austauschfälle festlegen
 
+**Status: begonnen.** Eine belegte Ist-Aufnahme, ein Erhebungsbogen, vier vorläufige Austauschfälle und ein Prüfkorpus-/Rechteinventar stehen in [Anforderungen-und-Austauschfaelle.md](Anforderungen-und-Austauschfaelle.md). Anwenderpriorisierung, Systemangaben, Rechteklärung und fachliche Abnahme sind noch offen; die Abnahmekriterien sind daher nicht erfüllt.
+
 **Zweck:** Vor Norm- oder Importfunktionen klären, welche Anwender und Zielsysteme tatsächlich unterstützt werden sollen.
 
 **Aufgaben**
