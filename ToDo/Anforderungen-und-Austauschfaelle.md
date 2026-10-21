@@ -9,6 +9,7 @@
 - **Fachliche Abnahme:** primär durch den Anwender.
 - **Möglicher späterer Austausch:** TIA Portal ist denkbar, liegt aber ausdrücklich noch weit außerhalb des aktuellen Umsetzungsumfangs.
 - **Weitere Idee, noch kein Auftrag:** DXF-Import mit Erkennung von Rohren und Symbolen sowie automatischer Betriebsmittelerstellung. Voraussetzung ist eine Definition der Symboldaten aus dem CAD-Programm; dieses Austauschprofil und die Erkennung sind noch zu klären.
+- **Mögliche fachliche Erweiterungen, noch nicht priorisiert:** komplexe Regelungen als Dokumentation darstellen (2P, 3P, Totband, PID und Kaskade, jeweils einschließlich Parameter) sowie Alarme und ihre Anlagenwirkungen als Fehlerpfad je Szenario/Schritt beschreiben. Gewünschte Integrationen und konkrete Ausprägungen kann der Anwender derzeit noch nicht festlegen.
 - **Beispieldaten:** Die vorhandene FlowSketch-Demo ist eine Demo und bildet keine reale Anlage ab. Das bestätigt ihren Demo-Charakter, ersetzt aber keine gesonderte Klärung von Herkunft/Nutzungsrechten.
 
 ## Belegter Ist-Stand
@@ -29,6 +30,8 @@ Priorität und Abnahme sind nach dem Anwenderinput aktualisiert. Weitere Details
 | --- | --- | --- | --- |
 | 1 – Ablaufdokumentation | Szenarien, Schritte sowie geerbte und überschreibende Zustände sind vorhanden; zentrale Priorität. Keine automatische Ausführung. | Welche Ablaufangaben braucht der Anwender zum Verständnis und zur Pflege? Welche fachlichen Fälle müssen dokumentiert und abgenommen werden? | Anwender ist primär fachlich abnehmend. |
 | 1 – Aktoren-/Zustandsliste | Der XLSX-Export enthält bereits Szenario, Schritt, Aktor und Zustand. Gewünschte Kernaussage: welcher Aktor hat in welchem Szenario/Schritt welchen Zustand? | Reichen die vorhandenen Spalten und Zustandswerte? Welche Darstellung, Sortierung, Filterung oder zusätzliche Angaben sind für den Arbeitsalltag erforderlich? Wird die Datei weiterbearbeitet oder nur ausgegeben? | Anwender ist primär fachlich abnehmend. |
+| Potenziell später – Regelungsdokumentation | Gewünscht ist eine Darstellungs-/Dokumentationsmöglichkeit für 2P-, 3P-, Totband-, PID- und Kaskadenregelungen einschließlich Parametern. Noch nicht priorisiert oder spezifiziert. | Welche Daten/Parameter je Regelungsart, Einheiten, Signalbezüge und Ansichten werden benötigt? Wie sind Kaskaden und Szenario-/Schrittvarianten darzustellen? Nur dokumentieren/visualisieren; keine Regelung ausführen oder Prozessverhalten simulieren. | Anwender; fachliche Abnahmekriterien offen. |
+| Potenziell später – Alarm- und Fehlerpfaddokumentation | Alarme samt Auswirkungen auf die Anlage als Fehlerpfad je Szenario/Schritt beschreiben. Noch nicht spezifiziert. | Auslöser, betroffene Geräte, Zustandsänderungen, Verzweigungen, Priorität, Quittierung, Rückkehr in Normalbetrieb und Beziehungen zwischen Alarmen/Schritten klären. Gewünschte Darstellung und Exporte offen. | Anwender; fachliche Abnahmekriterien offen. |
 | Später, noch nicht priorisiert – DXF | Anwenderinteresse an Rohren-/Symbolerkennung und automatischer Betriebsmittelerstellung. | CAD-Programm und DXF-Variante, verfügbare Symboldaten/-definitionen, Erkennungsgrenzen, Fehlermeldungen und manuelle Bestätigung klären. Kein Implementierungsumfang festgelegt. | Anwender und CAD-Datenverantwortliche; Abnahmeverfahren offen. |
 | Fernes mögliches Ziel – TIA Portal | Als denkbares Zielsystem genannt, aber ausdrücklich noch weit entfernt. | Nutzen, Richtung, Austauschformat, Version und konkreter Umfang erst nach Bedarfserhebung bestimmen. Keine Integration zugesagt. | Zielsystemverantwortliche und Abnahme offen. |
 | Nicht als aktuelle Priorität bestätigt – PDF-Review | Referenz-PDF, getrennt gespeichertes Overlay, PDF-Hashprüfung und Offline-Review-Paket sind vorhanden. | Nur weiter verfolgen, falls zusätzlicher Bedarf über vorhandene Funktionen hinaus benannt wird. | Anwenderabnahme für Zusatzbedarf offen. |
@@ -62,9 +65,10 @@ FlowSketch bleibt ein Review- und Dokumentationswerkzeug mit unveränderter Refe
 
 - [ ] Konkrete Abnahmekriterien mit dem primär fachlich abnehmenden Anwender festlegen.
 - [ ] Ablaufdokumentation und Aktoren-/Zustandsliste mit dem Anwender konkretisieren: Zustandsbedeutung, erwartete Vollständigkeit, Ausgabeform und fachliche Abnahmekriterien.
+- [ ] Mögliche Regelungsdarstellung und Alarm-/Fehlerpfade zunächst anhand konkreter Beispiele und benötigter Parameter/Auswirkungen spezifizieren und priorisieren; keine Steuerungs- oder Simulationsfunktion daraus ableiten.
 - [ ] DXF-Idee nur bei weiterer Priorisierung mit CAD-Symboldaten, Dateivariante, Erkennungsgrenzen und notwendiger manueller Prüfung konkretisieren; TIA Portal bleibt ein fernes mögliches Ziel ohne zugesagte Integration.
 - [ ] Verhalten bei unbekannten oder nicht unterstützten Angaben sowie Datenverantwortung für tatsächlich priorisierte Fälle festhalten.
 - [ ] Herkunft und Nutzungsrechte des vorhandenen Demo-Prüfkorpus klären; geeignete nicht vertrauliche Referenzpläne/Austauschdaten sammeln oder ausdrücklich feststellen, dass keine aufgenommen werden.
 - [ ] Priorisierte Anwendungsfälle und geeignete Prüfdaten fachlich abnehmen.
 
-**Abhängigkeit:** Der Anwender hat die Richtung und primäre Abnahme benannt. Die fehlenden Detailanforderungen, Abnahmekriterien und gegebenenfalls CAD-/Zielsystemangaben können nicht aus dem Repository abgeleitet werden.
+**Abhängigkeit:** Der Anwender hat die Richtung und primäre Abnahme benannt. Die fehlenden Detailanforderungen und Abnahmekriterien für Aktorzustände, Regelungsdarstellung und Fehlerpfade sowie gegebenenfalls CAD-/Zielsystemangaben können nicht aus dem Repository abgeleitet werden.

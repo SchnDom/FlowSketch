@@ -14,7 +14,7 @@ Die folgenden Arbeitspakete bauen darauf auf. Sie sind nach Abhängigkeit und Nu
 
 ## Arbeitspaket 1 – Anforderungen und Austauschfälle festlegen
 
-**Status: begonnen.** Die Priorität Ablaufdokumentation und Aktoren-/Zustandsliste sowie der Anwender als primär fachlich Abnehmender sind bestätigt. Der Arbeitsbogen [Anforderungen-und-Austauschfaelle.md](Anforderungen-und-Austauschfaelle.md) hält die Richtung fest: Excel beantwortet, welcher Aktor in welchem Szenario/Schritt welchen Zustand hat. DXF-Erkennung mit CAD-Symboldaten ist eine spätere, noch offene Idee; TIA Portal ein fernes mögliches Ziel ohne zugesagte Integration. Details, Prüfdaten/Rechteklärung und fachliche Abnahmekriterien bleiben offen.
+**Status: begonnen.** Die Priorität Ablaufdokumentation und Aktoren-/Zustandsliste sowie der Anwender als primär fachlich Abnehmender sind bestätigt. Der Arbeitsbogen [Anforderungen-und-Austauschfaelle.md](Anforderungen-und-Austauschfaelle.md) hält die Richtung fest: Excel beantwortet, welcher Aktor in welchem Szenario/Schritt welchen Zustand hat. Parametrierte Regelungsdarstellungen und Alarm-/Fehlerpfade je Szenario/Schritt sind zusätzliche, noch nicht priorisierte Wünsche zur Dokumentation/Visualisierung – keine Steuerungs- oder Simulationsanforderung. DXF-Erkennung mit CAD-Symboldaten ist eine spätere, noch offene Idee; TIA Portal ein fernes mögliches Ziel ohne zugesagte Integration. Details, Prüfdaten/Rechteklärung und fachliche Abnahmekriterien bleiben offen.
 
 **Zweck:** Vor Norm- oder Importfunktionen klären, welche Anwender und Zielsysteme tatsächlich unterstützt werden sollen.
 
