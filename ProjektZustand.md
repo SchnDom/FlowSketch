@@ -8,7 +8,6 @@ Stand: 20.10.2026. Neue Ausgabe **0.8.1**, `bin/0.8.1/FlowSketch.exe`. Der vom N
 - DXF-Erkennung von Rohren/Symbolen und automatische Betriebsmittelerstellung als spätere Idee mit Abhängigkeit von definierten CAD-Symboldaten festgehalten; TIA Portal als mögliches, aber noch weit entferntes Ziel ohne zugesagte Integration. Vorhandene FlowSketch-Demo ist laut Anwender keine reale Anlage; Rechteklärung bleibt davon getrennt.
 - Nächster Schritt: Bedarf und Abnahmekriterien für Ablauf- und Aktorzustände konkretisieren und prüfen, ob der vorhandene Excel-Export dafür ausreicht. Keine Anwenderabnahme oder Integrationsentscheidung behauptet; Referenzpläne wurden nicht hinzugefügt.
 - Nur Dokumentation geändert; keine Anwendung, Projektdateien oder Referenz-PDFs geändert. Build, Tests und UI-Prüfung nicht ausgeführt.
-- Nur Dokumentation geändert; keine Anwendung, Projektdateien oder Referenz-PDFs geändert. Build, Tests und UI-Prüfung nicht ausgeführt.
 
 ## Aktueller Stand – 0.8.1
 
