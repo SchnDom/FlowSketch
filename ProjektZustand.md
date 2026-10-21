@@ -2,6 +2,14 @@
 
 Stand: 20.10.2026. Neue Ausgabe **0.8.1**, `bin/0.8.1/FlowSketch.exe`. Der vom Nutzer gewählte Programmname ersetzt PID2Process; Projektdateien und frühere Versionsordner bleiben erhalten.
 
+## Aktueller Arbeitsstand – nächstes Level
+
+- Arbeitspaket 1 („Anforderungen und Austauschfälle festlegen“) begonnen; Anwenderinput vom 21.10.2026 in `ToDo/Anforderungen-und-Austauschfaelle.md` übernommen. Priorität: Ablaufdokumentation und Aktoren-/Zustandsliste; der Excel-Export soll klar zeigen, welcher Aktor in welchem Szenario/Schritt welchen Zustand hat. Anwender ist primär fachlich abnehmend.
+- Ergänzender Anwenderinput: Als mögliche, noch nicht priorisierte Erweiterungen sind parametrierte Darstellungen für 2P-/3P-/Totband-/PID-/Kaskadenregelungen sowie Alarmwirkungen und Fehlerpfade je Szenario/Schritt festgehalten. Konkrete fachliche Details fehlen; gemeint ist Dokumentation/Visualisierung, keine ausgeführte Regelung oder Simulation.
+- DXF-Erkennung von Rohren/Symbolen und automatische Betriebsmittelerstellung als spätere Idee mit Abhängigkeit von definierten CAD-Symboldaten festgehalten; TIA Portal als mögliches, aber noch weit entferntes Ziel ohne zugesagte Integration. Vorhandene FlowSketch-Demo ist laut Anwender keine reale Anlage; Rechteklärung bleibt davon getrennt.
+- Nächster Schritt: Bedarf und Abnahmekriterien für Ablauf- und Aktorzustände konkretisieren und prüfen, ob der vorhandene Excel-Export dafür ausreicht. Regelungsdarstellung und Fehlerpfade anhand konkreter Beispiele spezifizieren und erst danach priorisieren. Keine Anwenderabnahme oder Integrationsentscheidung behauptet; Referenzpläne wurden nicht hinzugefügt.
+- Nur Dokumentation geändert; keine Anwendung, Projektdateien oder Referenz-PDFs geändert. Build, Tests und UI-Prüfung nicht ausgeführt.
+
 ## Aktueller Stand – 0.8.1
 
 - Bildschirm-Pipette nach Nutzerreferenz überarbeitet: kontrastreiches schwarz-weißes Fadenkreuz mit freiem Zentrum am Abtastpunkt. Kleine dunkle Vorschau daneben mit großer Farbfläche, ergänzendem Hexwert und Klick-/Esc-Hinweis. Die Farbfläche zeigt exakt den abgetasteten RGB-Wert; Aktualisierung bei Mausbewegung sowie über Timer. Pixel-Lupe entfernt. Vorschaufenster weicht am rechten/unteren Rand nach innen aus.
