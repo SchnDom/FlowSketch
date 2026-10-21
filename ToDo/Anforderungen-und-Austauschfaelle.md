@@ -1,7 +1,15 @@
 # Arbeitspaket 1 – Anforderungen und Austauschfälle
 
-**Status:** begonnen; Arbeitsstand, keine fachliche Abnahme.  
+**Status:** begonnen; Schwerpunkt und primäre Abnahme durch den Anwender bestätigt, Details und Abnahmekriterien noch offen.  
 **Ziel:** typische Aufgaben, Austauschziele, Verantwortlichkeiten und den Umgang mit nicht unterstützten Angaben mit repräsentativen Anwendern abstimmen, bevor Profile oder Importfunktionen festgelegt werden.
+
+## Anwenderinput vom 21.10.2026
+
+- **Priorität:** zuerst Ablaufdokumentation und Aktoren. Der zentrale Informationsbedarf des Excel-Exports lautet: **Welcher Aktor hat in welchem Szenario/Schritt welchen Zustand?**
+- **Fachliche Abnahme:** primär durch den Anwender.
+- **Möglicher späterer Austausch:** TIA Portal ist denkbar, liegt aber ausdrücklich noch weit außerhalb des aktuellen Umsetzungsumfangs.
+- **Weitere Idee, noch kein Auftrag:** DXF-Import mit Erkennung von Rohren und Symbolen sowie automatischer Betriebsmittelerstellung. Voraussetzung ist eine Definition der Symboldaten aus dem CAD-Programm; dieses Austauschprofil und die Erkennung sind noch zu klären.
+- **Beispieldaten:** Die vorhandene FlowSketch-Demo ist eine Demo und bildet keine reale Anlage ab. Das bestätigt ihren Demo-Charakter, ersetzt aber keine gesonderte Klärung von Herkunft/Nutzungsrechten.
 
 ## Belegter Ist-Stand
 
@@ -10,23 +18,24 @@ Diese Bestandsaufnahme beschreibt den Repository-Stand, nicht bestätigte Anwend
 - FlowSketch bearbeitet ein Overlay getrennt von der unveränderten Referenz-PDF. Eine Freigabe ist an die PDF-Prüfung gebunden und Engineering-Änderungen widerrufen sie.
 - Projekte enthalten unter anderem Geräte mit Tag, Funktion und Einbauort, Verbindungen, Medien, Szenarien und Schritte. Schrittwerte können Szenariowerte überschreiben; alte Schritte ohne Szenario bleiben unzugeordnet.
 - Der XLSX-Aktorenexport ist ein Einweg-Export mit den Spalten **Szenario**, **Schritt**, **Aktor** und **Zustand**. Er umfasst Aktoren je Szenario/Schritt, nicht das vollständige Projekt. Die konkrete Aktorauswahl ist dokumentiert; ein Projektimport ist nicht vorhanden.
-- Das Repository enthält eine Demo-Projektdatei, ihre PNG-Vorschau und eine erzeugte Aktorenliste. Die Demo ist laut Begleitdokumentation keine reale Anlagensteuerung und benötigt keine Referenz-PDF. Ein Nutzungsrechtsnachweis oder eine Referenz-PDF ist im Repository derzeit nicht dokumentiert.
+- Das Repository enthält eine Demo-Projektdatei, ihre PNG-Vorschau und eine erzeugte Aktorenliste. Anwenderbestätigung: Die Demo bildet keine reale Anlage ab. Sie benötigt keine Referenz-PDF. Ein gesonderter Nutzungsrechtsnachweis ist im Repository derzeit nicht dokumentiert.
 - FlowSketch ist keine SPS-/HMI-Steuerung, führt keine Szenarien automatisch aus und berechnet keine hydraulischen oder thermischen Größen.
 
-## Vorläufige Austauschfälle
+## Priorisierte Anwendungs- und Austauschfälle
 
-Die Fälle stammen aus der Roadmap und sind noch durch Anwender zu priorisieren. Unbekannte Systeme oder Abläufe sind ausdrücklich offen.
+Priorität und Abnahme sind nach dem Anwenderinput aktualisiert. Weitere Details, Abnahmekriterien und nicht genannte Systeme bleiben offen.
 
-| Fall | Belegter Ausgangspunkt | Mit Anwendern zu klären | Verantwortlichkeit / Abnahme |
+| Rang / Fall | Ausgangspunkt und bestätigter Bedarf | Noch konkretisieren | Verantwortlichkeit / Abnahme |
 | --- | --- | --- | --- |
-| PDF-Review | Referenz-PDF, getrennt gespeichertes Overlay, PDF-Hashprüfung und Offline-Review-Paket sind vorhanden. | Wer erstellt, prüft und verteilt ein Review? Welche Identität, Szenario-/Schrittansicht und Prüfhinweise müssen mitgegeben werden? Welche Fehler (z. B. falscher Planstand) sind kritisch? | Planverantwortliche und Reviewer benennen; fachliche Abnahme offen. |
-| Ablaufdokumentation | Szenarien, Schritte sowie geerbte und überschreibende Zustände sind vorhanden; keine automatische Ausführung. | Wer pflegt Abläufe? Welche Voraussetzungen, Aktionen und Übergänge müssen dokumentiert werden? Wie wird die dargestellte Auswahl im Review verwendet? | Prozess-/Ablaufverantwortliche benennen; fachliche Abnahme offen. |
-| Aktorenliste pflegen | XLSX-Ausgabe mit Szenario, Schritt, Aktor und Zustand ist vorhanden; kein Tabellenimport. | Ist die Liste nur Ausgabe oder wird sie außerhalb FlowSketch weiterbearbeitet? Welche Felder, Änderungswege, Kennungen und Aktualisierungsregeln sind erforderlich? | Listenverantwortliche und führendes System benennen; fachliche Abnahme offen. |
-| Übergabe an ein Engineering-System | Ein Zielsystem oder Austauschformat ist im Repository nicht festgelegt. | Quell- und Zielsystem samt Version, Austauschformat, Umfang, Richtung, Häufigkeit, benötigte Felder und führende Datenquelle erheben. | Zielsystemverantwortliche und fachlich abnehmende Person benennen; offen. |
+| 1 – Ablaufdokumentation | Szenarien, Schritte sowie geerbte und überschreibende Zustände sind vorhanden; zentrale Priorität. Keine automatische Ausführung. | Welche Ablaufangaben braucht der Anwender zum Verständnis und zur Pflege? Welche fachlichen Fälle müssen dokumentiert und abgenommen werden? | Anwender ist primär fachlich abnehmend. |
+| 1 – Aktoren-/Zustandsliste | Der XLSX-Export enthält bereits Szenario, Schritt, Aktor und Zustand. Gewünschte Kernaussage: welcher Aktor hat in welchem Szenario/Schritt welchen Zustand? | Reichen die vorhandenen Spalten und Zustandswerte? Welche Darstellung, Sortierung, Filterung oder zusätzliche Angaben sind für den Arbeitsalltag erforderlich? Wird die Datei weiterbearbeitet oder nur ausgegeben? | Anwender ist primär fachlich abnehmend. |
+| Später, noch nicht priorisiert – DXF | Anwenderinteresse an Rohren-/Symbolerkennung und automatischer Betriebsmittelerstellung. | CAD-Programm und DXF-Variante, verfügbare Symboldaten/-definitionen, Erkennungsgrenzen, Fehlermeldungen und manuelle Bestätigung klären. Kein Implementierungsumfang festgelegt. | Anwender und CAD-Datenverantwortliche; Abnahmeverfahren offen. |
+| Fernes mögliches Ziel – TIA Portal | Als denkbares Zielsystem genannt, aber ausdrücklich noch weit entfernt. | Nutzen, Richtung, Austauschformat, Version und konkreter Umfang erst nach Bedarfserhebung bestimmen. Keine Integration zugesagt. | Zielsystemverantwortliche und Abnahme offen. |
+| Nicht als aktuelle Priorität bestätigt – PDF-Review | Referenz-PDF, getrennt gespeichertes Overlay, PDF-Hashprüfung und Offline-Review-Paket sind vorhanden. | Nur weiter verfolgen, falls zusätzlicher Bedarf über vorhandene Funktionen hinaus benannt wird. | Anwenderabnahme für Zusatzbedarf offen. |
 
 ## Erhebungsbogen je Austauschfall
 
-Für jeden priorisierten Fall gemeinsam mit repräsentativen Anwendern ausfüllen:
+Für Ablaufdokumentation und Aktoren-/Zustandsliste zuerst gemeinsam mit dem Anwender konkretisieren; für spätere Integrationen die technischen Verantwortlichen hinzuziehen:
 
 1. Aufgabe, Auslöser, Häufigkeit und beteiligte Rollen; heute verwendete Werkzeuge und typische Fehlerfälle.
 2. Quell- und Zielsystem einschließlich Version, Datenverantwortung und führender Quelle je Feld.
@@ -34,6 +43,8 @@ Für jeden priorisierten Fall gemeinsam mit repräsentativen Anwendern ausfülle
 4. Gewünschtes Ergebnis, Austauschformat, Richtung, Umfang und Zeitpunkt; akzeptable manuelle Arbeitsschritte.
 5. Verhalten bei unbekannten, ungültigen oder nicht unterstützten Feldern. Entscheidung je Fall: sichtbar melden, Import/Austausch anhalten, mit Bestätigung fortsetzen oder verlustfrei erhalten, sofern das Format dies erlaubt. Keine stille Verwerfung.
 6. Kritikalität, erwartbare Fehler und konkretes Abnahmekriterium; verantwortliche fachliche Abnahme.
+
+Für den Excel-Schwerpunkt insbesondere klären, ob der vorhandene Export den benötigten Anlagenzustand verständlich und vollständig wiedergibt und woran der Anwender eine fachlich richtige Ausgabe erkennt.
 
 ## Prüfkorpus und Rechte
 
@@ -49,10 +60,11 @@ FlowSketch bleibt ein Review- und Dokumentationswerkzeug mit unveränderter Refe
 
 ## Offene Punkte / Abnahme
 
-- [ ] Repräsentative Anwender und fachliche Abnehmende für die vier Austauschfälle benennen.
-- [ ] Aufgaben, Prioritäten, Fehlerfälle und Akzeptanzkriterien mit ihnen erheben.
-- [ ] Quell-/Zielsysteme, Feldumfang, Verantwortlichkeit und Verhalten bei nicht unterstützten Feldern je priorisiertem Fall festhalten.
+- [ ] Konkrete Abnahmekriterien mit dem primär fachlich abnehmenden Anwender festlegen.
+- [ ] Ablaufdokumentation und Aktoren-/Zustandsliste mit dem Anwender konkretisieren: Zustandsbedeutung, erwartete Vollständigkeit, Ausgabeform und fachliche Abnahmekriterien.
+- [ ] DXF-Idee nur bei weiterer Priorisierung mit CAD-Symboldaten, Dateivariante, Erkennungsgrenzen und notwendiger manueller Prüfung konkretisieren; TIA Portal bleibt ein fernes mögliches Ziel ohne zugesagte Integration.
+- [ ] Verhalten bei unbekannten oder nicht unterstützten Angaben sowie Datenverantwortung für tatsächlich priorisierte Fälle festhalten.
 - [ ] Herkunft und Nutzungsrechte des vorhandenen Demo-Prüfkorpus klären; geeignete nicht vertrauliche Referenzpläne/Austauschdaten sammeln oder ausdrücklich feststellen, dass keine aufgenommen werden.
-- [ ] Priorisierte Anwendungsfälle und gepflegten Prüfkorpus fachlich abnehmen.
+- [ ] Priorisierte Anwendungsfälle und geeignete Prüfdaten fachlich abnehmen.
 
-**Abhängigkeit:** Diese Punkte benötigen Angaben und Abnahme durch repräsentative Anwender. Der vorliegende Arbeitsstand ersetzt keine Interviews und trifft keine Entscheidung für ein Engineering-Zielsystem.
+**Abhängigkeit:** Der Anwender hat die Richtung und primäre Abnahme benannt. Die fehlenden Detailanforderungen, Abnahmekriterien und gegebenenfalls CAD-/Zielsystemangaben können nicht aus dem Repository abgeleitet werden.

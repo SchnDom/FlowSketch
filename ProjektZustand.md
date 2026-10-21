@@ -4,9 +4,10 @@ Stand: 20.10.2026. Neue Ausgabe **0.8.1**, `bin/0.8.1/FlowSketch.exe`. Der vom N
 
 ## Aktueller Arbeitsstand – nächstes Level
 
-- Arbeitspaket 1 („Anforderungen und Austauschfälle festlegen“) begonnen. Der neue Arbeitsbogen `ToDo/Anforderungen-und-Austauschfaelle.md` hält den belegten Repository-Ist-Stand, vier vorläufige Austauschfälle, Erhebungsfragen, den Demo-/Prüfkorpusstatus und die fachlichen Grenzen fest.
-- Keine Anwenderinterviews, Zielsystemauswahl, Rechtebestätigung oder fachliche Abnahme behauptet: Dafür fehlen repräsentative Anwender und belastbare Angaben. Referenzpläne oder vertrauliche Anlagenunterlagen wurden nicht hinzugefügt.
-- Nächster Schritt: Anwender und fachliche Abnehmende benennen lassen, Austauschfälle priorisieren und Quell-/Zielsysteme, Feldverantwortung sowie Fehlerverhalten gemeinsam festlegen. Arbeitspaket 1 bleibt bis zur Abnahme offen.
+- Arbeitspaket 1 („Anforderungen und Austauschfälle festlegen“) begonnen; Anwenderinput vom 21.10.2026 in `ToDo/Anforderungen-und-Austauschfaelle.md` übernommen. Priorität: Ablaufdokumentation und Aktoren-/Zustandsliste; der Excel-Export soll klar zeigen, welcher Aktor in welchem Szenario/Schritt welchen Zustand hat. Anwender ist primär fachlich abnehmend.
+- DXF-Erkennung von Rohren/Symbolen und automatische Betriebsmittelerstellung als spätere Idee mit Abhängigkeit von definierten CAD-Symboldaten festgehalten; TIA Portal als mögliches, aber noch weit entferntes Ziel ohne zugesagte Integration. Vorhandene FlowSketch-Demo ist laut Anwender keine reale Anlage; Rechteklärung bleibt davon getrennt.
+- Nächster Schritt: Bedarf und Abnahmekriterien für Ablauf- und Aktorzustände konkretisieren und prüfen, ob der vorhandene Excel-Export dafür ausreicht. Keine Anwenderabnahme oder Integrationsentscheidung behauptet; Referenzpläne wurden nicht hinzugefügt.
+- Nur Dokumentation geändert; keine Anwendung, Projektdateien oder Referenz-PDFs geändert. Build, Tests und UI-Prüfung nicht ausgeführt.
 - Nur Dokumentation geändert; keine Anwendung, Projektdateien oder Referenz-PDFs geändert. Build, Tests und UI-Prüfung nicht ausgeführt.
 
 ## Aktueller Stand – 0.8.1

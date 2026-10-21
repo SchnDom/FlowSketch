@@ -14,12 +14,12 @@ Die folgenden Arbeitspakete bauen darauf auf. Sie sind nach Abhängigkeit und Nu
 
 ## Arbeitspaket 1 – Anforderungen und Austauschfälle festlegen
 
-**Status: begonnen.** Eine belegte Ist-Aufnahme, ein Erhebungsbogen, vier vorläufige Austauschfälle und ein Prüfkorpus-/Rechteinventar stehen in [Anforderungen-und-Austauschfaelle.md](Anforderungen-und-Austauschfaelle.md). Anwenderpriorisierung, Systemangaben, Rechteklärung und fachliche Abnahme sind noch offen; die Abnahmekriterien sind daher nicht erfüllt.
+**Status: begonnen.** Die Priorität Ablaufdokumentation und Aktoren-/Zustandsliste sowie der Anwender als primär fachlich Abnehmender sind bestätigt. Der Arbeitsbogen [Anforderungen-und-Austauschfaelle.md](Anforderungen-und-Austauschfaelle.md) hält die Richtung fest: Excel beantwortet, welcher Aktor in welchem Szenario/Schritt welchen Zustand hat. DXF-Erkennung mit CAD-Symboldaten ist eine spätere, noch offene Idee; TIA Portal ein fernes mögliches Ziel ohne zugesagte Integration. Details, Prüfdaten/Rechteklärung und fachliche Abnahmekriterien bleiben offen.
 
 **Zweck:** Vor Norm- oder Importfunktionen klären, welche Anwender und Zielsysteme tatsächlich unterstützt werden sollen.
 
 **Aufgaben**
-- Mit repräsentativen Anwendern typische Aufgaben und Fehlerfälle erfassen: PDF-Review, Ablaufdokumentation, Pflege einer Aktorenliste und Übergabe an ein Engineering-System.
+- Zuerst Ablaufdokumentation und Pflege der Aktoren-/Zustandsliste mit dem Anwender konkretisieren; weitere Fälle nur nach bestätigter Priorität vertiefen.
 - Beispieldaten und Referenzpläne mit geklärten Nutzungsrechten sammeln; vertrauliche Anlagenunterlagen nicht ungeprüft ins Repository übernehmen.
 - Für jeden Austauschfall Quell-/Zielsystem, benötigte Daten, Verantwortlichkeit und gewünschtes Verhalten bei nicht unterstützten Feldern definieren.
 - Eine verbindliche Abgrenzung dokumentieren: keine Anlagensteuerung, keine Simulation, keine automatische Freigabe fachlicher Inhalte.
