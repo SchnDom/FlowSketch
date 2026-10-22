@@ -16,7 +16,7 @@
 
 - **Excel-Aktorenliste:** Neben Szenario, Schritt, Aktor und Zustand sollen Funktion, Einbauort und Beschreibung ausgegeben werden. Funktion, Einbauort und Beschreibung werden in jeder Szenario-/Schrittzeile des Aktors wiederholt.
 - **Prozessbeschreibung:** Die Excel-Ausgabe soll die textuelle Ablaufbeschreibung ergänzen oder teilweise ersetzen. Zusätzlich sind Szenario-Beschreibung, Schrittbeschreibung und Textfelder mit ihrem dynamischen Inhalt zu exportieren, wenn diese als lokale Beschreibung am Plan eingefügt sind. Die Szenario-Beschreibung gilt für alle Schritte und soll daher einmal oberhalb der jeweiligen Schritte erscheinen, nicht in jeder Tabellenzeile.
-- **Dynamische Textfelder:** Der Text kann sich je Schritt ändern. Exportiert wird der im jeweiligen Schritt eingetragene Text; je Textfeld erhält die Excel-Ausgabe eine zusätzliche Spalte mit dem Namen dieses Textfelds.
+- **Dynamische Textfelder:** Der Text kann sich je Schritt ändern. Exportiert wird der im jeweiligen Schritt eingetragene Text; je Textfeld erhält die Excel-Ausgabe eine zusätzliche Spalte mit dem Namen dieses Textfelds. Ist kein Text eingetragen, soll anstelle einer Vererbung „n/a“ oder „-“ erscheinen; welcher der beiden Marker verbindlich ist, bleibt noch offen.
 - **Unterscheidbarkeit:** Tag und Einbauort helfen, Betriebsmittel zu unterscheiden, etwa Motoren mit gleichem Tag an verschiedenen Orten.
 - **Tag-Prüfung:** Die bestehende Prüfung auf eindeutige Tags bleibt vorerst unverändert. Eine spätere Änderung ist lediglich eine Möglichkeit und keine aktuelle Anforderung.
 
@@ -55,7 +55,7 @@ Für Ablaufdokumentation und Aktoren-/Zustandsliste zuerst gemeinsam mit dem Anw
 5. Verhalten bei unbekannten, ungültigen oder nicht unterstützten Feldern. Entscheidung je Fall: sichtbar melden, Import/Austausch anhalten, mit Bestätigung fortsetzen oder verlustfrei erhalten, sofern das Format dies erlaubt. Keine stille Verwerfung.
 6. Kritikalität, erwartbare Fehler und konkretes Abnahmekriterium; verantwortliche fachliche Abnahme.
 
-Für den Excel-Schwerpunkt insbesondere klären, ob der vorhandene Export den benötigten Anlagenzustand und die Prozessbeschreibung verständlich und vollständig wiedergibt und woran der Anwender eine fachlich richtige Ausgabe erkennt. Das konkrete Tabellenlayout für Schrittbeschreibungen ist noch abzustimmen; dynamische Textfelder erhalten je eine Spalte mit ihrem Feldnamen und dem im jeweiligen Schritt eingetragenen Text.
+Für den Excel-Schwerpunkt insbesondere klären, ob der vorhandene Export den benötigten Anlagenzustand und die Prozessbeschreibung verständlich und vollständig wiedergibt und woran der Anwender eine fachlich richtige Ausgabe erkennt. Das konkrete Tabellenlayout für Schrittbeschreibungen ist noch abzustimmen; dynamische Textfelder erhalten je eine Spalte mit ihrem Feldnamen und dem im jeweiligen Schritt eingetragenen Text. Für nicht gesetzte Texte ist „n/a“ oder „-“ vorgesehen; der eindeutige Standardmarker ist noch zu bestätigen.
 
 ## Prüfkorpus und Rechte
 
