@@ -15,6 +15,7 @@
 ## Anwenderinput vom 22.10.2026
 
 - **Excel-Aktorenliste:** Neben Szenario, Schritt, Aktor und Zustand sollen Funktion, Einbauort und Beschreibung ausgegeben werden. Funktion, Einbauort und Beschreibung werden in jeder Szenario-/Schrittzeile des Aktors wiederholt.
+- **Prozessbeschreibung:** Die Excel-Ausgabe soll die textuelle Ablaufbeschreibung ergänzen oder teilweise ersetzen. Zusätzlich sind Szenario-Beschreibung, Schrittbeschreibung und Textfelder mit ihrem dynamischen Inhalt zu exportieren, wenn diese als lokale Beschreibung am Plan eingefügt sind. Die Szenario-Beschreibung gilt für alle Schritte und soll daher einmal oberhalb der jeweiligen Schritte erscheinen, nicht in jeder Tabellenzeile.
 - **Unterscheidbarkeit:** Tag und Einbauort helfen, Betriebsmittel zu unterscheiden, etwa Motoren mit gleichem Tag an verschiedenen Orten.
 - **Tag-Prüfung:** Die bestehende Prüfung auf eindeutige Tags bleibt vorerst unverändert. Eine spätere Änderung ist lediglich eine Möglichkeit und keine aktuelle Anforderung.
 
@@ -53,7 +54,7 @@ Für Ablaufdokumentation und Aktoren-/Zustandsliste zuerst gemeinsam mit dem Anw
 5. Verhalten bei unbekannten, ungültigen oder nicht unterstützten Feldern. Entscheidung je Fall: sichtbar melden, Import/Austausch anhalten, mit Bestätigung fortsetzen oder verlustfrei erhalten, sofern das Format dies erlaubt. Keine stille Verwerfung.
 6. Kritikalität, erwartbare Fehler und konkretes Abnahmekriterium; verantwortliche fachliche Abnahme.
 
-Für den Excel-Schwerpunkt insbesondere klären, ob der vorhandene Export den benötigten Anlagenzustand verständlich und vollständig wiedergibt und woran der Anwender eine fachlich richtige Ausgabe erkennt.
+Für den Excel-Schwerpunkt insbesondere klären, ob der vorhandene Export den benötigten Anlagenzustand und die Prozessbeschreibung verständlich und vollständig wiedergibt und woran der Anwender eine fachlich richtige Ausgabe erkennt. Das konkrete Tabellenlayout für Schrittbeschreibungen und dynamische Textfelder ist noch abzustimmen.
 
 ## Prüfkorpus und Rechte
 
