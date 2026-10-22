@@ -12,6 +12,12 @@
 - **Mögliche fachliche Erweiterungen, noch nicht priorisiert:** komplexe Regelungen als Dokumentation darstellen (2P, 3P, Totband, PID und Kaskade, jeweils einschließlich Parameter) sowie Alarme und ihre Anlagenwirkungen als Fehlerpfad je Szenario/Schritt beschreiben. Gewünschte Integrationen und konkrete Ausprägungen kann der Anwender derzeit noch nicht festlegen.
 - **Beispieldaten:** Die vorhandene FlowSketch-Demo ist eine Demo und bildet keine reale Anlage ab. Das bestätigt ihren Demo-Charakter, ersetzt aber keine gesonderte Klärung von Herkunft/Nutzungsrechten.
 
+## Anwenderinput vom 22.10.2026
+
+- **Excel-Aktorenliste:** Neben Szenario, Schritt, Aktor und Zustand sollen Funktion, Einbauort und Beschreibung ausgegeben werden. Funktion, Einbauort und Beschreibung werden in jeder Szenario-/Schrittzeile des Aktors wiederholt.
+- **Unterscheidbarkeit:** Tag und Einbauort helfen, Betriebsmittel zu unterscheiden, etwa Motoren mit gleichem Tag an verschiedenen Orten.
+- **Tag-Prüfung:** Die bestehende Prüfung auf eindeutige Tags bleibt vorerst unverändert. Eine spätere Änderung ist lediglich eine Möglichkeit und keine aktuelle Anforderung.
+
 ## Belegter Ist-Stand
 
 Diese Bestandsaufnahme beschreibt den Repository-Stand, nicht bestätigte Anwenderanforderungen:
