@@ -9,12 +9,33 @@ public sealed class PdfRasterizer
     private PdfDocument? _document;
     private readonly SemaphoreSlim _renderLock = new(1,1);
     public int PageCount => (int)(_document?.PageCount ?? 0);
+    internal (double Width,double Height) SizePoints(int index)
+    {
+        if(_document is null)throw new InvalidOperationException("Keine PDF geöffnet.");
+        using var page=_document.GetPage((uint)index);return(page.Size.Width*.75,page.Size.Height*.75);
+    }
     public double AspectRatio(int index)
     {
         if (_document is null) return .708;
         using var page = _document.GetPage((uint)index); return page.Size.Height / page.Size.Width;
     }
     public async Task OpenAsync(string path) => _document = await PdfDocument.LoadFromFileAsync(await StorageFile.GetFileFromPathAsync(Path.GetFullPath(path)));
+    internal async Task<BitmapSource> RenderFragmentAsync(PdfFragment fragment,int requestedWidth)
+    {
+        if(_document is null)throw new InvalidOperationException("Keine PDF geöffnet.");
+        await _renderLock.WaitAsync();
+        try
+        {
+            using var page=_document.GetPage((uint)(fragment.Page-1));
+            var aspect=page.Size.Height*fragment.CropHeight/(page.Size.Width*fragment.CropWidth);
+            var width=(uint)Math.Clamp(requestedWidth,64,Math.Min(12000,(int)Math.Sqrt(48_000_000/aspect)));
+            using var stream=new InMemoryRandomAccessStream();
+            await page.RenderToStreamAsync(stream,new PdfPageRenderOptions{SourceRect=new Windows.Foundation.Rect(fragment.CropX*page.Size.Width,fragment.CropY*page.Size.Height,fragment.CropWidth*page.Size.Width,fragment.CropHeight*page.Size.Height),DestinationWidth=width,DestinationHeight=(uint)Math.Max(1,Math.Round(width*aspect))});
+            stream.Seek(0);using var reader=new DataReader(stream.GetInputStreamAt(0));await reader.LoadAsync((uint)stream.Size);var bytes=new byte[(int)stream.Size];reader.ReadBytes(bytes);
+            using var memory=new MemoryStream(bytes);var image=BitmapFrame.Create(memory,BitmapCreateOptions.None,BitmapCacheOption.OnLoad);image.Freeze();return image;
+        }
+        finally{_renderLock.Release();}
+    }
     public async Task<BitmapSource> RenderAsync(int index, int requestedWidth = 2000)
     {
         if (_document is null) throw new InvalidOperationException("Keine PDF geöffnet.");

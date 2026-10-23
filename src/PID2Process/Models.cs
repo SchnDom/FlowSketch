@@ -4,8 +4,10 @@ namespace PID2Process;
 
 public sealed class EngineeringProject
 {
-    public string FormatVersion { get; set; } = "2.1";
+    public string FormatVersion { get; set; } = "2.2";
+    public PdfComposition? Composition {get;set;}
     public string Name { get; set; } = "Neues FlowSketch-Projekt";
+    public int ReferenceNumber {get;set;}
     public PdfReference Pdf { get; set; } = new();
     public BlankSheet? BlankSheet {get;set;}
     public List<MediumDefinition> Media {get;set;}=[];
@@ -50,6 +52,11 @@ public sealed class EquipmentItem
 {
     public Guid Id { get; set; } = Guid.NewGuid();
     public string Tag { get; set; } = "";
+    public bool ShowTag {get;set;}=true;
+    public double TagOffsetX {get;set;}
+    public double TagOffsetY {get;set;}
+    public bool BackgroundTransparent {get;set;}
+    public bool LinesTransparent {get;set;}
     public EquipmentType Type { get; set; } = EquipmentType.Generic;
     public string Description { get; set; } = "";
     public int Page { get; set; } = 1;
@@ -83,6 +90,7 @@ public sealed class EquipmentItem
     public string MediaName {get;set;} = "";
     public MediumType MediumType {get;set;} = MediumType.Liquid;
     public string TextContent {get;set;} = "Text";
+    public string ReferenceId {get;set;} = "";
     public Guid? GroupId {get;set;}
     public double? TemperatureCelsius {get;set;}
     public double? PressureBar {get;set;}

@@ -49,6 +49,9 @@ internal static class PipeNetwork
         string Device(Guid id,string port)=>"d:"+id+":"+port;
         string Node(Guid id,double t)=>"p:"+id+":"+t.ToString("R",System.Globalization.CultureInfo.InvariantCulture);
         void Add(string a,string b,bool directed=false,Guid? pipe=null,double start=0,double end=0,Guid? conveyor=null,Guid? heat=null,bool primary=false,Guid? check=null){var i=edges.Count;edges.Add(new(a,b,pipe,start,end,conveyor,heat,primary,check));if(!links.ContainsKey(a))links[a]=[];links[a].Add(i);if(!directed){if(!links.ContainsKey(b))links[b]=[];links[b].Add(i);}}
+        // A shared hub avoids pairwise edges and permits any number of peers across pages.
+        foreach(var item in p.Equipment.Where(x=>x.Variant=="Querverweis"&&!string.IsNullOrWhiteSpace(x.ReferenceId)))
+            foreach(var port in Ports(item))Add(Device(item.Id,port),"reference:"+item.ReferenceId.Trim());
         var points=p.Pipes.ToDictionary(x=>x.Id,x=>Resolve(p,x));var cuts=p.Pipes.ToDictionary(x=>x.Id,x=>new SortedSet<double>{0,points[x.Id].Count-1});
         double Position(PipeConnection c,Guid parent)=>Math.Clamp(c.Segment,0,points[parent].Count-2)+Math.Clamp(c.Fraction,0,1);
         foreach(var pipe in p.Pipes)foreach(var c in new[]{pipe.StartConnection,pipe.EndConnection})if(c?.NeedsReview!=true&&c?.PipeId is Guid parent&&p.Pipes.Any(x=>x.Id==parent&&x.Page==pipe.Page))cuts[parent].Add(Position(c,parent));
@@ -58,6 +61,7 @@ internal static class PipeNetwork
         }
         foreach(var pipe in p.Pipes)foreach(var c in new[]{pipe.StartConnection,pipe.EndConnection})if(c?.NeedsReview!=true&&c?.PipeId is Guid parent&&p.Pipes.Any(x=>x.Id==parent&&x.Page==pipe.Page))targets.Remove(Node(parent,Position(c,parent)));
         foreach(var x in p.Equipment){var ports=Ports(x);var state=SymbolCatalog.State(x,v);
+            if(x.Variant=="Querverweis"&&!string.IsNullOrWhiteSpace(x.ReferenceId))continue; // The shared hub already joins all ports.
             void Pair(string a,string b,bool directed=false,Guid? conveyor=null,bool? primary=null){if(ports.Contains(a)&&ports.Contains(b))Add(Device(x.Id,a),Device(x.Id,b),directed,conveyor:conveyor,heat:primary.HasValue?x.Id:null,primary:primary??false,check:SymbolCatalog.CheckValve(x)?x.Id:null);}
             if(x.Type==EquipmentType.Vessel){foreach(var port in ports)targets[Device(x.Id,port)]=x.Id;foreach(var port in ports.Skip(1))Pair(ports[0],port);continue;}if(x.Type is EquipmentType.MediaSource or EquipmentType.Text)continue;
             if(x.Type==EquipmentType.HeatExchanger){Pair("PrimaryIn","PrimaryOut",primary:true);Pair("SecondaryIn","SecondaryOut",primary:false);continue;}

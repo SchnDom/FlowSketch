@@ -20,8 +20,8 @@ public class EditorDialog : Window
     internal SourceMediaFields? SourceMedia {get;set;}
     public EditorDialog(Window? owner, string title)
     {
-        DialogTheme.Apply(this);_device=title.StartsWith("Gerätedaten",StringComparison.Ordinal);if(owner?.IsVisible==true)Owner = owner; Title = title; Width = _device?740:570; SizeToContent = SizeToContent.Height; MaxHeight = Math.Min(850, SystemParameters.WorkArea.Height - 60); WindowStartupLocation = WindowStartupLocation.CenterOwner;
-        if(_device)foreach(var name in new[]{"Kennzeichnung","Objekteigenschaften","Farben und Größen"}){var grid=new Grid();grid.ColumnDefinitions.Add(new());grid.ColumnDefinitions.Add(new());var group=DialogTheme.Group(name,grid);_groups.Add(name,(group,grid));_fields.Children.Add(group);}
+        DialogTheme.Apply(this);_device=title.StartsWith("Gerätedaten",StringComparison.Ordinal);if(owner?.IsVisible==true)Owner = owner; Title = title; Width = _device?650:570; SizeToContent = SizeToContent.Height; MaxHeight = Math.Min(850, SystemParameters.WorkArea.Height - 60); WindowStartupLocation = WindowStartupLocation.CenterOwner;
+        if(_device)foreach(var name in new[]{"Kennzeichnung","Objekteigenschaften","Farben","Größe"}){var grid=new Grid();grid.ColumnDefinitions.Add(new());grid.ColumnDefinitions.Add(new());var group=DialogTheme.Group(name,grid);_groups.Add(name,(group,grid));_fields.Children.Add(group);}
         var root = new DockPanel{Background=PageVisual.Color("#20262E")}; var buttons = new StackPanel { Orientation = Orientation.Horizontal, HorizontalAlignment = HorizontalAlignment.Right };
         var ok = new Button { Content = "Übernehmen", IsDefault = true }; ok.Click += (_, _) => {var error=Validation?.Invoke();if(error is not null){MessageBox.Show(this,error,"Eingaben prüfen");return;} DialogResult = true; };
         var cancel = new Button { Content = "Abbrechen", IsCancel = true }; buttons.Children.Add(ok); buttons.Children.Add(cancel);
@@ -43,15 +43,25 @@ public class EditorDialog : Window
     private void Add(string label, FrameworkElement control,bool custom=false)
     {
         var row=new StackPanel{Tag=label,Margin=new Thickness(4,4,4,6)};var heading=new TextBlock{Text=label,FontWeight=FontWeights.SemiBold,Foreground=PageVisual.Color("#BFD0E2"),Margin=new Thickness(0,0,0,4)};
-        if(control is CheckBox toggle)toggle.Content=label;else if(!custom)row.Children.Add(heading);row.Children.Add(control);_rows.Add(label,row);_labels.Add(label,heading);control.Tag=label;_controls.Add(label,control);
+        if(_device&&control is not CheckBox&&!custom){var fields=new Grid();fields.ColumnDefinitions.Add(new(){Width=new GridLength(205)});fields.ColumnDefinitions.Add(new());heading.VerticalAlignment=VerticalAlignment.Center;heading.TextWrapping=TextWrapping.Wrap;fields.Children.Add(heading);Grid.SetColumn(control,1);fields.Children.Add(control);row.Children.Add(fields);}else{if(control is CheckBox toggle)toggle.Content=label;else if(!custom)row.Children.Add(heading);row.Children.Add(control);}_rows.Add(label,row);_labels.Add(label,heading);control.Tag=label;_controls.Add(label,control);
         System.Windows.Automation.AutomationProperties.SetLabeledBy(control,heading);
         if(!_device){_fields.Children.Add(row);return;}
-        var key=label is "Tag" or "Beschreibung" or "Funktion" or "Einbauort (+)"?"Kennzeichnung":new[]{"Farbe","Hintergrundfarbe","Deckkraft","Breite","Höhe"}.Any(label.StartsWith)?"Farben und Größen":"Objekteigenschaften";
+        var key=label is "Tag" or "Beschreibung" or "Funktion" or "Einbauort (+)"?"Kennzeichnung":new[]{"Breite","Höhe"}.Any(label.StartsWith)?"Größe":new[]{"Farbe","Hintergrundfarbe","Deckkraft","Transparent"}.Any(label.StartsWith)?"Farben":"Objekteigenschaften";
         _groups[key].Box.Visibility=Visibility.Visible;var grid=_groups[key].Grid;var wide=custom||control is TextBox{AcceptsReturn:true};var column=0;var index=grid.Children.Count==0?0:grid.Children.Cast<UIElement>().Max(Grid.GetRow);
-        if(grid.Children.Count>0){var previous=(FrameworkElement)grid.Children[^1];if(wide||Grid.GetColumnSpan(previous)==2||Grid.GetColumn(previous)==1)index++;else column=1;}
+        wide=true;if(grid.Children.Count>0){var previous=(FrameworkElement)grid.Children[^1];if(wide||Grid.GetColumnSpan(previous)==2||Grid.GetColumn(previous)==1)index++;else column=1;}
         while(grid.RowDefinitions.Count<=index)grid.RowDefinitions.Add(new(){Height=GridLength.Auto});Grid.SetRow(row,index);Grid.SetColumn(row,column);if(wide)Grid.SetColumnSpan(row,2);grid.Children.Add(row);ReflowGroups();
     }
     public string Value(string label) => _controls[label] switch { TextBox t => t.Text.Trim(), ComboBox c => (c.IsEditable?c.Text:c.SelectedItem?.ToString()??"").Trim(), ColorPicker c=>c.Value, _ => "" };
+    internal void ActionBeside(string label,string caption,Action action)
+    {
+        var control=Control(label);if(control.Parent is not Panel parent)return;var index=parent.Children.IndexOf(control);var column=Grid.GetColumn(control);parent.Children.Remove(control);
+        var panel=new DockPanel();var button=new Button{Content=caption,MinWidth=28,ToolTip=caption=="+"?"Neu hinzufügen":caption};button.Click+=(_,_)=>action();DockPanel.SetDock(button,Dock.Right);panel.Children.Add(button);panel.Children.Add(control);Grid.SetColumn(panel,column);parent.Children.Insert(index,panel);
+    }
+    internal void TransparencyBeside(string label,string key,bool value)
+    {
+        var toggle=new CheckBox{Content="Transparent",IsChecked=value,VerticalAlignment=VerticalAlignment.Center,Margin=new Thickness(8,0,0,0)};
+        _controls[key]=toggle;var control=Control(label);if(control.Parent is not Panel parent)return;var index=parent.Children.IndexOf(control);var column=Grid.GetColumn(control);parent.Children.Remove(control);var panel=new DockPanel();DockPanel.SetDock(toggle,Dock.Right);panel.Children.Add(toggle);panel.Children.Add(control);Grid.SetColumn(panel,column);parent.Children.Insert(index,panel);
+    }
     public bool Checked(string label) => ((CheckBox)_controls[label]).IsChecked == true;
     public void Hide(string label)
     {

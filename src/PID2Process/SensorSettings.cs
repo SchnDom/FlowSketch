@@ -12,7 +12,7 @@ public sealed class SensorSettings
     public double ScaledMax {get;set;}=100;
     public string Unit {get;set;}="%";
     public List<SensorLimit> Limits {get;set;}=[new(){Name="High-High",Value=99},new(){Name="High",Value=95},new(){Name="Low",Value=5},new(){Name="Low-Low",Value=1}];
-    public double Scale(double raw)=>ScaledMin+(raw-RawMin)/(RawMax-RawMin)*(ScaledMax-ScaledMin);
+    public double Scale(double value)=>value;
 }
 public sealed class SensorLimit
 {

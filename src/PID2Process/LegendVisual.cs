@@ -15,7 +15,7 @@ internal static class LegendVisual
     {
         var grid=new Grid{Width=Math.Max(18,item.Width*width),Height=Math.Max(18,item.Height*height),Opacity=item.Opacity};
         var canvas=new Canvas{Width=300,Height=40+item.LegendEntries.Count*25};
-        canvas.Children.Add(new Rectangle{Width=300,Height=canvas.Height,Fill=PageVisual.Color(item.BackgroundColor),Stroke=PageVisual.Color(item.Color),StrokeThickness=1});
+        canvas.Children.Add(new Rectangle{Width=300,Height=canvas.Height,Fill=item.BackgroundTransparent?Brushes.Transparent:PageVisual.Color(item.BackgroundColor),Stroke=item.LinesTransparent?Brushes.Transparent:PageVisual.Color(item.Color),StrokeThickness=1});
         var title=new TextBlock{Text=item.LegendTitle,FontSize=14,FontWeight=FontWeights.SemiBold,Width=276,TextTrimming=TextTrimming.CharacterEllipsis};Canvas.SetLeft(title,12);Canvas.SetTop(title,8);canvas.Children.Add(title);
         for(var i=0;i<item.LegendEntries.Count;i++)
         {

@@ -4,6 +4,7 @@ public partial class App : System.Windows.Application
     protected override async void OnStartup(System.Windows.StartupEventArgs e)
     {
         base.OnStartup(e);
+        if(e.Args.FirstOrDefault(x=>x.StartsWith("--animation-benchmark=")) is {} benchmark){ShutdownMode=System.Windows.ShutdownMode.OnExplicitShutdown;Shutdown(await AnimationBenchmark.Run(benchmark.Split('=')[1]));return;}
         if(e.Args.Contains("--brand-assets")){ShutdownMode=System.Windows.ShutdownMode.OnExplicitShutdown;IconAssetBuilder.Write(System.IO.Path.Combine(Environment.CurrentDirectory,"_media"));Shutdown();return;}
         if(e.Args.Contains("--model-test")){ShutdownMode=System.Windows.ShutdownMode.OnExplicitShutdown;Shutdown(await HeadlessSelfTest.Run());return;}
         if (e.Args.Contains("--self-test")) { ShutdownMode = System.Windows.ShutdownMode.OnExplicitShutdown; var result = await EditorSelfTest.Run(); Shutdown(result); return; }

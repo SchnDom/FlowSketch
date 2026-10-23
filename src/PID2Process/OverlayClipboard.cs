@@ -17,7 +17,7 @@ internal static class OverlayClipboard
         var kept=OverlaySelection.ExpandGroups(p,ids,page);
         var removed=p.Equipment.Select(x=>x.Id).Concat(p.Pipes.Select(x=>x.Id)).Concat(p.SignalLines.Select(x=>x.Id)).Where(id=>!kept.Contains(id)).ToHashSet();OverlaySelection.Delete(p,removed);
         var width=source.BlankSheet is {} b?2000*b.WidthMm/297:2000;var aspect=source.BlankSheet is {} blank?blank.HeightMm/blank.WidthMm:source.Pdf.PageAspectRatios.ElementAtOrDefault(page-1);if(aspect<=0)aspect=.708;
-        p.Pdf=new(){PageCount=1,PageAspectRatios=[aspect]};p.Approval=new();
+        p.Pdf=new(){PageCount=1,PageAspectRatios=[aspect]};p.Composition=null;p.Approval=new();
         return new(){Selection=p,PageWidth=width,PageHeight=width*aspect};
     }
     internal static HashSet<Guid> Paste(EngineeringProject target,OverlayClip input,int page,double targetWidth,double targetHeight,Point center)
@@ -37,7 +37,7 @@ internal static class OverlayClipboard
         var sx=clip.PageWidth/targetWidth;var sy=clip.PageHeight/targetHeight;
         void Point(PipePoint q){q.X*=sx;q.Y*=sy;}
         void Connection(PipeConnection? c){if(c is null)return;if(c.EquipmentId is Guid e)c.EquipmentId=ids.GetValueOrDefault(e);if(c.PipeId is Guid r)c.PipeId=ids.GetValueOrDefault(r);if(c.PreservedPoint is {} q)Point(q);}
-        foreach(var x in p.Equipment){x.Id=ids[x.Id];x.Tag=Tag(x.Tag);x.Page=page;x.GroupId=Group(x.GroupId);x.X*=sx;x.Y*=sy;x.Width*=sx;x.Height*=sy;x.MediumId=Medium(x.MediumId);foreach(var row in x.LegendEntries)row.MediumId=Medium(row.MediumId);if(x.Drawing.Start is {} a)Point(a);if(x.Drawing.End is {} z)Point(z);x.Drawing.PageWidth=targetWidth;if(x.Sensor.ConnectionEnd is {} end)Point(end);Connection(x.Sensor.Connection);}
+        foreach(var x in p.Equipment){x.Id=ids[x.Id];x.Tag=Tag(x.Tag);x.Page=page;x.GroupId=Group(x.GroupId);x.X*=sx;x.Y*=sy;x.Width*=sx;x.Height*=sy;x.TagOffsetX*=sx;x.TagOffsetY*=sy;x.MediumId=Medium(x.MediumId);foreach(var row in x.LegendEntries)row.MediumId=Medium(row.MediumId);if(x.Drawing.Start is {} a)Point(a);if(x.Drawing.End is {} z)Point(z);x.Drawing.PageWidth=targetWidth;if(x.Sensor.ConnectionEnd is {} end)Point(end);Connection(x.Sensor.Connection);}
         foreach(var x in p.Pipes){x.Id=ids[x.Id];x.Page=page;x.GroupId=Group(x.GroupId);foreach(var q in x.Points)Point(q);Connection(x.StartConnection);Connection(x.EndConnection);}
         foreach(var x in p.SignalLines){x.Id=ids[x.Id];x.Page=page;x.GroupId=Group(x.GroupId);foreach(var q in x.Points)Point(q);foreach(var c in new[]{x.StartConnection,x.EndConnection})if(c is not null)c.EquipmentId=ids[c.EquipmentId];}
         var bounds=p.Equipment.Select(OverlaySelection.Bounds).Concat(p.Pipes.Select(x=>OverlaySelection.Bounds(p,x))).Concat(p.SignalLines.Select(x=>OverlaySelection.Bounds(p,x))).Aggregate(Rect.Empty,(a,b)=>{a.Union(b);return a;});

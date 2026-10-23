@@ -1,4 +1,8 @@
 {
+  "Generic|Querverweis": {
+    "ports": { "Left": [0,0.5], "Right": [1,0.5], "Top": [0.5,0], "Bottom": [0.5,1] },
+    "shapes": [{ "path": "M 0,50 L 25,0 L 75,0 L 100,50 L 75,100 L 25,100 Z" }, { "text": "↔", "x": 50, "y": 50 }]
+  },
   "Legend": {"ports": {}, "shapes": []},
   "Vessel": {
     "ports": {

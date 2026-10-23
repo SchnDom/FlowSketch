@@ -10,11 +10,13 @@ public partial class MainWindow
         UndoButton.IsEnabled=editable&&Current?.History.CanUndo==true;
         RedoButton.IsEnabled=editable&&Current?.History.CanRedo==true;
     }
-    private void RestoreHistory(bool redo)
+    private async void RestoreHistory(bool redo)
     {
         if(Current is not {} doc||_previewProject is not null||OwnedWindows.Cast<Window>().Any(x=>x.IsVisible))return;
         CancelCopyDrag();CancelPlacement();var restored=doc.History.Restore(redo);if(restored is null)return;
         var scenario=(ScenarioBox.SelectedItem as Scenario)?.Id;var step=(StepBox.SelectedItem as ControlStep)?.Id;
-        ClearSelection();doc.Project=restored;doc.Dirty=true;SetPlanSelection(restored,scenario,step);RefreshInspector();UpdateHeader();Draw();
+        ClearSelection();var changedPdf=doc.Project.Pdf.FilePath!=restored.Pdf.FilePath;doc.Project=restored;doc.Dirty=true;
+        if(changedPdf&&restored.BlankSheet is null){doc.Raster=new();await doc.Raster.OpenAsync(restored.Pdf.FilePath);doc.Page=0;await RenderPage();}
+        SetPlanSelection(restored,scenario,step);RefreshInspector();UpdateHeader();Draw();
     }
 }

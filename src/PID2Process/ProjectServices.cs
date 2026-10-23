@@ -71,16 +71,20 @@ public static class ProjectServices
 
     public static void Save(string path, EngineeringProject project)
     {
-        Normalize(project);project.FormatVersion="2.1";
+        Normalize(project);project.FormatVersion="2.2";
         File.WriteAllText(path, JsonSerializer.Serialize(project, JsonOptions));
     }
 
     public static EngineeringProject Load(string path)
     {
-        var project=JsonSerializer.Deserialize<EngineeringProject>(File.ReadAllText(path),JsonOptions)??throw new InvalidDataException("Ungültige PID2Process-Projektdatei.");Normalize(project);return project;
+        var json=File.ReadAllText(path);var project=JsonSerializer.Deserialize<EngineeringProject>(json,JsonOptions)??throw new InvalidDataException("Ungültige PID2Process-Projektdatei.");
+        using var data=JsonDocument.Parse(json);project.FormatVersion=data.RootElement.TryGetProperty("formatVersion",out var version)?version.GetString()??"2.0":"2.0";
+        Normalize(project);return project;
     }
     internal static void Normalize(EngineeringProject project)
     {
+        SensorMigration.Upgrade(project);
+        if(CrossReferences.Normalize(project)){project.Approval.IsApproved=false;project.Approval.IsBlocked=true;project.Approval.BlockReason="Querverweise kompakt dargestellt und lange IDs gruppenerhaltend gekürzt. Erneute Freigabe erforderlich.";}
         if(project.BlankSheet is {} blank){project.Pdf.PageCount=1;project.Pdf.PageAspectRatios=[blank.HeightMm/blank.WidthMm];}
         if(ScenarioSteps.Ensure(project)){project.Approval.IsApproved=false;project.Approval.IsBlocked=true;project.Approval.BlockReason="Ersten Szenarioschritt ergänzt. Erneute Freigabe erforderlich.";}
         var upgradedDrawing=project.Equipment.Any(DrawingGeometry.IsLine)&&project.Equipment.Where(DrawingGeometry.IsLine).Any(x=>x.Drawing.Start is null||x.Drawing.End is null);DrawingGeometry.Normalize(project);

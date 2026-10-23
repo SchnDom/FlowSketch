@@ -21,7 +21,7 @@ internal sealed partial class StateEditor
     internal DataGrid AlarmGrid {get;}=new(){AutoGenerateColumns=false,CanUserAddRows=false};
     private DockPanel BuildAlarmsPage()
     {
-        var panel=new DockPanel();var hint=new TextBlock{Text="Betriebsmittelalarme bearbeiten und dem gewählten Szenario zuordnen. Sensorgrenzwertalarme werden aus den Rohwerten abgeleitet.",TextWrapping=TextWrapping.Wrap,Margin=new Thickness(4)};DockPanel.SetDock(hint,Dock.Top);panel.Children.Add(hint);
+        var panel=new DockPanel();var hint=new TextBlock{Text="Betriebsmittelalarme bearbeiten und dem gewählten Szenario zuordnen. Sensorgrenzwertalarme werden aus den Prozesswerten abgeleitet.",TextWrapping=TextWrapping.Wrap,Margin=new Thickness(4)};DockPanel.SetDock(hint,Dock.Top);panel.Children.Add(hint);
         var buttons=new WrapPanel();var add=new Button{Content="Neuer Alarm"};add.Click+=(_,_)=>{var alarm=new Alarm{Name="Neuer Alarm",Tag=Working.Equipment.FirstOrDefault(x=>x.Type!=EquipmentType.Drawing)?.Tag??""};if(_activeScenario is {} s)alarm.ScenarioIds.Add(s.Id);Working.Alarms.Add(alarm);RefreshAlarmRows();};var remove=new Button{Content="Alarm löschen"};remove.Click+=(_,_)=>{if(AlarmGrid.SelectedItem is AlarmAssignmentRow row){Working.Alarms.Remove(row.Alarm);RefreshAlarmRows();}};buttons.Children.Add(add);buttons.Children.Add(remove);DockPanel.SetDock(buttons,Dock.Bottom);panel.Children.Add(buttons);
         AlarmGrid.Columns.Add(new DataGridCheckBoxColumn{Header="Im Szenario",Binding=new Binding("Assigned"){UpdateSourceTrigger=UpdateSourceTrigger.PropertyChanged},Width=90});
         AlarmGrid.Columns.Add(new DataGridTextColumn{Header="Name",Binding=new Binding("Name"),Width=180});

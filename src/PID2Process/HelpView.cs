@@ -40,6 +40,7 @@ internal sealed class HelpView : DockPanel
                     var image=new Image{Source=new BitmapImage(new Uri("pack://application:,,,/Help/"+match.Groups[2].Value)),Stretch=Stretch.Uniform,MaxHeight=470,Margin=new Thickness(0,4,0,6)};
                     body.Children.Add(image);body.Children.Add(new TextBlock{Text=match.Groups[1].Value,TextWrapping=TextWrapping.Wrap,Foreground=PageVisual.Color("#A9BCD0"),Margin=new Thickness(0,0,0,18)});
                 }
+                else if(line.StartsWith("### "))body.Children.Add(new TextBlock{Text=line[4..],TextWrapping=TextWrapping.Wrap,FontSize=16,FontWeight=FontWeights.SemiBold,Margin=new Thickness(0,8,0,12)});
                 else body.Children.Add(new TextBlock{Text=line,TextWrapping=TextWrapping.Wrap,FontSize=14,Margin=new Thickness(0,0,0,12)});
             }
             scroll.ScrollToTop();

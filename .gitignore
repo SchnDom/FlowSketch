@@ -1,4 +1,7 @@
 obj/
+bin/
+output/
+_media/*.xlsm
 .vs/
 *.user
 *.pid2process.json

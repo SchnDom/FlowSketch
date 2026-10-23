@@ -29,7 +29,7 @@ internal static class FlowSketchSelfTest
         v.EquipmentStates[source.Id]="Aktiv";v.EquipmentStates[outlet.Id]="Offen";scene=Capture("Quelle gewinnt vor Tankversorgung");check(scene.Pipes[end.Id].MediumType==MediumType.Liquid,"Erreichbare Quelle bestimmt das Durchflussmedium statt eigener Tankversorgung");
         var sensor=Item(EquipmentType.Instrument,"PE1234",.25,.55);sensor.Height=sensor.Width*297/210;sensor.Color="#000000";sensor.Sensor.Signal="PE";sensor.Sensor.Number="1234";p.Equipment.Add(sensor);
         check(sensor.Sensor.RawMax==27648&&sensor.Sensor.Unit=="%"&&sensor.Sensor.Limits.All(l=>l.Enabled),"Sensor-Standardwerte und aktive Alarmgrenzen");
-        v.SensorValues[sensor.Id]=27648;Capture("Sensor High-High");check(SensorEvaluation.Alarms(p,v).Count==2,"High und High-High sind bei 100 Prozent aktiv");
+        v.SensorValues[sensor.Id]=100;Capture("Sensor High-High");check(SensorEvaluation.Alarms(p,v).Count==2,"High und High-High sind bei 100 Prozent aktiv");
         v.SensorValues[sensor.Id]=0;Capture("Sensor Low-Low");check(SensorEvaluation.Alarms(p,v).Count==2,"Low und Low-Low sind bei 0 Prozent aktiv");
         v.SensorValues.Remove(sensor.Id);Capture("Sensor ohne Vorgabe");check(SensorEvaluation.Alarms(p,v).Count==0,"Ohne vorgegebenen Rohwert keine erfundenen Sensoralarme");
         var d=new EditorDialog(null,"Sensor");new SensorEditor(d,sensor.Sensor);check(d.Control("Skalierung") is Expander{IsExpanded:false}&&d.Control("Alarmwerte") is Expander{IsExpanded:false},"Sensor-Skalierung und Alarme sind standardmäßig eingeklappt");

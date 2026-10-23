@@ -1,6 +1,6 @@
 # FlowSketch – Hilfe
 
-Version 0.8.1 · cs-systems GmbH
+Version 0.10.0 · Dominik Schneeberger · MIT-Lizenz
 
 FlowSketch zeichnet funktionelle Prozessdarstellungen auf leeren Blättern oder auf R&I-/P&ID-PDFs. Symbole, Rohrleitungen, Wirklinien, Szenarien und Schritte werden in einer eigenen Projektdatei gespeichert. Die importierte PDF bleibt unverändert. Diese Hilfe ist im Programm unter Hilfe → Bedienhilfe und offline als Hilfe.html im Dokumentationsordner verfügbar.
 
@@ -15,7 +15,7 @@ Beim Start erscheint sofort ein leeres A4-Blatt im Querformat. Links befindet si
 5. Rechts Abläufe öffnen, einen Ablauf mit Schritten anlegen und Zustände festlegen. Die Ansichtsoption im Szenarioeditor kann die Auswahl mit der oberen Werkzeugleiste synchronisieren.
 6. Datei → Speichern wählen und einen Namen für die Projektdatei vergeben.
 
-Zum Ausprobieren Hilfe → Demo öffnen wählen. Die Demo ist zusätzlich in der EXE enthalten und benötigt keinen Beispiele-Ordner. Die Demo wird als Arbeitskopie auf einem A2-Blatt geöffnet; beim Speichern einen eigenen Dateinamen vergeben. Sie benötigt keine PDF und enthält 37 Symbole, 29 rechtwinklige Rohrpfade ohne Kreuzungen zwischen den Anlagenwegen, sieben Szenarien und 26 Schritte. Die Bereiche zeigen Wasser, Druckluft, Feststoff und zwei unabhängige Wärmetauscherkreise. Rechts unter Abläufe einen Ablauf doppelklicken und danach die Schritte wechseln.
+Zum Ausprobieren Hilfe → Demo öffnen wählen. Die Demo ist zusätzlich in der EXE enthalten und benötigt keinen Beispiele-Ordner. Die Demo wird als Arbeitskopie auf einem A2-Blatt geöffnet; beim Speichern einen eigenen Dateinamen vergeben. Sie benötigt keine PDF und enthält 43 Symbole, 32 rechtwinklige Rohrpfade, sieben Szenarien und 26 Schritte. Die Bereiche zeigen Wasser, Druckluft, Feststoff und zwei unabhängige Wärmetauscherkreise. REF-101, REF-102 und REF-103 verbinden über QV000001 drei Wasserleitungen einschließlich des Wärmetauscher-Ausgangs. REF-201 und REF-202 bilden mit QV000002 ein unabhängiges Paar im Druckluftweg. Die gelben Hervorhebungen einer Planungsvorlage gehören nicht zur Demo. Rechts unter Abläufe einen Ablauf doppelklicken und danach die Schritte wechseln.
 
 Die Demoabläufe zeigen Stillstand, Wasserfüllung, Tankversorgung mit Mediumwechsel, Verdichter und Ventilator, Filterverstopfung und Ablass, getrennte Wärmetauscherkreise sowie skalierte Sensorwerte mit Grenzwertalarmen. Die Schritte sind manuelle Vorgaben und laufen nicht automatisch ab. Eine Erläuterung, eine große PNG-Vorschau und die Excel-Aktorenliste liegen im Programmordner unter Beispiele.
 
@@ -27,7 +27,7 @@ Im Tab Betriebsmittel sucht das Feld mit der Lupe nach Tag, Funktion oder Einbau
 
 Die feste obere Werkzeugleiste steuert Seite, Zoom, Szenario und Schritt. Sie besitzt keine Ziehpunkte und keinen Überlaufknopf; bei wenig Platz werden die Bedienelemente in eine weitere Zeile umgebrochen. Die Trennlinien entsprechen dem dunklen Oberflächenstil. Die rechte Seitenleiste lässt sich am Trennbalken verbreitern. Betriebsmittel und Alarme besitzen eigene rechte Tabs. Der Tab Abläufe enthält oben die Gruppe Szenario und darunter die zugehörigen Schritte; der Trennsteg verändert ihre Höhe. Ein Szenariowechsel aktualisiert die Schrittgruppe und öffnet den ersten Schritt. Die Planübersicht bleibt darunter bestehen. Eine Auswahl im Tab Betriebsmittel selektiert und umrandet das Symbol im Plan; bei Bedarf wird dessen Seite angezeigt.
 
-Die Gerätedaten verwenden drei kompakte Gruppen: Kennzeichnung (Tag, Beschreibung, Funktion, Einbauort), Objekteigenschaften und Farben und Größen. Die Felder verteilen sich auf zwei Spalten; längere Beschreibungen und Sensortabellen nutzen die volle Breite. Übernehmen validiert die Eingaben vollständig, Abbrechen verwirft sie. Medien-, Legenden-, Szenario-, Sammel- und Farbdialoge verwenden denselben dunklen Stil. Die bereitgestellte CS-Icongrafik kennzeichnet EXE, Fenster und Taskleiste; Hilfe und Über uns zeigen die neue Firmenwortmarke auf hellem Grund.
+Die Gerätedaten verwenden vier kompakte Gruppen: Kennzeichnung, Objekteigenschaften, Farben und Größe. Feldnamen stehen links, Eingaben rechts; Beschreibung ist mehrzeilig. Der Titel zeigt Gerätedaten – gefolgt vom aktuellen Objekt-Tag. Übernehmen validiert die Eingaben vollständig, Abbrechen verwirft sie. Medien-, Legenden-, Szenario-, Sammel- und Farbdialoge verwenden denselben dunklen Stil. Das neutrale FlowSketch-Icon kennzeichnet EXE, Fenster und Taskleiste. Hilfe und Über uns nennen Dominik Schneeberger und enthalten die MIT-Lizenz sowie Drittanbieterhinweise.
 
 ## 2. Dokumente anlegen, öffnen und speichern
 
@@ -38,6 +38,22 @@ Ein Stern am Dokumentnamen kennzeichnet ungespeicherte Änderungen. Datei → Sp
 Die Projektdatei enthält die Zeichnung und Zuweisungen. Bei einem PDF-Projekt bleibt die Referenz-PDF eine eigene Datei. Verschiebe die Referenz nicht unbedacht: Wird sie beim Öffnen nicht gefunden, fragt das Programm nach ihrer neuen Position. Eine abweichende PDF wird durch die Hashprüfung erkannt. Ein gespeichertes Leerblatt benötigt keine Referenzdatei.
 
 Unter Projekt → Projekteinstellungen werden Projektname und Planrevision gepflegt. Tabs haben voneinander unabhängige Zeichnungen, Seiten und Zuweisungen. Zum Bearbeiten zuerst den gewünschten Tab auswählen.
+
+### PDF-Komposition: mehrere P&IDs zu einer Anlagenkarte zusammensetzen
+
+Datei → PDF-Komposition, direkt unter PDF importieren…, öffnet ein eigenes Kartenfenster. Die umrandeten Gruppen Kartenlayout, PDF-Ausschnitte, Grafische Orientierung, Ansicht und Ausgabe ordnen die Werkzeuge. Demo laden erzeugt zwei Beispiel-PDFs mit unterschiedlich gedrehten Seiten und Ausschnitten ohne Schriftkopf zum Ausprobieren.
+
+Über PDF hinzufügen… mehrere Dateien auswählen oder PDFs aus dem Explorer in das Fenster ziehen. Für jede PDF zunächst eine Seite auswählen und mit der Maus den gewünschten rechteckigen Inhalt aufziehen, beispielsweise den Plan ohne Schriftkopf. Ganze Seite setzt die Auswahl zurück; Ausschnitt hinzufügen übernimmt sie. Weiterer Ausschnitt… öffnet dieselbe PDF erneut zur Auswahl eines anderen Bereichs. Duplizieren kopiert den ausgewählten Ausschnitt.
+
+Die Ausschnitte mit der linken Maustaste anordnen. Kanten und Mittellinien rasten an anderen Ausschnitten ein; mit gedrückter Shift-Taste ist Snap deaktiviert. Größe… skaliert den ausgewählten Ausschnitt proportional. Das Mausrad zoomt um den Kartenpunkt unter dem Mauszeiger; +/− zoomen um die Ansichtsmitte. Einpassen zeigt die gesamte Karte; die mittlere Maustaste verschiebt die Ansicht. Die Darstellung wird beim Zoom erneut aus der Original-PDF gerendert.
+
+Flussanimationen im Haupteditor laufen nur bei sichtbarem, aktivem Hauptfenster mit höchstens 30 Bildern pro Sekunde. Im Hintergrund oder minimiert ruhen sie; Medienfarben und Zustände bleiben erhalten. Beim Zurückkehren setzen die Animationen wieder ein.
+
+Hilfslinie zeichnen aktivieren und Start- und Zielpunkt auf den Ausschnitten anklicken. Die rechtwinklige Linie verdeutlicht die Zuordnung zwischen Planteilen und folgt beiden Ausschnitten beim Verschieben und Skalieren. Sie wird in die PDF exportiert und überträgt keine Medienzustände. Per Rechtsklick auf die Linie → Hilfslinie entfernen lässt sie sich entfernen; Esc beendet den Zeichenmodus. Entfernen löscht den ausgewählten Ausschnitt mitsamt seinen Hilfslinien.
+
+Speichern legt eine *.pdfmap.json-Datei mit Ausschnitten, relativen Quellpfaden, Prüfsummen und Hilfslinien ab. Die Original-PDFs werden weiterhin benötigt; bei einer geänderten oder fehlenden Quelle wird das Laden beziehungsweise Exportieren abgelehnt. PDF exportieren… erstellt eine gemeinsame PDF-Karte mit den ausgewählten Inhalten und Kartenpositionen. Gedrehte Seiten und Seitenbeschnitte werden berücksichtigt; Vektoren und Texte bleiben erhalten.
+
+Übernehmen erstellt eine eigene PDF-Karte im lokalen FlowSketch-Datenordner und öffnet sie direkt als neues Dokument im Hauptfenster. Dort Symbole, Rohranschlüsse und Querverweise für die funktionelle Medienweitergabe ergänzen. Das bearbeitbare Kartenlayout wird im Projekt mitgespeichert. Projekt → Ändere PDF-Komposition öffnet die bestehende Komposition auf einer Arbeitskopie. Übernehmen aktualisiert dasselbe Dokument; Abbrechen verwirft die Änderungen. Zugeordnete Symbole und freie Pfadpunkte folgen verschobenen/skalierten Planteilen. Beim Entfernen eines Planteils bleiben seine Overlays am bisherigen Kartenort erhalten. Rückgängig/Wiederholen stellt Komposition und PDF gemeinsam wieder her. Bei gewöhnlich importierten PDFs ist der Menüpunkt deaktiviert; vorhandene .pdfmap.json-Layouts zuerst über Datei → PDF-Komposition öffnen und übernehmen.
 
 ## 3. Blattlayout: A4, A3, A2 und Formfrei
 
@@ -63,6 +79,8 @@ Ohne Rahmen fordert ein formfreier Export zunächst dessen Auswahl an. Der orang
 
 ## 5. Ansicht, Zoom und Navigation
 
+Ein maximiertes Fenster lässt sich auch direkt am obersten Bildschirmrand an einer freien Stelle der Titelleiste fassen und nach unten ziehen. Windows stellt dabei die vorherige Fenstergröße wieder her und führt das Fenster mit der Maus mit. Im verkleinerten Zustand dienen die äußeren Ränder weiterhin zum Ändern der Fenstergröße.
+
 Mausrad: hinein- oder herauszoomen. Die Zoom-Schaltflächen ändern den Maßstab ebenfalls. Einpassen passt das Blatt in den sichtbaren Bereich ein. Mittlere Maustaste gedrückt halten und bewegen: Ansicht verschieben. Rechte Maustaste: Kontextmenü.
 
 Mausrad-Zoom hält die Position unter dem Mauszeiger fest. Dokumente können über das × im Tab oder Datei → Schließen... geschlossen werden. Ungespeicherte Änderungen können vorher gespeichert werden.
@@ -77,9 +95,9 @@ Rechts unten zeigt die Planübersicht immer die vollständige aktuelle Seite. Da
 
 Symboltyp links wählen und die Vorschau auf dem Blatt positionieren. Der erste Klick öffnet die Gerätedaten. Übernehmen fügt das Symbol mit den validierten Angaben ein; Abbrechen verwirft die Platzierung. Esc beendet die Vorschau vor dem Platzieren.
 
-Ein vorhandenes Symbol per Doppelklick öffnen. Die verfügbaren Felder richten sich nach dem Gerätetyp: Tag, Beschreibung, Funktion, Einbauort, Bauform, Antrieb, Rückmeldungen und weitere gerätespezifische Angaben. Tags müssen eindeutig sein. Ungültige Eingaben werden vor der Übernahme gemeldet.
+Ein vorhandenes Symbol per Doppelklick öffnen. Die verfügbaren Felder richten sich nach dem Gerätetyp: Tag, Beschreibung, Funktion, Einbauort, Antriebsbauart und weitere gerätespezifische Angaben. Der mechanische Aufbau ergibt sich aus dem Symbol; Motorantrieb, Grundstellung und Rückmeldungsfelder werden nicht mehr angeboten. Bereits gespeicherte Altwerte bleiben erhalten. Tags müssen eindeutig sein. Ungültige Eingaben werden vor der Übernahme gemeldet.
 
-Funktion beschreibt den Prozesszweck, Einbauort (+) die Zuordnung in der Anlage. Medienquellen wählen ein unter Projekt → Medien definiertes Medium direkt über seinen Namen. Die schreibgeschützte Zusammenfassung darunter zeigt Mediumtyp, Temperatur, Druck und Durchflussgeschwindigkeit. Betriebswerte… bearbeitet die drei Werte individuell je Quelle. Medien verwalten… öffnet die zentrale Medienverwaltung. Erst Übernehmen im äußeren Gerätedialog übernimmt alle Änderungen; Abbrechen verwirft auch Änderungen aus den Unterdialogen. Behälter wählen weiterhin zuerst den Mediumtyp und anschließend den passenden Mediennamen.
+Funktion beschreibt den Prozesszweck, Einbauort (+) die Zuordnung in der Anlage. Medienquellen wählen ein unter Projekt → Medien definiertes Medium direkt über seinen Namen. Die schreibgeschützte Zusammenfassung darunter zeigt Mediumtyp, Temperatur, Druck und Durchflussgeschwindigkeit. Betriebswerte… bearbeitet die drei Werte individuell je Quelle. Medien verwalten… öffnet die zentrale Medienverwaltung. Erst Übernehmen im äußeren Gerätedialog übernimmt alle Änderungen; Abbrechen verwirft auch Änderungen aus den Unterdialogen. Behälter wählen zuerst den Mediumtyp und anschließend den passenden Mediennamen. Das + neben dem Medium legt ein neues Medium an und wählt es aus. Erst Übernehmen im äußeren Gerätefenster bestätigt es. Neben Funktion bietet + ebenfalls eine neue Eingabe.
 
 Die Kategorie Zeichnen enthält Linie, Kreis / Ellipse, Rechteck, Textfeld, Pfeil und Doppelpfeil. Per Rechtsklick auf einen Bibliothekseintrag die Zeicheneigenschaften für neue Objekte dieser Form einstellen. Schnellfarben, frei wählbare Farbe, Strichstärken-Vorgaben und – passend zur Form – Füllung, Text und Pfeilspitzengröße sind verfügbar. Übernehmen gilt für nachfolgende Platzierungen in dieser Sitzung, Abbrechen verwirft die Änderung. Werkzeug wählen und mit gedrückter linker Maustaste die Grafik aufziehen. Ein kurzer Klick verwendet eine Standardgröße; beim Textfeld anschließend den Text eingeben. SHIFT beim Aufziehen von Rechteck oder Ellipse hält gleiche Seitenlängen.
 
@@ -91,7 +109,7 @@ Zeichenobjekte dienen nur zur Anzeige. Sie erscheinen nicht als Betriebsmittel, 
 
 Breite und Höhe werden in logischen Pixeln (px) eingegeben und intern weiterhin normiert gespeichert. Die Größe ist damit vom aktuellen Zoom unabhängig.
 
-Farbe, Hintergrund, Deckkraft und Größe lassen sich in den Eigenschaften ändern. Semantische Zustandsfarben haben Vorrang. Zustandstext anzeigen schaltet bei Armaturen und Ein/Aus-Geräten einen kompakten Zustandstext zu; standardmäßig ist er ausgeblendet. Der Zustand bleibt auch ohne Text in den Detailinformationen verfügbar.
+Farbe, Hintergrund, Deckkraft und Größe lassen sich in den Eigenschaften ändern. Hintergrund und Symbol-Linien besitzen jeweils einen Transparent-Schalter, der die gewählte Farbe für später erhält. Deckkraft als 0–100 % eingeben; Breite/Höhe werden mit einer Nachkommastelle in px angezeigt. Unveränderte Größen behalten intern ihre volle Präzision. Tag anzeigen blendet nur die Objektbeschriftung ein oder aus. Den Tag auf dem Plan unabhängig ziehen; Rechtsklick auf den Tag bietet Ausblenden und Position zurücksetzen. Semantische Zustandsfarben haben Vorrang. Zustandstext anzeigen schaltet bei Armaturen und Ein/Aus-Geräten einen kompakten Zustandstext zu; standardmäßig ist er ausgeblendet. Der Zustand bleibt auch ohne Text in den Detailinformationen verfügbar.
 
 Alle Farbfelder bieten eine Farbvorschau, den Hexwert und Farbrad…. Im Farbrad stehen Farbton, Sättigung, Helligkeit und eine editierbare Hexfarbe zur Verfügung. Pipette blendet den Dialog vorübergehend aus. Ein kontrastreiches Fadenkreuz markiert den Abtastpunkt; ein kleines Fenster daneben zeigt die aktuelle Farbe als große Farbfläche und ergänzenden Hexwert. Die Farbfläche folgt dem Fadenkreuz; am Bildschirmrand weicht das Fenster nach innen aus. Linksklick wählt die Farbe, Esc bricht ab. Erst Übernehmen im Farbrad bestätigt die Auswahl; Abbrechen lässt das ursprüngliche Farbfeld unverändert. Bildschirmaufnahmen werden nur vorübergehend im Arbeitsspeicher verwendet.
 
@@ -139,6 +157,14 @@ Doppelklick auf ein Rohr öffnet Rohrdaten mit Bezeichnung, Breite, Strichtyp un
 
 ## 10. Wirklinien / Regellinien
 
+### Querverweise für Rohrverbindungen
+
+Unter Symbole → Weitere → Querverweis platzieren. Das kompakte Symbol besitzt vier Rohranschlüsse; seine Größe bleibt in den Gerätedaten einstellbar. Die Querverweis-ID ist editierbar und umfasst 1 bis 8 Zeichen. Neue Vorschläge zählen aufsteigend: QV000001, QV000002 usw. Für zusammengehörige Querverweise dieselbe ID aus der Liste wählen oder eintragen. Der Tag bleibt je Symbol eindeutig, die Querverweis-ID wird bewusst von mehreren Symbolen geteilt. IDs unterscheiden Groß- und Kleinschreibung; äußere Leerzeichen werden entfernt. Beim Laden alter Projekte werden lange IDs gruppenerhaltend gekürzt; eine bestehende Freigabe wird dabei widerrufen.
+
+Rohrpfade lassen sich an allen vier Anschlüssen des Symbols fangen. Gleiche IDs verbinden diese Anschlüsse bidirektional über alle Seiten desselben Projekts. Mehrere Quellen und Abgänge sind möglich: Medien werden wie bei Rohrabzweigen weitergereicht und bei unterschiedlichen Medientypen als Gemisch dargestellt. Flussanimation erscheint weiterhin nur auf versorgten Wegen zu einem Ziel; Querverweise erzeugen selbst kein Medium und keinen Durchfluss. Leere oder unterschiedliche IDs verbinden keine fremden Querverweise. Unabhängige Dokument-Tabs besitzen eigene Netze. Für mehrere PDFs zuerst eine gemeinsame Compositor-Karte erstellen und importieren.
+
+Verbindet ein Rohr zwei bereits über dieselbe ID verlinkte Querverweise, entsteht eine zusätzliche Schleife im selben Netz. Sie übernimmt den Medienstatus, erzeugt aber allein keinen Durchfluss. Ein Abgang aus dieser Schleife zu einem Ziel kann einen durchflossenen Weg bilden. Die Demo zeigt stattdessen drei verbundene Wasserleitungen und ein separates Druckluftpaar.
+
 Wirklinie / Regellinie in der Bibliothek oder Wirklinie einfügen im Kontextmenü wählen. Die dünne Linie mit Klammerzeichen zeigt, welcher Sensor welchem Gerät zugeordnet ist.
 
 Start und Eckpunkte anklicken; Anschlussfang, Doppelklick oder Enter schließen ab. Esc verwirft den Entwurf. Beim Zeichnen sind die Symbolumrandungen als Fangbereiche markiert.
@@ -157,11 +183,11 @@ Beispiel: Wasser ist als Flüssig definiert und Druckluft als Gasförmig. Im Ger
 
 ![Medienquelle mit Mediumauswahl und schreibgeschützten Betriebswerten](images/media-filter.png)
 
-Sensorik verwendet ein gemeinsames Kreissymbol mit waagrechter Teilung: Signalkennung oben, Tagnummer unten. Beide Texte sind frei editierbar. Die standardmäßig eingeklappten Bereiche Skalierung und Alarme enthalten die Tabellen. Vorgaben: Rohbereich 0 bis 27648, skalierter Bereich 0 bis 100, Einheit %. Die vier aktivierten Grenzen sind High-High 99, High 95, Low 5, Low-Low 1.
+Sensorik verwendet ein gemeinsames Kreissymbol mit waagrechter Teilung: Signalkennung oben, Tagnummer unten. Beide Texte sind frei editierbar. Die standardmäßig eingeklappten Bereiche Skalierung und Alarme enthalten die Tabellen. Vorgaben: Prozesswertbereich 0 bis 100, Einheit %. Rohwertfelder entfallen. Die vier aktivierten Grenzen sind High-High 99, High 95, Low 5, Low-Low 1.
 
 Sensoren erhalten beim Einfügen eine dünne grafische Anschlusslinie. Prozessanschluss im Gerätedialog wählt Ausgeblendet, Unten (Vorgabe), Links, Rechts oder Oben. Nach dem Auswählen des Sensors kann der blaue Endgriff auf ein Rohrsegment gezogen werden. Die Bindung folgt dem Rohr; sie ist keine Medienverbindung. Beim Einfügen wird ein passendes Rohr in Anschlussrichtung automatisch gefangen, wenn es nahe genug liegt.
 
-Sensor-Rohwerte werden in Szenario/Schritt vorgegeben. Ohne einen vorgegebenen Wert wird kein Grenzwertalarm abgeleitet. Der skalierte Wert wird linear aus den Grenzen ermittelt; aktive Grenzwertalarme erscheinen unter Alarme. Es besteht keine SPS-Verbindung.
+Sensor-Prozesswerte werden in Szenario/Schritt direkt mit ihrer technischen Einheit vorgegeben. Ohne einen vorgegebenen Wert wird kein Grenzwertalarm abgeleitet. Aktive Grenzwertalarme erscheinen unter Alarme. Projektformat 2.2 rechnet Vorgaben älterer Projekte anhand ihrer bisherigen Skalierung einmalig wertgleich um; ungültige Altskalierungen werden mit den betroffenen Tags gemeldet. Eine bestehende Freigabe wird bei der Migration widerrufen. Es besteht keine SPS-Verbindung.
 
 Aktive Sensoralarme färben die Kreishälften: Low-Low unten rot, Low unten gelb, High oben gelb, High-High oben rot. HH hat oben Vorrang vor H, LL unten vor L. Unter dem Sensor stehen ausschließlich aktive Grenzwerte mit Kennung und Einheit; ohne Alarm wird dieser Text ausgeblendet. Deaktivierte Grenzwerte lösen weder Färbung noch Alarmanzeige aus.
 
@@ -229,7 +255,7 @@ Im Szenarioeditor erlaubt der Tab Alarme die Zuordnung über „Im Szenario“ u
 
 Im Szenarioeditor zuerst das gewünschte Szenario wählen, dann den Tab Alarme öffnen. Neuer Alarm legt eine Zeile an. Namen und Betriebsmittel auswählen, Priorität und Beschreibung ausfüllen und Im Szenario aktivieren. Alarm löschen entfernt die ausgewählte Definition aus der Arbeitskopie. Übernehmen bestätigt die Änderungen; Abbrechen verwirft sie.
 
-Sensorgrenzwertalarme werden aus den vorgegebenen Rohwerten abgeleitet und in der rechten Alarmliste angezeigt. Diese Anzeigen sind keine manuell bearbeitbaren Alarmdefinitionen. Grenzen im Sensor-Gerätedialog, Rohwerte unter Symbolzustände anpassen.
+Sensorgrenzwertalarme werden aus den vorgegebenen Prozesswerten abgeleitet und in der rechten Alarmliste angezeigt. Diese Anzeigen sind keine manuell bearbeitbaren Alarmdefinitionen. Grenzen im Sensor-Gerätedialog, Prozesswerte unter Symbolzustände anpassen.
 
 ## 15. Revision und Freigabe
 
@@ -261,7 +287,7 @@ Zum Drucken das exportierte PDF öffnen. Bei maßhaltiger Ausgabe im PDF-Program
 
 ## 17. Tastatur und typische Probleme
 
-R: Rohrwerkzeug. Enter: laufenden Linienpfad abschließen. Esc: Platzierung oder Entwurf abbrechen. ENTF: Auswahl löschen. SHIFT beim Verschieben: waagrecht/senkrecht. SHIFT beim Skalieren: Seitenverhältnis erhalten. STRG-Ziehen eines Symbols: Kopie. STRG-Ziehen eines Rohrs: mehrteiliger Abzweig. Mittlere Maustaste: Ansicht verschieben. Mausrad: Zoom. Rechte Maustaste: Kontextmenü.
+R: Rohrwerkzeug. Enter: laufenden Linienpfad abschließen. Esc: Platzierung oder Entwurf abbrechen. ENTF: Auswahl löschen. SHIFT beim Zeichnen von Rohrpfaden/Wirklinien: freie Winkel; ohne SHIFT rechtwinklig. SHIFT beim Verschieben: waagrecht/senkrecht. SHIFT beim Skalieren: Seitenverhältnis erhalten. STRG-Ziehen eines Symbols: Kopie. STRG-Ziehen eines Rohrs: mehrteiliger Abzweig. Mittlere Maustaste: Ansicht verschieben. Mausrad: Zoom. Rechte Maustaste: Kontextmenü.
 
 Kein Durchfluss sichtbar? Prüfe Versorgung, Gerätezustände, Anschlussbindungen und ein erreichbares Ziel. Statisch befüllte Leitungen sind nicht automatisch durchflossen.
 
@@ -295,10 +321,10 @@ Doppelklick auf die Legende oder Projekt → Legende öffnet Legende bearbeiten.
 
 ## 19. Kontakt und Programminformationen
 
-Hilfe → Über uns zeigt Programmversion, Logo, Kontakt und die vollständigen bereitgestellten Firmenangaben.
+Hilfe → Über uns zeigt Programmversion, Autor Dominik Schneeberger, MIT-Lizenz und die Hinweise der verwendeten Bibliotheken.
 
-cs-systems GmbH · Plabutscherstrasse 115 · 8051 Graz, Austria
+Copyright (c) 2026 Dominik Schneeberger. Lizenz: MIT; vollständiger Text in LICENSE.
 
-E-Mail: office@cs-systems.com
+Drittanbieter behalten ihre eigenen Copyright- und Lizenzhinweise; siehe THIRD-PARTY-NOTICES.md.
 
-Bei einer Rückmeldung die Versionsnummer, den betroffenen Arbeitsablauf und möglichst eine nachvollziehbare Beschreibung angeben. Die Firmenangaben stehen zusätzlich in companyInfo.txt im Dokumentationsordner.
+Bei einer Rückmeldung die Versionsnummer, den betroffenen Arbeitsablauf und möglichst eine nachvollziehbare Beschreibung angeben. Lizenztexte liegen auch im Dokumentationsordner.

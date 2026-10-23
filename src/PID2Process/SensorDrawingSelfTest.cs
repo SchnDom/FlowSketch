@@ -28,7 +28,7 @@ internal static class SensorDrawingSelfTest
         var atlas=ProjectServices.NewBlank();var view=new Scenario();atlas.Scenarios.Add(view);var cases=new List<object>();
         for(int i=0;i<5;i++)
         {
-            var s=new EquipmentItem{Type=EquipmentType.Instrument,Tag=new[]{"LL","L","H","HH","Normal"}[i],X=.04+i*.19,Y=.12,Width=.11,Height=.11/.708,Color="#000000",Opacity=1};s.Sensor.Signal="TE";s.Sensor.Number="401";s.Sensor.ConnectionSide="Hidden";atlas.Equipment.Add(s);view.SensorValues[s.Id]=new[]{0d,1000d,26542d,27648d,13824d}[i];var values=SceneValues.From(view,null);var display=SensorEvaluation.Display(s,values);
+            var s=new EquipmentItem{Type=EquipmentType.Instrument,Tag=new[]{"LL","L","H","HH","Normal"}[i],X=.04+i*.19,Y=.12,Width=.11,Height=.11/.708,Color="#000000",Opacity=1};s.Sensor.Signal="TE";s.Sensor.Number="401";s.Sensor.ConnectionSide="Hidden";atlas.Equipment.Add(s);view.SensorValues[s.Id]=new[]{0d,1000d,26542d,27648d,13824d}[i]/27648*100;var values=SceneValues.From(view,null);var display=SensorEvaluation.Display(s,values);
             var expected=i is 0 or 3?"#FF0000":i is 1 or 2?"#FFFF00":"#FFFFFF";check((i<2?display.LowerColor:display.UpperColor)==expected&&(i==4?display.Text.Length==0:display.Text.Contains(new[]{"LL:","L:","H:","HH:"}[i])),"Sensorhalbkreis und Alarmwert: "+s.Tag);cases.Add(new{item=s,values=new{sensorValues=values.SensorValues},expected=display,project=atlas,points=SensorConnections.Resolve(atlas,s)});
         }
         Save(atlas,view,Path.Combine(output,"sensor-alarms.png"));

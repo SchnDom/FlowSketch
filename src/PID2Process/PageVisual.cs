@@ -15,10 +15,11 @@ internal static class PageVisual
         if(item.Type==EquipmentType.Legend)return LegendVisual.Symbol(item,pageWidth,pageHeight);
         var values=new SceneValues();if(state is not null)values.EquipmentStates[item.Id]=state;
         state=SymbolCatalog.State(item,values);if(SymbolCatalog.CheckValve(item))state=status=="Durchflossen"?"Durchflossen":"Gesperrt";var fault=status?.StartsWith("Störung")==true;
-        var color=Color(StateColor(item,fault?"Störung":state));
+        var color=item.LinesTransparent?Brushes.Transparent:Color(StateColor(item,fault?"Störung":state));
         var background=(fault?"Störung":state) switch{"Offen" or "Ein" or "Aktiv" or "A-B" or "A-C" or "B-C"=>"#CEF4DE","Geschlossen" or "Aus" or "Inaktiv"=>"#FFDF9A","Störung"=>"#FFC5C5",_=>item.BackgroundColor};
         if(SymbolCatalog.Colored(item))background=item.BackgroundColor=="#FFFFFF"?"#FFDF9A":item.BackgroundColor;
-        var grid=new Grid{Width=Math.Max(18,item.Width*pageWidth),Height=Math.Max(18,item.Height*pageHeight),Opacity=state=="Ausgeblendet"?0:item.Opacity,ToolTip=item.Tag+" · "+item.Variant};
+        if(item.BackgroundTransparent)background="#00FFFFFF";
+        var grid=new Grid{Width=Math.Max(item.Variant=="Querverweis"?2:18,item.Width*pageWidth),Height=Math.Max(item.Variant=="Querverweis"?2:18,item.Height*pageHeight),Opacity=state=="Ausgeblendet"?0:item.Opacity,ToolTip=item.Tag+" · "+item.Variant};
         // The border is an overlay background; the actual symbol is drawn from the shared catalog.
         grid.Children.Add(new Border{Background=Color(background),BorderBrush=color,BorderThickness=new Thickness(item.Type is EquipmentType.MediaSource or EquipmentType.Text?1:0)});
         var canvas=new Canvas{Width=100,Height=100};if(SymbolCatalog.CheckValve(item)&&item.CheckValveReversed)canvas.RenderTransform=new ScaleTransform(-1,1,50,50);
@@ -42,7 +43,7 @@ internal static class PageVisual
             grid.Children.Add(new Viewbox{Child=content,Margin=new Thickness(5),Stretch=Stretch.Uniform,StretchDirection=StretchDirection.DownOnly});
         }
         var caption=status??(SymbolCatalog.Valve(item)||SymbolCatalog.Conveyor(item)||item.Type==EquipmentType.Filter?state:"");
-        if(caption.Length>0&&(!SymbolCatalog.Colored(item)||item.ShowStateText)){var layer=new Canvas{IsHitTestVisible=false};var text=new TextBlock{Text=caption,Width=item.Type==EquipmentType.Instrument?Math.Max(140,grid.Width):grid.Width,TextAlignment=TextAlignment.Center,TextWrapping=item.Type==EquipmentType.Instrument||SymbolCatalog.Colored(item)?TextWrapping.NoWrap:TextWrapping.Wrap,TextTrimming=TextTrimming.CharacterEllipsis,FontSize=item.Type==EquipmentType.Instrument?Math.Max(10,Math.Min(16,grid.Width/10)):SymbolCatalog.Colored(item)?Math.Max(6,pageWidth/250):Math.Max(9,pageWidth/180),Foreground=fault?Brushes.DarkRed:Brushes.Black,Background=Brushes.White};if(item.Type==EquipmentType.Instrument)Canvas.SetLeft(text,(grid.Width-text.Width)/2);Canvas.SetTop(text,grid.Height+2);layer.Children.Add(text);grid.Children.Add(layer);}
+        if(caption.Length>0&&(!SymbolCatalog.Colored(item)||item.ShowStateText)){var layer=new Canvas{IsHitTestVisible=false};var text=new TextBlock{Text=caption,Width=item.Variant=="Querverweis"?Math.Max(grid.Width,pageWidth*.035):item.Type==EquipmentType.Instrument?Math.Max(140,grid.Width):grid.Width,TextAlignment=TextAlignment.Center,TextWrapping=item.Type==EquipmentType.Instrument||item.Variant=="Querverweis"||SymbolCatalog.Colored(item)?TextWrapping.NoWrap:TextWrapping.Wrap,TextTrimming=TextTrimming.CharacterEllipsis,FontSize=item.Type==EquipmentType.Instrument?Math.Max(10,Math.Min(16,grid.Width/10)):SymbolCatalog.Colored(item)?Math.Max(6,pageWidth/250):Math.Max(9,pageWidth/180),Foreground=fault?Brushes.DarkRed:Brushes.Black,Background=Brushes.White};if(item.Type==EquipmentType.Instrument||item.Variant=="Querverweis")Canvas.SetLeft(text,(grid.Width-text.Width)/2);Canvas.SetTop(text,grid.Height+2);layer.Children.Add(text);grid.Children.Add(layer);}
         grid.ToolTip=item.Tag+" · "+item.Variant+" · "+caption;
         return grid;
     }
@@ -55,9 +56,10 @@ internal static class PageVisual
         copy.Color=filled?MediaSettings.Color(p,medium?.Type??assignment?.MediumType??item.MediumType,medium?.Name??assignment?.MediumName??item.MediaName):p.MediaColors.Empty;
         copy.BackgroundColor=copy.Color;return copy;
     }
-    internal static double CaptionOffset(EquipmentItem x,double width)=>x.Type==EquipmentType.Instrument?Math.Max(26,width/100):SymbolCatalog.Colored(x)?x.ShowStateText?Math.Max(12,width/200):0:x.Type is EquipmentType.Filter or EquipmentType.Vessel or EquipmentType.HeatExchanger?Math.Max(48,width/45):0;
+    internal static double CaptionOffset(EquipmentItem x,double width)=>x.Variant=="Querverweis"?Math.Max(24,width/90):x.Type==EquipmentType.Instrument?Math.Max(26,width/100):SymbolCatalog.Colored(x)?x.ShowStateText?Math.Max(12,width/200):0:x.Type is EquipmentType.Filter or EquipmentType.Vessel or EquipmentType.HeatExchanger?Math.Max(48,width/45):0;
     internal static string? Status(EquipmentItem x,SceneValues v,NetworkScene network)
     {
+        if(x.Variant=="Querverweis")return x.ReferenceId;
         if(SymbolCatalog.CheckValve(x))return network.CheckValves.GetValueOrDefault(x.Id)?"Durchflossen":"Gesperrt";
         if(x.Type==EquipmentType.Instrument)return SensorEvaluation.Display(x,v).Text;
         if(network.Errors.TryGetValue(x.Id,out var error))return error;
@@ -81,8 +83,8 @@ internal static class PageVisual
         foreach(var item in project.Equipment.Where(x=>x.Page==page))
         {
             if(item.Type is EquipmentType.Text or EquipmentType.Legend&&scenario?.EquipmentStates.GetValueOrDefault(item.Id)=="Ausgeblendet")continue;
-            var symbol=Symbol(Appearance(item,project,values),width,height,scenario?.EquipmentStates.GetValueOrDefault(item.Id),scenario?.TextValues.GetValueOrDefault(item.Id),Status(item,values,network),item.Type==EquipmentType.Instrument?SensorEvaluation.Display(item,values):null);Canvas.SetLeft(symbol,item.X*width);Canvas.SetTop(symbol,item.Y*height);canvas.Children.Add(symbol);if(item.Type==EquipmentType.Drawing)continue;
-            var label=new TextBlock {Text=item.Tag,Background=Brushes.White,Foreground=Brushes.Black,FontSize=width/150};Canvas.SetLeft(label,item.X*width);Canvas.SetTop(label,item.Y*height+symbol.Height+CaptionOffset(item,width));canvas.Children.Add(label);
+            var symbol=Symbol(Appearance(item,project,values),width,height,scenario?.EquipmentStates.GetValueOrDefault(item.Id),scenario?.TextValues.GetValueOrDefault(item.Id),Status(item,values,network),item.Type==EquipmentType.Instrument?SensorEvaluation.Display(item,values):null);Canvas.SetLeft(symbol,item.X*width);Canvas.SetTop(symbol,item.Y*height);canvas.Children.Add(symbol);if(item.Type==EquipmentType.Drawing||!item.ShowTag)continue;
+            var label=new TextBlock {Text=item.Tag,Background=Brushes.White,Foreground=Brushes.Black,FontSize=width/150};Canvas.SetLeft(label,(item.X+item.TagOffsetX)*width);Canvas.SetTop(label,item.Y*height+symbol.Height+CaptionOffset(item,width)+item.TagOffsetY*height);canvas.Children.Add(label);
         }
         canvas.Measure(new Size(width,height));canvas.Arrange(new Rect(0,0,width,height));canvas.UpdateLayout();var image=new RenderTargetBitmap((int)Math.Ceiling(width),(int)Math.Ceiling(height),96,96,PixelFormats.Pbgra32);image.Render(canvas);image.Freeze();return image;
     }

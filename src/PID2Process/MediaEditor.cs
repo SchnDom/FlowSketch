@@ -59,11 +59,18 @@ internal sealed class MediaEditor : Window
 }
 internal static class MediaUi
 {
+    internal static MediumDefinition? AddMedium(EditorDialog owner,EngineeringProject project)
+    {
+        var dialog=new EditorDialog(owner,"Medium hinzufügen");dialog.Text("Bezeichnung","");dialog.FixedChoice("Typ",Types[0].Label,Types.Select(x=>x.Label).ToArray());dialog.Color("Farbe",project.MediaColors.Liquid);
+        dialog.Validation=()=>dialog.Value("Bezeichnung").Length==0||project.Media.Any(x=>x.Name==dialog.Value("Bezeichnung"))?"Eine neue, eindeutige Bezeichnung eingeben.":!ColorPicker.IsValid(dialog.Value("Farbe"))?"Eine gültige Farbe eingeben.":null;
+        if(dialog.ShowDialog()!=true)return null;var medium=new MediumDefinition{Name=dialog.Value("Bezeichnung"),Type=Types.First(x=>x.Label==dialog.Value("Typ")).Value,Color=dialog.Value("Farbe")};project.Media.Add(medium);return medium;
+    }
     internal static void AddSelection(EditorDialog dialog,EngineeringProject project,MediumType type,string name)
     {
         dialog.FixedChoice("Mediumtyp",Types.First(t=>t.Value==type).Label,Types.Select(t=>t.Label).ToArray());
         dialog.FixedChoice("Name des Mediums",name,project.Media.Where(m=>m.Type==type).Select(m=>m.Name).ToArray());
         var types=(ComboBox)dialog.Control("Mediumtyp");var names=(ComboBox)dialog.Control("Name des Mediums");
+        dialog.ActionBeside("Name des Mediums","+",()=>{if(AddMedium(dialog,project) is not {} medium)return;types.SelectedItem=Types.First(x=>x.Value==medium.Type).Label;names.ItemsSource=project.Media.Where(x=>x.Type==medium.Type).Select(x=>x.Name).ToArray();names.SelectedItem=medium.Name;});
         types.SelectionChanged+=(_,e)=>{if(e.Source!=types)return;var selected=Types.FirstOrDefault(t=>t.Label==types.SelectedItem?.ToString())?.Value;var old=names.SelectedItem as string;var choices=project.Media.Where(m=>m.Type==selected).Select(m=>m.Name).ToArray();names.ItemsSource=choices;names.SelectedItem=choices.Contains(old)?old:choices.FirstOrDefault();};
     }
     internal sealed record Choice(MediumType Value,string Label);

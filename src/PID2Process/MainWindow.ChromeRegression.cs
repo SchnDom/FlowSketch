@@ -20,6 +20,28 @@ public partial class MainWindow
         RestoreHistory(false);check(Current.Project.Equipment.All(x=>x.GroupId is null),"Undo löst gerade erstellte Gruppe vollständig auf");RestoreHistory(true);check(Current.Project.Equipment.Select(x=>x.GroupId).Distinct().Count()==1&&Current.Project.Equipment[0].GroupId is not null,"Redo erhält Gruppenzuordnung und Objekt-IDs");
         CreateBlankDocument();check(!UndoButton.IsEnabled&&!RedoButton.IsEnabled,"Neuer Tab erbt keinen Verlauf eines anderen Dokuments");DocumentTabs.SelectedItem=tab;check(UndoButton.IsEnabled,"Tabwechsel aktiviert den eigenen Dokumentverlauf");
         var chrome=System.Windows.Shell.WindowChrome.GetWindowChrome(this);check(chrome is {CaptionHeight:44,UseAeroCaptionButtons:false}&&System.Windows.Shell.WindowChrome.GetIsHitTestVisibleInChrome(MainMenu),"Eigene Titelleiste behält Resize-/Caption-Zonen mit bedienbarem Menü");
+        // Exercise WPF's actual non-client hit-test, without creating a visible HWND,
+        // sending mouse input, or reimplementing its caption/resize calculations.
+        var workerType=typeof(System.Windows.Shell.WindowChrome).Assembly.GetType("System.Windows.Shell.WindowChromeWorker",true)!;
+        var worker=workerType.GetMethod("GetWindowChromeWorker",System.Reflection.BindingFlags.Static|System.Reflection.BindingFlags.Public)!.Invoke(null,[this]);
+        var hitTest=workerType.GetMethod("_HitTestNca",System.Reflection.BindingFlags.Instance|System.Reflection.BindingFlags.NonPublic)!;
+        var priorState=WindowState;
+        try
+        {
+            WindowState=WindowState.Maximized;UpdateChrome();
+            foreach(var scale in new[]{1d,1.5,2d})
+            foreach(var origin in new[]{new Point(0,0),new Point(-2560,-200)})
+            {
+                var bounds=new Rect(origin.X/scale,origin.Y/scale,2560/scale,1440/scale);
+                var hits=new[]{0d,1d,5d}.Select(y=>Convert.ToInt32(hitTest.Invoke(worker,[bounds,new Point(bounds.Left+bounds.Width/2,bounds.Top+y/scale)]))).ToArray();
+                check(hits.All(hit=>hit==2),$"Echter WPF-Hittest am obersten Bildschirmrand liefert HTCAPTION bei {scale*100}% DPI und Monitor {origin.X}");
+            }
+            check(System.Windows.Shell.WindowChrome.GetIsHitTestVisibleInChrome(MainMenu)&&System.Windows.Shell.WindowChrome.GetIsHitTestVisibleInChrome(CaptionActions),"Menüs und Fensterbuttons behalten ihre eigenen Klickbereiche beim Maximieren");
+            WindowState=WindowState.Normal;UpdateChrome();
+            check(Convert.ToInt32(hitTest.Invoke(worker,[new Rect(0,0,1500,900),new Point(750,0)]))==12&&chrome.ResizeBorderThickness==new Thickness(6),"Wiederhergestelltes Fenster erhält den oberen nativen Größenänderungsrand zurück");
+            check(Convert.ToInt32(hitTest.Invoke(worker,[new Rect(0,0,1500,900),new Point(750,10)]))==2,"Unterhalb des Größenänderungsrands bleibt die normale Titelleiste ziehbar");
+        }
+        finally{WindowState=priorState;UpdateChrome();}
         foreach(var monitor in new[]{new NativeRect{Left=0,Top=0,Right=1920,Bottom=1080},new NativeRect{Left=-2560,Top=-300,Right=0,Bottom=1140}})
         foreach(var edge in new[]{"unten","oben","links","rechts"})
         {
@@ -37,6 +59,14 @@ public partial class MainWindow
         var fileMenu=(MenuItem)MainMenu.Items[0];fileMenu.ApplyTemplate();var popup=(System.Windows.Controls.Primitives.Popup)fileMenu.Template.FindName("PART_Popup",fileMenu);check(!Descendants(popup.Child).OfType<ScrollViewer>().Any(),"Auch Menü-Unterlisten besitzen keinen ScrollViewer");
         check(MainMenu.Items.OfType<MenuItem>().All(item=>item.Background is SolidColorBrush brush&&brush.Color.A==0)&&menu.Items.OfType<MenuItem>().All(item=>item.Background is SolidColorBrush brush&&brush.Color.A==0),"Titel- und Kontextmenüs haben keine dauerhaften Buttonflächen");
         Save(menu,"context-menu-"+BuildInfo.Version+".png");Save(root,"desktop-chrome-"+BuildInfo.Version+".png");
+        foreach(var size in new[]{new Size(1000,600),new Size(1707,960),new Size(2560,1440)})
+        {
+            root.Width=size.Width;root.Height=size.Height;root.Measure(size);root.Arrange(new Rect(size));root.UpdateLayout();
+            bool Inside(FrameworkElement element){var bounds=element.TransformToAncestor(root).TransformBounds(new Rect(element.RenderSize));return bounds.Top>=0&&bounds.Bottom<=size.Height+.1&&bounds.Left>=0&&bounds.Right<=size.Width+.1&&bounds.Height>0;}
+            check(Inside(Overview)&&Inside(StatusText),$"Planübersicht und Statusleiste innerhalb des Layouts bei {size.Width} × {size.Height} logischen Pixeln");
+            Save(root,$"screen-layout-{size.Width}-{size.Height}.png");
+        }
+        root.Width=1500;root.Height=900;root.Measure(new Size(1500,900));root.Arrange(new Rect(0,0,1500,900));root.UpdateLayout();
         void Save(FrameworkElement visual,string name){var bitmap=new RenderTargetBitmap((int)Math.Ceiling(visual.ActualWidth),(int)Math.Ceiling(visual.ActualHeight),96,96,PixelFormats.Pbgra32);bitmap.Render(visual);var encoder=new PngBitmapEncoder();encoder.Frames.Add(BitmapFrame.Create(bitmap));using var file=System.IO.File.Create(System.IO.Path.Combine(output,name));encoder.Save(file);}
     }
 }

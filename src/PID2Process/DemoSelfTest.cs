@@ -7,7 +7,7 @@ internal static class DemoSelfTest
     internal static void Run(Action<bool,string> check)
     {
         var directory=Path.Combine(Environment.CurrentDirectory,"examples");var p=ProjectServices.Load(Path.Combine(directory,"FlowSketch-Demo.pid2process.json"));
-        check(p.BlankSheet is {Format:"A2"}&&p.Equipment.Count>=30&&p.Scenarios.Count==7&&p.ControlSteps.Count==26,"Demo enthält A2-Blatt, 37 Symbole, sieben Szenarien und 26 Schritte");
+        check(p.BlankSheet is {Format:"A2"}&&p.Equipment.Count>=40&&p.Scenarios.Count==7&&p.ControlSteps.Count==26,"Demo enthält A2-Blatt, kompakte Querverweise, sieben Szenarien und 26 Schritte");
         var segments=p.Pipes.SelectMany(pipe=>{var points=PipeNetwork.Resolve(p,pipe);return points.Zip(points.Skip(1),(a,b)=>(a,b,pipe.Id));}).ToArray();
         const double eps=1e-8;
         check(segments.All(s=>Math.Abs(s.a.X-s.b.X)<eps||Math.Abs(s.a.Y-s.b.Y)<eps),"Demo: sämtliche aufgelösten Rohrsegmente sind horizontal oder vertikal");
@@ -21,6 +21,8 @@ internal static class DemoSelfTest
         SceneValues Values(int scenario,int step)=>SceneValues.From(p.Scenarios[scenario-1],p.ControlSteps.Where(t=>t.ScenarioId==p.Scenarios[scenario-1].Id).ElementAt(step-1));
         var pump=p.Equipment.Single(e=>e.Tag=="P-101");var tank=p.Equipment.Single(e=>e.Tag=="B-101");var fan=p.Equipment.Single(e=>e.Tag=="V-201");var heat=p.Equipment.Single(e=>e.Tag=="WT-401");
         var filling=PipeNetwork.EvaluateScene(p,Values(2,2));check(filling.Pipes.Values.Any(a=>a.Flowing)&&!filling.Errors.ContainsKey(pump.Id),"Demo: Wasserfüllung läuft mit versorgter Pumpe");
+        var third=p.Equipment.Single(x=>x.Tag=="REF-103");var waterBranch=p.Pipes.Single(x=>x.StartConnection?.EquipmentId==third.Id);
+        check(p.Equipment.Count(x=>x.Variant=="Querverweis"&&x.ReferenceId=="QV000001")==3&&p.Equipment.Count(x=>x.Variant=="Querverweis"&&x.ReferenceId=="QV000002")==2&&filling.Pipes[waterBranch.Id].State=="Befüllt","Demo: drei Wasser-Querverweise und eigenes Druckluftpaar verteilen Medien über getrennte IDs");
         var mixed=PipeNetwork.EvaluateScene(p,Values(3,4));check(mixed.Pipes.Values.Any(a=>a.Flowing&&a.MediumType==MediumType.Mixed),"Demo: Behälter versorgt Ausgang mit Schrittmedium Emulsion");
         check(PipeNetwork.EvaluateScene(p,Values(4,4)).Errors.GetValueOrDefault(fan.Id)=="Störung: Medium ungeeignet","Demo: ungeeignetes Ventilatormedium wird als Störung gezeigt");
         check(PipeNetwork.EvaluateScene(p,Values(6,1)).HeatExchangers[heat.Id]==(true,false)&&PipeNetwork.EvaluateScene(p,Values(6,2)).HeatExchangers[heat.Id]==(true,true)&&PipeNetwork.EvaluateScene(p,Values(6,3)).HeatExchangers[heat.Id]==(false,true),"Demo: Wärmetauscher zeigt primären, beide und sekundären Durchfluss unabhängig");
