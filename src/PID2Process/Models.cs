@@ -6,6 +6,7 @@ public sealed class EngineeringProject
 {
     public string FormatVersion { get; set; } = "2.1";
     public string Name { get; set; } = "Neues FlowSketch-Projekt";
+    public int ReferenceNumber {get;set;}
     public PdfReference Pdf { get; set; } = new();
     public BlankSheet? BlankSheet {get;set;}
     public List<MediumDefinition> Media {get;set;}=[];
@@ -83,6 +84,7 @@ public sealed class EquipmentItem
     public string MediaName {get;set;} = "";
     public MediumType MediumType {get;set;} = MediumType.Liquid;
     public string TextContent {get;set;} = "Text";
+    public string ReferenceId {get;set;} = "";
     public Guid? GroupId {get;set;}
     public double? TemperatureCelsius {get;set;}
     public double? PressureBar {get;set;}

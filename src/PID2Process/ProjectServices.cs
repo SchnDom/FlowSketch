@@ -81,6 +81,7 @@ public static class ProjectServices
     }
     internal static void Normalize(EngineeringProject project)
     {
+        if(CrossReferences.Normalize(project)){project.Approval.IsApproved=false;project.Approval.IsBlocked=true;project.Approval.BlockReason="Querverweise kompakt dargestellt und lange IDs gruppenerhaltend gekürzt. Erneute Freigabe erforderlich.";}
         if(project.BlankSheet is {} blank){project.Pdf.PageCount=1;project.Pdf.PageAspectRatios=[blank.HeightMm/blank.WidthMm];}
         if(ScenarioSteps.Ensure(project)){project.Approval.IsApproved=false;project.Approval.IsBlocked=true;project.Approval.BlockReason="Ersten Szenarioschritt ergänzt. Erneute Freigabe erforderlich.";}
         var upgradedDrawing=project.Equipment.Any(DrawingGeometry.IsLine)&&project.Equipment.Where(DrawingGeometry.IsLine).Any(x=>x.Drawing.Start is null||x.Drawing.End is null);DrawingGeometry.Normalize(project);

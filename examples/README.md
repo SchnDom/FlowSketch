@@ -2,9 +2,9 @@
 
 Über **Hilfe → Demo öffnen** wird eine Arbeitskopie auf einem A2-Blatt geöffnet. **Datei → Speichern...** speichert diese unter einem eigenen Dateinamen. Alternativ die Projektdatei über Datei → Öffnen... laden.
 
-Die Demo enthält 37 Symbole, 29 ausschließlich rechtwinklige Rohrpfade, zwei grafische Wirklinien, vier Medien, sieben Szenarien und 26 Schritte. Die vier räumlich getrennten Anlagenbereiche vermeiden Rohrkreuzungen. PNG-Vorschau und Excel-Aktorenliste liegen daneben.
+Die Demo enthält 40 Symbole, 31 ausschließlich rechtwinklige Rohrpfade, zwei grafische Wirklinien, vier Medien, sieben Szenarien und 26 Schritte. PNG-Vorschau und Excel-Aktorenliste liegen daneben. Im Wasserweg verbinden REF-101 und REF-102 über dieselbe editierbare ID QV000001 ihre Rohranschlüsse. Das zusätzliche Rohr L-REF-SCHLEIFE zwischen den beiden zeigt eine versorgte Schleife ohne künstliche Flussanimation.
 
-Rechts im Tab **Szenarien** einen Ablauf doppelklicken, dann rechts im Editor einen Schritt wählen. **Szenario- und Schrittauswahl in aktueller Ansicht anzeigen** synchronisiert die obere Werkzeugleiste. Zustände sind manuelle Vorgaben; Schritte laufen nicht automatisch ab.
+Rechts im Tab **Abläufe** ein Szenario doppelklicken, dann rechts im Editor einen Schritt wählen. **Szenario- und Schrittauswahl in aktueller Ansicht anzeigen** synchronisiert die obere Werkzeugleiste. Zustände sind manuelle Vorgaben; Schritte laufen nicht automatisch ab.
 
 | Szenario | Gezeigte Funktionen |
 | --- | --- |
@@ -21,3 +21,5 @@ Zusätzlich: automatische Medienlegende, elektrische Armaturantriebe, zwei frei 
 Die Demo erfordert keine PDF und steuert keine reale Anlage. Tankfüllstände ändern sich ausschließlich durch die Schrittvorgabe. Die bereitgestellte Arbeitsmappe ist eine Ausgabe, kein Projektimport.
 
 Die Projektdatei lässt sich im Quellverzeichnis reproduzierbar mit `python scripts/Create-Demo.py` erzeugen. Der bildschirmfreie Modelltest prüft Geometrie und ausgewählte Prozesszustände und erzeugt Vorschau sowie Excel-Datei.
+
+Die separate Compositor-Demo ist über Datei → PDF-Compositor → Demo laden erreichbar. Sie erzeugt zwei Beispiel-PDFs mit unterschiedlich gedrehten Seiten und zeigt ausgewählte Inhalte ohne Schriftkopf. Anordnung, Mauszeiger-Zoom, Hilfslinien, Export und Übernehmen in den Haupteditor können daran ausprobiert werden.

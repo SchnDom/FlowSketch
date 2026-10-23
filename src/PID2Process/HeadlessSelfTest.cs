@@ -16,6 +16,9 @@ internal static class HeadlessSelfTest
         try
         {
             IconAssetBuilder.Write(Path.Combine(Environment.CurrentDirectory,"_media"));
+            await CompositionSelfTest.Run(output,Check);
+            CrossReferenceSelfTest.Run(output,Check);
+            await CompositionExportSelfTest.Run(output,Check);
             var fixture=Path.Combine(output,"process-fixture.pid2process.json");
             var pdf=Path.Combine(output,"model-pages.pdf");EditorSelfTest.MakePdf(pdf);var project=Fixture(pdf);ProjectServices.Save(fixture,project);var scenario=project.Scenarios.Single(s=>s.Name=="Befüllen");var step=project.ControlSteps.Single(s=>s.Name=="Füllen starten");
             var valve=project.Equipment.Single(x=>x.Tag=="XV-101");var source=project.Equipment.Single(x=>x.Type==EquipmentType.MediaSource);var text=project.Equipment.Single(x=>x.Type==EquipmentType.Text);

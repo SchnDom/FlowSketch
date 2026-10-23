@@ -247,6 +247,78 @@
       "mediumType": "Liquid"
     },
     {
+      "id": "0c1b42a6-abce-505f-aae9-162c7b64a036",
+      "tag": "REF-101",
+      "type": "Generic",
+      "variant": "Querverweis",
+      "page": 1,
+      "x": 0.4797979797979798,
+      "y": 0.1619047619047619,
+      "width": 0.006734006734006734,
+      "height": 0.009523809523809525,
+      "function": "Wasser / Querverweis",
+      "installationLocation": "+DEMO",
+      "description": "REF-101",
+      "actuator": "Manual",
+      "failPosition": "NC",
+      "color": "#007E87",
+      "backgroundColor": "#FFFFFF",
+      "opacity": 1,
+      "mediumId": "5fe6e61e-4b39-5ef0-ae7f-7c7df41b37ba",
+      "mediaName": "Wasser",
+      "mediumType": "Liquid",
+      "referenceId": "QV000001"
+    },
+    {
+      "id": "da24c6aa-419c-5dd3-848b-e804f0116969",
+      "tag": "REF-102",
+      "type": "Generic",
+      "variant": "Querverweis",
+      "page": 1,
+      "x": 0.5387205387205387,
+      "y": 0.1619047619047619,
+      "width": 0.006734006734006734,
+      "height": 0.009523809523809525,
+      "function": "Wasser / Querverweis",
+      "installationLocation": "+DEMO",
+      "description": "REF-102",
+      "actuator": "Manual",
+      "failPosition": "NC",
+      "color": "#007E87",
+      "backgroundColor": "#FFFFFF",
+      "opacity": 1,
+      "mediumId": "5fe6e61e-4b39-5ef0-ae7f-7c7df41b37ba",
+      "mediaName": "Wasser",
+      "mediumType": "Liquid",
+      "referenceId": "QV000001"
+    },
+    {
+      "id": "d266066d-e146-5dfa-90fa-96293431991d",
+      "tag": "REF-HINWEIS",
+      "type": "Drawing",
+      "variant": "Textfeld",
+      "page": 1,
+      "x": 0.4292929292929293,
+      "y": 0.05714285714285714,
+      "width": 0.2609427609427609,
+      "height": 0.02857142857142857,
+      "function": "Demo",
+      "installationLocation": "+DEMO",
+      "description": "REF-HINWEIS",
+      "actuator": "Manual",
+      "failPosition": "NC",
+      "color": "#203544",
+      "backgroundColor": "#FFFFFF",
+      "opacity": 1,
+      "mediumId": "5fe6e61e-4b39-5ef0-ae7f-7c7df41b37ba",
+      "mediaName": "Wasser",
+      "mediumType": "Liquid",
+      "textContent": "QV000001: gleicher Medienknoten. Zusatzrohr unten: Schleife, kein eigener Durchfluss.",
+      "drawing": {
+        "fontSize": 18
+      }
+    },
+    {
       "id": "08d46b0f-952f-5720-abd9-231b4e84231e",
       "tag": "XV-101",
       "type": "IsolationValve",
@@ -934,7 +1006,7 @@
         ],
         "connectionSide": "Bottom",
         "connection": {
-          "pipeId": "22726065-3a6b-51a2-8c10-7fb3b54568e6",
+          "pipeId": "e783b371-d8bc-5142-bb78-39015b5ab800",
           "segment": 0,
           "fraction": 0.1797752808988764
         },
@@ -1118,7 +1190,7 @@
           "y": 0.1666666666666667
         },
         {
-          "x": 0.5976430976430976,
+          "x": 0.4797979797979798,
           "y": 0.1666666666666667
         }
       ],
@@ -1127,13 +1199,67 @@
         "port": "Right"
       },
       "endConnection": {
-        "equipmentId": "f440c686-5cd9-57da-972b-9b7f98fa5b9e",
-        "port": "Left1"
+        "equipmentId": "0c1b42a6-abce-505f-aae9-162c7b64a036",
+        "port": "Left"
       }
     },
     {
       "id": "8fed473a-850d-5373-9633-e5c5cc9be5e0",
       "tag": "L-006",
+      "page": 1,
+      "points": [
+        {
+          "x": 0.5454545454545454,
+          "y": 0.1666666666666667
+        },
+        {
+          "x": 0.5976430976430976,
+          "y": 0.1666666666666667
+        }
+      ],
+      "startConnection": {
+        "equipmentId": "da24c6aa-419c-5dd3-848b-e804f0116969",
+        "port": "Right"
+      },
+      "endConnection": {
+        "equipmentId": "f440c686-5cd9-57da-972b-9b7f98fa5b9e",
+        "port": "Left1"
+      }
+    },
+    {
+      "id": "5441d2e8-7c82-5fee-b8ba-dd6e577eca0e",
+      "tag": "L-REF-SCHLEIFE",
+      "page": 1,
+      "points": [
+        {
+          "x": 0.4831649831649832,
+          "y": 0.17142857142857143
+        },
+        {
+          "x": 0.4831649831649832,
+          "y": 0.20238095238095238
+        },
+        {
+          "x": 0.5420875420875421,
+          "y": 0.20238095238095238
+        },
+        {
+          "x": 0.5420875420875421,
+          "y": 0.17142857142857143
+        }
+      ],
+      "startConnection": {
+        "equipmentId": "0c1b42a6-abce-505f-aae9-162c7b64a036",
+        "port": "Bottom"
+      },
+      "endConnection": {
+        "equipmentId": "da24c6aa-419c-5dd3-848b-e804f0116969",
+        "port": "Bottom"
+      }
+    },
+    {
+      "id": "1beb23b1-fdfa-5a15-9aa5-2f0f757b348e",
+      "tag": "L-008",
       "page": 1,
       "points": [
         {
@@ -1155,8 +1281,8 @@
       }
     },
     {
-      "id": "5441d2e8-7c82-5fee-b8ba-dd6e577eca0e",
-      "tag": "L-007",
+      "id": "8cf6090a-7faa-5f23-b0ad-28720e65b972",
+      "tag": "L-009",
       "page": 1,
       "points": [
         {
@@ -1174,8 +1300,8 @@
       }
     },
     {
-      "id": "1beb23b1-fdfa-5a15-9aa5-2f0f757b348e",
-      "tag": "L-008",
+      "id": "11c5d415-cd5d-55d0-bccb-2d4f2953d552",
+      "tag": "L-010",
       "page": 1,
       "points": [
         {
@@ -1201,8 +1327,8 @@
       }
     },
     {
-      "id": "8cf6090a-7faa-5f23-b0ad-28720e65b972",
-      "tag": "L-009",
+      "id": "71145a51-6830-5abe-ac42-90e4339ee3c1",
+      "tag": "L-011",
       "page": 1,
       "points": [
         {
@@ -1220,8 +1346,8 @@
       }
     },
     {
-      "id": "11c5d415-cd5d-55d0-bccb-2d4f2953d552",
-      "tag": "L-010",
+      "id": "f4834af7-e98e-5291-b0d0-28bdb8c97eaf",
+      "tag": "L-012",
       "page": 1,
       "points": [
         {
@@ -1243,8 +1369,8 @@
       }
     },
     {
-      "id": "71145a51-6830-5abe-ac42-90e4339ee3c1",
-      "tag": "L-011",
+      "id": "01a27b53-dc08-5e9d-8255-44b557772884",
+      "tag": "L-013",
       "page": 1,
       "points": [
         {
@@ -1266,8 +1392,8 @@
       }
     },
     {
-      "id": "f4834af7-e98e-5291-b0d0-28bdb8c97eaf",
-      "tag": "L-012",
+      "id": "818be7b3-940e-57ea-8352-73ad8979dd1c",
+      "tag": "L-014",
       "page": 1,
       "points": [
         {
@@ -1289,8 +1415,8 @@
       }
     },
     {
-      "id": "01a27b53-dc08-5e9d-8255-44b557772884",
-      "tag": "L-013",
+      "id": "67801814-e46f-5eed-bf64-af35f9d04ad2",
+      "tag": "L-015",
       "page": 1,
       "points": [
         {
@@ -1312,8 +1438,8 @@
       }
     },
     {
-      "id": "818be7b3-940e-57ea-8352-73ad8979dd1c",
-      "tag": "L-014",
+      "id": "aeb5b28d-4e04-5ec0-bdc6-8ca855ee6f0c",
+      "tag": "L-016",
       "page": 1,
       "points": [
         {
@@ -1335,8 +1461,8 @@
       }
     },
     {
-      "id": "67801814-e46f-5eed-bf64-af35f9d04ad2",
-      "tag": "L-015",
+      "id": "80080f54-7b1f-5549-b3c6-7615965c22a3",
+      "tag": "L-017",
       "page": 1,
       "points": [
         {
@@ -1358,8 +1484,8 @@
       }
     },
     {
-      "id": "aeb5b28d-4e04-5ec0-bdc6-8ca855ee6f0c",
-      "tag": "L-016",
+      "id": "7e489769-a6c8-5f13-bcb6-39d6314e9f4a",
+      "tag": "L-018",
       "page": 1,
       "points": [
         {
@@ -1377,8 +1503,8 @@
       }
     },
     {
-      "id": "80080f54-7b1f-5549-b3c6-7615965c22a3",
-      "tag": "L-017",
+      "id": "258f19ee-5bc0-56d6-9fcf-dc37e1bad388",
+      "tag": "L-019",
       "page": 1,
       "points": [
         {
@@ -1400,8 +1526,8 @@
       }
     },
     {
-      "id": "7e489769-a6c8-5f13-bcb6-39d6314e9f4a",
-      "tag": "L-018",
+      "id": "229f3d10-540b-5724-b310-074919c5cf5d",
+      "tag": "L-020",
       "page": 1,
       "points": [
         {
@@ -1435,8 +1561,8 @@
       }
     },
     {
-      "id": "258f19ee-5bc0-56d6-9fcf-dc37e1bad388",
-      "tag": "L-019",
+      "id": "e5d4cbd8-9a1a-5b4f-918f-af6798c280fa",
+      "tag": "L-021",
       "page": 1,
       "points": [
         {
@@ -1470,8 +1596,8 @@
       }
     },
     {
-      "id": "229f3d10-540b-5724-b310-074919c5cf5d",
-      "tag": "L-020",
+      "id": "91667092-54ed-5877-964d-2b3e3ba06967",
+      "tag": "L-022",
       "page": 1,
       "points": [
         {
@@ -1493,8 +1619,8 @@
       }
     },
     {
-      "id": "e5d4cbd8-9a1a-5b4f-918f-af6798c280fa",
-      "tag": "L-021",
+      "id": "ae9b7aa7-6150-5844-80a3-d90048e4f207",
+      "tag": "L-023",
       "page": 1,
       "points": [
         {
@@ -1512,8 +1638,8 @@
       }
     },
     {
-      "id": "91667092-54ed-5877-964d-2b3e3ba06967",
-      "tag": "L-022",
+      "id": "25aff2f6-4bb0-5059-ba20-c6782191842e",
+      "tag": "L-024",
       "page": 1,
       "points": [
         {
@@ -1535,8 +1661,8 @@
       }
     },
     {
-      "id": "ae9b7aa7-6150-5844-80a3-d90048e4f207",
-      "tag": "L-023",
+      "id": "2114634c-be15-5a03-a5e6-543cfd66bb37",
+      "tag": "L-025",
       "page": 1,
       "points": [
         {
@@ -1558,8 +1684,8 @@
       }
     },
     {
-      "id": "25aff2f6-4bb0-5059-ba20-c6782191842e",
-      "tag": "L-024",
+      "id": "22726065-3a6b-51a2-8c10-7fb3b54568e6",
+      "tag": "L-026",
       "page": 1,
       "points": [
         {
@@ -1581,8 +1707,8 @@
       }
     },
     {
-      "id": "2114634c-be15-5a03-a5e6-543cfd66bb37",
-      "tag": "L-025",
+      "id": "3ea185e7-9e34-5768-8bf2-46ec25be69e0",
+      "tag": "L-027",
       "page": 1,
       "points": [
         {
@@ -1604,8 +1730,8 @@
       }
     },
     {
-      "id": "22726065-3a6b-51a2-8c10-7fb3b54568e6",
-      "tag": "L-026",
+      "id": "e783b371-d8bc-5142-bb78-39015b5ab800",
+      "tag": "L-028",
       "page": 1,
       "points": [
         {
@@ -1623,8 +1749,8 @@
       }
     },
     {
-      "id": "3ea185e7-9e34-5768-8bf2-46ec25be69e0",
-      "tag": "L-027",
+      "id": "36f74279-9566-5e4c-9b0c-9ac675880ec6",
+      "tag": "L-029",
       "page": 1,
       "points": [
         {
@@ -1650,8 +1776,8 @@
       }
     },
     {
-      "id": "e783b371-d8bc-5142-bb78-39015b5ab800",
-      "tag": "L-028",
+      "id": "3b4949bb-5aee-5a42-b898-257c2b51d569",
+      "tag": "L-030",
       "page": 1,
       "points": [
         {
@@ -1677,8 +1803,8 @@
       }
     },
     {
-      "id": "36f74279-9566-5e4c-9b0c-9ac675880ec6",
-      "tag": "L-029",
+      "id": "56ce52be-ef9c-5a1d-a201-3c8accfe606e",
+      "tag": "L-031",
       "page": 1,
       "points": [
         {
@@ -2589,5 +2715,6 @@
         "9190688a-1e5b-5311-8af6-0fd972ccca92"
       ]
     }
-  ]
+  ],
+  "referenceNumber": 1
 }

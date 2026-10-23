@@ -1,6 +1,7 @@
 """Reproducible, PDF-free FlowSketch example. Coordinates below are millimetres."""
 import json
 import uuid
+import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -89,7 +90,16 @@ equipment('XV-104', 'IsolationValve', 270, 102, variant='Kugelarmatur', function
 pipe(('Q-WASSER', 'Right'), ('XV-101', 'Left')); pipe(('XV-101', 'Right'), ('P-101', 'Left'))
 pipe(('P-101', 'Right'), ('F-101', 'Top'), [(150, 70), (150, 50), (177, 50)])
 pipe(('F-101', 'Bottom'), ('XV-102', 'Left'), [(177, 90), (208, 90), (208, 70)])
-pipe(('XV-102', 'Right'), ('B-101', 'Left1')); pipe(('B-101', 'Right1'), ('XV-103', 'Left'))
+equipment('REF-101', 'Generic', 285, 70, 4, 4, variant='Querverweis', function='Wasser / Querverweis')
+equipment('REF-102', 'Generic', 320, 70, 4, 4, variant='Querverweis', function='Wasser / Querverweis')
+items['REF-101']['referenceId']=items['REF-102']['referenceId']='QV000001'
+p['referenceNumber']=1
+pipe(('XV-102', 'Right'), ('REF-101', 'Left'))
+pipe(('REF-102', 'Right'), ('B-101', 'Left1'))
+pipe(('REF-101', 'Bottom'), ('REF-102', 'Bottom'), [(287,85),(322,85)])
+p['pipes'][-1]['tag']='L-REF-SCHLEIFE'
+text('REF-HINWEIS', 'QV000001: gleicher Medienknoten. Zusatzrohr unten: Schleife, kein eigener Durchfluss.', 255, 24, 155, 12)
+pipe(('B-101', 'Right1'), ('XV-103', 'Left'))
 pipe(('XV-103', 'Right'), target=(545, 70))
 pipe(('XV-102', 'Bottom'), ('XV-104', 'Left'), [(240, 102)])
 pipe(('XV-104', 'Right'), target=(330, 102))
@@ -199,6 +209,9 @@ for name,raw in [('Low und Low-Low',0),('Normalwert',13824),('High',26542),('Hig
 for tag,name,trigger in [('P-101','Trockenlauf prüfen','Pumpe Ein ohne Eingangsmedium'),('F-101','Filterwartung','Filter Verstopft'),('V-201','Medium ungeeignet','Ventilator mit Flüssigkeit statt Gas')]:
     p['alarms'].append(dict(id=ident('Alarm-'+tag),tag=tag,name=name,priority='Warning',trigger=trigger,impact='Förderweg unterbrochen',operatorAction='Versorgung und Schrittvorgaben prüfen.',scenarioIds=[p['scenarios'][4 if tag=='F-101' else 3 if tag=='V-201' else 1]['id']]))
 
-out=ROOT/'examples';out.mkdir(exist_ok=True)
-(out/'FlowSketch-Demo.pid2process.json').write_text(json.dumps(p,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
-print(f"Demo: {len(p['equipment'])} Symbole, {len(p['pipes'])} rechtwinklige Rohre, {len(p['scenarios'])} Szenarien, {len(p['controlSteps'])} Schritte")
+if '--stdout' in sys.argv:
+    print(json.dumps(p,ensure_ascii=False,indent=2))
+else:
+    out=ROOT/'examples';out.mkdir(exist_ok=True)
+    (out/'FlowSketch-Demo.pid2process.json').write_text(json.dumps(p,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+    print(f"Demo: {len(p['equipment'])} Symbole, {len(p['pipes'])} rechtwinklige Rohre, {len(p['scenarios'])} Szenarien, {len(p['controlSteps'])} Schritte")

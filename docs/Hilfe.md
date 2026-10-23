@@ -1,6 +1,6 @@
 # FlowSketch – Hilfe
 
-Version 0.8.1 · cs-systems GmbH
+Version 0.10.0 · cs-systems GmbH
 
 FlowSketch zeichnet funktionelle Prozessdarstellungen auf leeren Blättern oder auf R&I-/P&ID-PDFs. Symbole, Rohrleitungen, Wirklinien, Szenarien und Schritte werden in einer eigenen Projektdatei gespeichert. Die importierte PDF bleibt unverändert. Diese Hilfe ist im Programm unter Hilfe → Bedienhilfe und offline als Hilfe.html im Dokumentationsordner verfügbar.
 
@@ -15,7 +15,7 @@ Beim Start erscheint sofort ein leeres A4-Blatt im Querformat. Links befindet si
 5. Rechts Abläufe öffnen, einen Ablauf mit Schritten anlegen und Zustände festlegen. Die Ansichtsoption im Szenarioeditor kann die Auswahl mit der oberen Werkzeugleiste synchronisieren.
 6. Datei → Speichern wählen und einen Namen für die Projektdatei vergeben.
 
-Zum Ausprobieren Hilfe → Demo öffnen wählen. Die Demo ist zusätzlich in der EXE enthalten und benötigt keinen Beispiele-Ordner. Die Demo wird als Arbeitskopie auf einem A2-Blatt geöffnet; beim Speichern einen eigenen Dateinamen vergeben. Sie benötigt keine PDF und enthält 37 Symbole, 29 rechtwinklige Rohrpfade ohne Kreuzungen zwischen den Anlagenwegen, sieben Szenarien und 26 Schritte. Die Bereiche zeigen Wasser, Druckluft, Feststoff und zwei unabhängige Wärmetauscherkreise. Rechts unter Abläufe einen Ablauf doppelklicken und danach die Schritte wechseln.
+Zum Ausprobieren Hilfe → Demo öffnen wählen. Die Demo ist zusätzlich in der EXE enthalten und benötigt keinen Beispiele-Ordner. Die Demo wird als Arbeitskopie auf einem A2-Blatt geöffnet; beim Speichern einen eigenen Dateinamen vergeben. Sie benötigt keine PDF und enthält 40 Symbole, 31 rechtwinklige Rohrpfade, sieben Szenarien und 26 Schritte. Die Bereiche zeigen Wasser, Druckluft, Feststoff und zwei unabhängige Wärmetauscherkreise. Im Wasserweg verbinden REF-101 und REF-102 über dieselbe ID QV000001 zwei Anschlüsse. Das zusätzliche Rohr zwischen ihnen zeigt eine versorgte Schleife ohne künstliche Flussanimation. Rechts unter Abläufe einen Ablauf doppelklicken und danach die Schritte wechseln.
 
 Die Demoabläufe zeigen Stillstand, Wasserfüllung, Tankversorgung mit Mediumwechsel, Verdichter und Ventilator, Filterverstopfung und Ablass, getrennte Wärmetauscherkreise sowie skalierte Sensorwerte mit Grenzwertalarmen. Die Schritte sind manuelle Vorgaben und laufen nicht automatisch ab. Eine Erläuterung, eine große PNG-Vorschau und die Excel-Aktorenliste liegen im Programmordner unter Beispiele.
 
@@ -38,6 +38,20 @@ Ein Stern am Dokumentnamen kennzeichnet ungespeicherte Änderungen. Datei → Sp
 Die Projektdatei enthält die Zeichnung und Zuweisungen. Bei einem PDF-Projekt bleibt die Referenz-PDF eine eigene Datei. Verschiebe die Referenz nicht unbedacht: Wird sie beim Öffnen nicht gefunden, fragt das Programm nach ihrer neuen Position. Eine abweichende PDF wird durch die Hashprüfung erkannt. Ein gespeichertes Leerblatt benötigt keine Referenzdatei.
 
 Unter Projekt → Projekteinstellungen werden Projektname und Planrevision gepflegt. Tabs haben voneinander unabhängige Zeichnungen, Seiten und Zuweisungen. Zum Bearbeiten zuerst den gewünschten Tab auswählen.
+
+### PDF-Compositor: mehrere P&IDs zu einer Anlagenkarte zusammensetzen
+
+Datei → PDF-Compositor, direkt unter PDF importieren…, öffnet ein eigenes Kartenfenster. Die umrandeten Gruppen Kartenlayout, PDF-Ausschnitte, Grafische Orientierung, Ansicht und Ausgabe ordnen die Werkzeuge. Demo laden erzeugt zwei Beispiel-PDFs mit unterschiedlich gedrehten Seiten und Ausschnitten ohne Schriftkopf zum Ausprobieren.
+
+Über PDF hinzufügen… mehrere Dateien auswählen oder PDFs aus dem Explorer in das Fenster ziehen. Für jede PDF zunächst eine Seite auswählen und mit der Maus den gewünschten rechteckigen Inhalt aufziehen, beispielsweise den Plan ohne Schriftkopf. Ganze Seite setzt die Auswahl zurück; Ausschnitt hinzufügen übernimmt sie. Weiterer Ausschnitt… öffnet dieselbe PDF erneut zur Auswahl eines anderen Bereichs. Duplizieren kopiert den ausgewählten Ausschnitt.
+
+Die Ausschnitte mit der linken Maustaste anordnen. Kanten und Mittellinien rasten an anderen Ausschnitten ein; mit gedrückter Shift-Taste ist Snap deaktiviert. Größe… skaliert den ausgewählten Ausschnitt proportional. Das Mausrad zoomt um den Kartenpunkt unter dem Mauszeiger; +/− zoomen um die Ansichtsmitte. Einpassen zeigt die gesamte Karte; die mittlere Maustaste verschiebt die Ansicht. Die Darstellung wird beim Zoom erneut aus der Original-PDF gerendert.
+
+Hilfslinie zeichnen aktivieren und Start- und Zielpunkt auf den Ausschnitten anklicken. Die rechtwinklige Linie verdeutlicht die Zuordnung zwischen Planteilen und folgt beiden Ausschnitten beim Verschieben und Skalieren. Sie wird in die PDF exportiert und überträgt keine Medienzustände. Per Rechtsklick auf die Linie → Hilfslinie entfernen lässt sie sich entfernen; Esc beendet den Zeichenmodus. Entfernen löscht den ausgewählten Ausschnitt mitsamt seinen Hilfslinien.
+
+Speichern legt eine *.pdfmap.json-Datei mit Ausschnitten, relativen Quellpfaden, Prüfsummen und Hilfslinien ab. Die Original-PDFs werden weiterhin benötigt; bei einer geänderten oder fehlenden Quelle wird das Laden beziehungsweise Exportieren abgelehnt. PDF exportieren… erstellt eine gemeinsame PDF-Karte mit den ausgewählten Inhalten und Kartenpositionen. Gedrehte Seiten und Seitenbeschnitte werden berücksichtigt; Vektoren und Texte bleiben erhalten.
+
+Übernehmen erstellt eine eigene PDF-Karte im lokalen FlowSketch-Datenordner und öffnet sie direkt als neues Dokument im Hauptfenster. Dort Symbole, Rohranschlüsse und Querverweise für die funktionelle Medienweitergabe ergänzen. Das bearbeitbare Kartenlayout separat speichern; spätere Änderungen im Compositor erzeugen bei erneuter Übernahme ein weiteres Dokument.
 
 ## 3. Blattlayout: A4, A3, A2 und Formfrei
 
@@ -62,6 +76,8 @@ PDF, JPG und das Review-Paket geben den gewählten Ausschnitt aus. Objekte auße
 Ohne Rahmen fordert ein formfreier Export zunächst dessen Auswahl an. Der orange Rahmen selbst wird nicht mit exportiert. Bei A4/A3/A2 und PDF-Projekten wird die jeweilige vollständige Seite ausgegeben.
 
 ## 5. Ansicht, Zoom und Navigation
+
+Ein maximiertes Fenster lässt sich auch direkt am obersten Bildschirmrand an einer freien Stelle der Titelleiste fassen und nach unten ziehen. Windows stellt dabei die vorherige Fenstergröße wieder her und führt das Fenster mit der Maus mit. Im verkleinerten Zustand dienen die äußeren Ränder weiterhin zum Ändern der Fenstergröße.
 
 Mausrad: hinein- oder herauszoomen. Die Zoom-Schaltflächen ändern den Maßstab ebenfalls. Einpassen passt das Blatt in den sichtbaren Bereich ein. Mittlere Maustaste gedrückt halten und bewegen: Ansicht verschieben. Rechte Maustaste: Kontextmenü.
 
@@ -138,6 +154,14 @@ Wird ein angeschlossenes Objekt gelöscht, bleibt die letzte Rohrgeometrie erhal
 Doppelklick auf ein Rohr öffnet Rohrdaten mit Bezeichnung, Breite, Strichtyp und getrennten Farben für Leer und Befüllt. Breite wird in Pixeln bei Referenz-Seitenbreite 2000 angegeben und zoomunabhängig gespeichert; leer erhält die bisherige Breite. Durchgezogen, Punktiert, Gestrichelt, Strichpunkt und Strichpunktpunkt gelten in beiden Zuständen. Bisherige Darstellung erhält das Verhalten älterer Projekte. Automatische Leerfarbe folgt den Standardfarben; automatische Befülltfarbe folgt dem Medium. Individuelle Farben werden über Farbrad… ausgewählt.
 
 ## 10. Wirklinien / Regellinien
+
+### Querverweise für Rohrverbindungen
+
+Unter Symbole → Weitere → Querverweis platzieren. Das kompakte Symbol besitzt vier Rohranschlüsse; seine Größe bleibt in den Gerätedaten einstellbar. Die Querverweis-ID ist editierbar und umfasst 1 bis 8 Zeichen. Neue Vorschläge zählen aufsteigend: QV000001, QV000002 usw. Für zusammengehörige Querverweise dieselbe ID aus der Liste wählen oder eintragen. Der Tag bleibt je Symbol eindeutig, die Querverweis-ID wird bewusst von mehreren Symbolen geteilt. IDs unterscheiden Groß- und Kleinschreibung; äußere Leerzeichen werden entfernt. Beim Laden alter Projekte werden lange IDs gruppenerhaltend gekürzt; eine bestehende Freigabe wird dabei widerrufen.
+
+Rohrpfade lassen sich an allen vier Anschlüssen des Symbols fangen. Gleiche IDs verbinden diese Anschlüsse bidirektional über alle Seiten desselben Projekts. Mehrere Quellen und Abgänge sind möglich: Medien werden wie bei Rohrabzweigen weitergereicht und bei unterschiedlichen Medientypen als Gemisch dargestellt. Flussanimation erscheint weiterhin nur auf versorgten Wegen zu einem Ziel; Querverweise erzeugen selbst kein Medium und keinen Durchfluss. Leere oder unterschiedliche IDs verbinden keine fremden Querverweise. Unabhängige Dokument-Tabs besitzen eigene Netze. Für mehrere PDFs zuerst eine gemeinsame Compositor-Karte erstellen und importieren.
+
+Verbindet ein Rohr zwei bereits über dieselbe ID verlinkte Querverweise, entsteht eine zusätzliche Schleife im selben Netz. Sie übernimmt den Medienstatus, erzeugt aber allein keinen Durchfluss. Ein Abgang aus dieser Schleife zu einem Ziel kann einen durchflossenen Weg bilden. Die Demo zeigt den Fall im Wasserweg mit REF-101 und REF-102.
 
 Wirklinie / Regellinie in der Bibliothek oder Wirklinie einfügen im Kontextmenü wählen. Die dünne Linie mit Klammerzeichen zeigt, welcher Sensor welchem Gerät zugeordnet ist.
 

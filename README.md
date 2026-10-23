@@ -6,7 +6,7 @@
 
 FlowSketch ist ein deutschsprachiger Windows-Editor mit WPF und .NET 10. Zeichnungen entstehen auf einem leeren Blatt oder als funktionelles Overlay auf einem R&I-/P&ID-PDF. Die Referenz-PDF bleibt unverändert; Verbindungen und Zustände werden in einer separaten Projektdatei gespeichert.
 
-**Version 0.8.1** · [Bedienhilfe](docs/Hilfe.md) · [Projektstand und Prüfnachweise](ProjektZustand.md)
+**Version 0.10.0** · [Bedienhilfe](docs/Hilfe.md) · [Projektstand und Prüfnachweise](ProjektZustand.md)
 
 ![Editor mit Ablaufverwaltung und Planübersicht](_media/help/blank-editor.png)
 
@@ -15,6 +15,8 @@ FlowSketch ist ein deutschsprachiger Windows-Editor mit WPF und .NET 10. Zeichnu
 - Leere Blätter in A4/A3/A2, Hoch-/Querformat und formfreie Arbeitsflächen mit Druck-/Exportrahmen; mehrere Dokumente in Tabs.
 - Armaturen mit Antrieben, Pumpen, Kompressoren, Ventilatoren, Behälter, Wärmetauscher, Filter, Sensoren und Legenden sowie einfache Zeichenobjekte.
 - Mehrteilige Rohrpfade, gebundene Abzweige, Sensoranschlüsse und grafische Wirk-/Regellinien.
+- PDF-Compositor direkt unter PDF importieren: gruppierte Werkzeuge, frei gewählte Seitenausschnitte, Snap (Shift deaktiviert), Mauszeiger-Zoom, grafische Hilfslinien und Vektor-PDF-Export. Übernehmen lädt die Karte direkt in den Haupteditor; Demo laden zeigt ein Beispiel.
+- Kompakte bidirektionale Querverweise: editierbare IDs mit maximal acht Zeichen, aufsteigende Vorschläge ab QV000001. Gleiche IDs verbinden beliebig viele Anschlüsse auf den Seiten eines Projekts; mehrere Quellen und Abgänge werden wie Rohrabzweige behandelt. Eine zusätzliche Rohrschleife erzeugt keinen künstlichen Durchfluss.
 - Projektmedien mit Typ, Farbe und automatischen Legenden; richtungsabhängige Medienweitergabe und Durchflussdarstellung.
 - Szenarien mit Schritten, vererbten Zuständen und Schrittüberschreibungen. Der Tab „Abläufe“ vereint Szenarioauswahl und zugehörige Schritte.
 - Sensorkennungen, Rohwertskalierung und LL/L/H/HH-Alarme.
@@ -44,7 +46,7 @@ dotnet restore PID2Process.sln
 dotnet run --project src/PID2Process/PID2Process.csproj
 ```
 
-Beim Start erscheint ein leeres Zeichenblatt. **Hilfe → Demo öffnen** lädt eine unabhängige Arbeitskopie der eingebetteten Demo mit 37 Symbolen, 29 rechtwinkligen Rohrpfaden, sieben Szenarien und 26 Schritten. Erläuterung und Dateien: [examples](examples/README.md).
+Beim Start erscheint ein leeres Zeichenblatt. **Hilfe → Demo öffnen** lädt eine unabhängige Arbeitskopie der eingebetteten Demo mit 40 Symbolen, 31 rechtwinkligen Rohrpfaden, sieben Szenarien und 26 Schritten. Zwei verlinkte Querverweise mit zusätzlichem Schleifenrohr zeigen die Medienweitergabe im Wasserweg. Erläuterung und Dateien: [examples](examples/README.md).
 
 Die internen Solution-/Quellnamen `PID2Process` und die Dateiendung `.pid2process.json` bleiben aus Kompatibilitätsgründen erhalten. Programm- und Repositoryname lauten FlowSketch.
 
@@ -54,7 +56,7 @@ Die internen Solution-/Quellnamen `PID2Process` und die Dateiendung `.pid2proces
 ./scripts/Publish-Release.ps1
 ```
 
-Die Version stammt aus [PID2Process.csproj](src/PID2Process/PID2Process.csproj). Die Ausgabe liegt unter `bin/<Version>/FlowSketch.exe`, aktuell `bin/0.8.1/FlowSketch.exe`. Beispiele, Dokumentation und Diagnoseinformationen besitzen eigene Unterordner. Frühere Versionsordner bleiben erhalten; Builds sind nicht Bestandteil des Git-Repositories.
+Die Version stammt aus [PID2Process.csproj](src/PID2Process/PID2Process.csproj). Die Ausgabe liegt unter `bin/<Version>/FlowSketch.exe`, aktuell `bin/0.10.0/FlowSketch.exe`. Beispiele, Dokumentation und Diagnoseinformationen besitzen eigene Unterordner. Frühere Versionsordner bleiben erhalten; Builds sind nicht Bestandteil des Git-Repositories.
 
 ## Prüfen
 
@@ -63,6 +65,7 @@ Die Version stammt aus [PID2Process.csproj](src/PID2Process/PID2Process.csproj).
 dotnet run --project src/PID2Process/PID2Process.csproj -c Release -- --model-test
 node tests/review-scene.test.cjs
 node tests/review-zoom.test.cjs
+node tests/references.test.cjs
 
 # Offline-Hilfe im versionierten Ausgabeverzeichnis prüfen:
 ./scripts/Publish-Release.ps1

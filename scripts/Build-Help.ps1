@@ -19,6 +19,8 @@ foreach ($line in (Get-Content -LiteralPath $guide -Encoding utf8)) {
         $title = [System.Net.WebUtility]::HtmlEncode($line.Substring(3))
         [void]$navigation.AppendLine("<a href='#kapitel-$chapterNumber'>$title</a>")
         [void]$content.AppendLine("<section id='kapitel-$chapterNumber'><h2>$title</h2>")
+    } elseif ($line.StartsWith('### ')) {
+        [void]$content.AppendLine('<h3>' + [System.Net.WebUtility]::HtmlEncode($line.Substring(4)) + '</h3>')
     } elseif ($line.StartsWith('# ')) {
         [void]$content.AppendLine('<h1>' + [System.Net.WebUtility]::HtmlEncode($line.Substring(2)) + '</h1>')
     } elseif ($line -match '^!\[([^\]]+)\]\(images/([a-z0-9-]+\.png)\)$') {
