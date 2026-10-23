@@ -5,7 +5,7 @@ New-Item -ItemType Directory -Path $OutputDirectory -Force | Out-Null
 $imageDirectory = Join-Path $OutputDirectory 'images'
 New-Item -ItemType Directory -Path $imageDirectory -Force | Out-Null
 Copy-Item -Path (Join-Path $projectRoot '_media/help/*.png') -Destination $imageDirectory
-Copy-Item -LiteralPath (Join-Path $projectRoot "_media/CS26001-1-Logo-4c.png") -Destination (Join-Path $imageDirectory "company-logo.png")
+Copy-Item -LiteralPath (Join-Path $projectRoot "_media/favicon-256x256.png") -Destination (Join-Path $imageDirectory "flowsketch-icon.png")
 $guide = Join-Path $projectRoot 'docs/Hilfe.md'
 Copy-Item -LiteralPath $guide -Destination (Join-Path $OutputDirectory 'Hilfe.md')
 $content = [System.Text.StringBuilder]::new()
@@ -42,11 +42,11 @@ $template = @'
 nav{position:sticky;top:0;height:100vh;overflow:auto;padding:24px;background:#e8eff3}nav a{display:block;padding:7px;color:#005b83;text-decoration:none}
 input{width:100%;padding:10px;margin:12px 0;border:1px solid #8b9aa4;border-radius:4px}
 main{background:white;padding:35px;min-width:0}section{scroll-margin-top:20px;border-top:1px solid #d7e0e6;padding:20px 0}
-.company-logo{width:300px;max-height:95px;border:0;background:white;padding:8px;margin-bottom:20px}h1,h2{line-height:1.25}figure{margin:24px 0}img{display:block;width:auto;max-width:100%;max-height:750px;border:1px solid #d7e0e6}
+.flowsketch-icon{width:72px;height:72px;object-fit:contain;border:0;background:transparent;padding:0;margin-bottom:20px}h1,h2{line-height:1.25}figure{margin:24px 0}img{display:block;width:auto;max-width:100%;max-height:750px;border:1px solid #d7e0e6}
 figcaption{font-size:14px;color:#536775;margin-top:8px}a{color:#005b83}
 @media(max-width:850px){.layout{display:block}nav{position:static;height:auto}main{padding:20px}}
 @media print{nav{display:none}.layout{display:block}main{padding:0}section{break-inside:auto}figure{break-inside:avoid}img{max-height:500px}}
-</style></head><body><div class="layout"><nav aria-label="Inhaltsverzeichnis"><b>FlowSketch &#8211; Hilfe</b><input id="search" type="search" placeholder="Hilfe durchsuchen" aria-label="Hilfe durchsuchen">__NAV__</nav><main><img class="company-logo" src="images/company-logo.png" alt="cs-systems GmbH">__CONTENT__</main></div>
+</style></head><body><div class="layout"><nav aria-label="Inhaltsverzeichnis"><b>FlowSketch &#8211; Hilfe</b><input id="search" type="search" placeholder="Hilfe durchsuchen" aria-label="Hilfe durchsuchen">__NAV__</nav><main><img class="flowsketch-icon" src="images/flowsketch-icon.png" alt="FlowSketch">__CONTENT__</main></div>
 <script>document.getElementById('search').addEventListener('input',function(){const q=this.value.toLocaleLowerCase('de');document.querySelectorAll('main section').forEach(s=>s.hidden=!s.textContent.toLocaleLowerCase('de').includes(q));});</script></body></html>
 '@
 $html = $template.Replace('__NAV__',$navigation.ToString()).Replace('__CONTENT__',$content.ToString())

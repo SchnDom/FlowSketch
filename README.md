@@ -1,4 +1,4 @@
-<img src="_media/CS26001-1-Icon-4c.png" width="72" alt="cs-systems">
+<img src="_media/FlowSketch.svg" width="72" alt="FlowSketch">
 
 # FlowSketch
 
@@ -8,6 +8,8 @@ FlowSketch ist ein deutschsprachiger Windows-Editor mit WPF und .NET 10. Zeichnu
 
 **Version 0.10.0** · [Bedienhilfe](docs/Hilfe.md) · [Projektstand und Prüfnachweise](ProjektZustand.md)
 
+Copyright (c) 2026 Dominik Schneeberger · [MIT-Lizenz](LICENSE) · [Drittanbieterhinweise](THIRD-PARTY-NOTICES.md) · [Changelog](CHANGELOG.md)
+
 ![Editor mit Ablaufverwaltung und Planübersicht](_media/help/blank-editor.png)
 
 ## Funktionen
@@ -15,11 +17,11 @@ FlowSketch ist ein deutschsprachiger Windows-Editor mit WPF und .NET 10. Zeichnu
 - Leere Blätter in A4/A3/A2, Hoch-/Querformat und formfreie Arbeitsflächen mit Druck-/Exportrahmen; mehrere Dokumente in Tabs.
 - Armaturen mit Antrieben, Pumpen, Kompressoren, Ventilatoren, Behälter, Wärmetauscher, Filter, Sensoren und Legenden sowie einfache Zeichenobjekte.
 - Mehrteilige Rohrpfade, gebundene Abzweige, Sensoranschlüsse und grafische Wirk-/Regellinien.
-- PDF-Compositor direkt unter PDF importieren: gruppierte Werkzeuge, frei gewählte Seitenausschnitte, Snap (Shift deaktiviert), Mauszeiger-Zoom, grafische Hilfslinien und Vektor-PDF-Export. Übernehmen lädt die Karte direkt in den Haupteditor; Demo laden zeigt ein Beispiel.
+- PDF-Komposition direkt unter PDF importieren: gruppierte Werkzeuge, frei gewählte Seitenausschnitte, Snap (Shift deaktiviert), Mauszeiger-Zoom, grafische Hilfslinien und Vektor-PDF-Export. Übernehmen lädt die Karte direkt in den Haupteditor; Demo laden zeigt ein Beispiel.
 - Kompakte bidirektionale Querverweise: editierbare IDs mit maximal acht Zeichen, aufsteigende Vorschläge ab QV000001. Gleiche IDs verbinden beliebig viele Anschlüsse auf den Seiten eines Projekts; mehrere Quellen und Abgänge werden wie Rohrabzweige behandelt. Eine zusätzliche Rohrschleife erzeugt keinen künstlichen Durchfluss.
 - Projektmedien mit Typ, Farbe und automatischen Legenden; richtungsabhängige Medienweitergabe und Durchflussdarstellung.
 - Szenarien mit Schritten, vererbten Zuständen und Schrittüberschreibungen. Der Tab „Abläufe“ vereint Szenarioauswahl und zugehörige Schritte.
-- Sensorkennungen, Rohwertskalierung und LL/L/H/HH-Alarme.
+- Sensorkennungen, Prozesswertgrenzen und direkte Prozesswerte und LL/L/H/HH-Alarme.
 - Mehrfachauswahl, Gruppen, gemeinsame Eigenschaften, projektübergreifendes Kopieren, Wildcard-Suche und bis zu 100 Undo-/Redo-Schritte je Dokument.
 - Zoom zur Mausposition, Pan und navigierbare Planübersicht.
 - PDF-/JPG-Export, Offline-Review-Paket mit Zoom und Excel-Aktorenliste nach Szenario, Schritt und Aktor.
@@ -46,7 +48,7 @@ dotnet restore PID2Process.sln
 dotnet run --project src/PID2Process/PID2Process.csproj
 ```
 
-Beim Start erscheint ein leeres Zeichenblatt. **Hilfe → Demo öffnen** lädt eine unabhängige Arbeitskopie der eingebetteten Demo mit 40 Symbolen, 31 rechtwinkligen Rohrpfaden, sieben Szenarien und 26 Schritten. Zwei verlinkte Querverweise mit zusätzlichem Schleifenrohr zeigen die Medienweitergabe im Wasserweg. Erläuterung und Dateien: [examples](examples/README.md).
+Beim Start erscheint ein leeres Zeichenblatt. **Hilfe → Demo öffnen** lädt eine unabhängige Arbeitskopie der eingebetteten Demo mit 43 Symbolen, 32 rechtwinkligen Rohrpfaden, sieben Szenarien und 26 Schritten. Drei verlinkte Wasser-Querverweise und ein separates Druckluftpaar zeigen die Medienweitergabe über gemeinsame IDs. Erläuterung und Dateien: [examples](examples/README.md).
 
 Die internen Solution-/Quellnamen `PID2Process` und die Dateiendung `.pid2process.json` bleiben aus Kompatibilitätsgründen erhalten. Programm- und Repositoryname lauten FlowSketch.
 
@@ -97,7 +99,7 @@ Der optionale Parameter `--self-test` startet eine **sichtbare** Testinstanz und
 | --- | --- |
 | `src/PID2Process/` | WPF-Anwendung, Modell, Netzwerkauswertung und Review-Viewer |
 | `docs/` | Bedienhilfe als gemeinsame Quelle für Programm und Offline-HTML |
-| `_media/` | Firmenangaben, Markenbilder, generiertes ICO und Hilfebilder |
+| `_media/` | Neutrales FlowSketch-Icon, generiertes ICO und Hilfebilder |
 | `examples/` | Eingebettete Demo, Vorschau und Excel-Beispiel |
 | `scripts/` | Versionierter Publish und Offline-Hilfeerstellung |
 | `tests/` | Node-Regressionen für Viewer, Zoom und Hilfe |
@@ -109,4 +111,4 @@ Persönliche Projektdateien, Referenz-PDFs unter `_PIDs/`, Buildordner und Testa
 
 Positionen und Größen werden normiert gespeichert. PDF-Seiten werden beim Zoomen aus dem Original in passender Auflösung neu gerendert. Editor und SVG-Review verwenden gemeinsame Symboldefinitionen und übereinstimmende Szenario-/Schrittwerte.
 
-Die dunkle Oberfläche orientiert sich an [CustomTkinter](https://github.com/TomSchimansky/CustomTkinter); die Implementierung bleibt WPF. Formgruppen und Fensterrahmen orientieren sich an den [Microsoft-Formularrichtlinien](https://learn.microsoft.com/en-us/windows/apps/design/controls/forms) und [WindowChrome](https://learn.microsoft.com/en-us/dotnet/api/system.windows.shell.windowchrome). Die bereitgestellten CS-Markenbilder sind die Quelle für Programmicon und Firmenwortmarke.
+Die dunkle Oberfläche orientiert sich an [CustomTkinter](https://github.com/TomSchimansky/CustomTkinter); die Implementierung bleibt WPF. Formgruppen und Fensterrahmen orientieren sich an den [Microsoft-Formularrichtlinien](https://learn.microsoft.com/en-us/windows/apps/design/controls/forms) und [WindowChrome](https://learn.microsoft.com/en-us/dotnet/api/system.windows.shell.windowchrome). Das neutrale FlowSketch-Icon liegt als SVG vor.

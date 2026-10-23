@@ -19,6 +19,7 @@ internal static class HeadlessSelfTest
             await CompositionSelfTest.Run(output,Check);
             CrossReferenceSelfTest.Run(output,Check);
             await CompositionExportSelfTest.Run(output,Check);
+            await RevisionSelfTest.Run(output,Check);
             var fixture=Path.Combine(output,"process-fixture.pid2process.json");
             var pdf=Path.Combine(output,"model-pages.pdf");EditorSelfTest.MakePdf(pdf);var project=Fixture(pdf);ProjectServices.Save(fixture,project);var scenario=project.Scenarios.Single(s=>s.Name=="Befüllen");var step=project.ControlSteps.Single(s=>s.Name=="Füllen starten");
             var valve=project.Equipment.Single(x=>x.Tag=="XV-101");var source=project.Equipment.Single(x=>x.Type==EquipmentType.MediaSource);var text=project.Equipment.Single(x=>x.Type==EquipmentType.Text);
@@ -55,7 +56,7 @@ internal static class HeadlessSelfTest
             // Render the content only, not a desktop window; useful for layout review.
             var panel=(FrameworkElement)editor.Content;editor.Content=null;var whiteBackground=new Border{Background=Brushes.White,Child=panel};whiteBackground.Measure(new Size(1070,680));whiteBackground.Arrange(new Rect(0,0,1070,680));whiteBackground.UpdateLayout();
             var bitmap=new RenderTargetBitmap(1070,680,96,96,PixelFormats.Pbgra32);bitmap.Render(whiteBackground);var encoder=new PngBitmapEncoder();encoder.Frames.Add(BitmapFrame.Create(bitmap));using(var file=File.Create(Path.Combine(output,"headless-state-editor.png")))encoder.Save(file);
-            var saved=Path.Combine(output,"headless-roundtrip.pid2process.json");ProjectServices.Save(saved,project);var loaded=ProjectServices.Load(saved);Check(loaded.FormatVersion=="2.1"&&loaded.Pipes.Single(p=>p.Id==branch.Id).StartConnection!.PipeId==downstream.Id&&loaded.Equipment.Single(x=>x.Id==source.Id).Function==source.Function&&loaded.ControlSteps.Single(s=>s.Id==step.Id).TextValues[text.Id]=="Befüllung läuft","JSON-Roundtrip: Pfade, Anschlüsse, Funktion, Medium und Schritttext");
+            var saved=Path.Combine(output,"headless-roundtrip.pid2process.json");ProjectServices.Save(saved,project);var loaded=ProjectServices.Load(saved);Check(loaded.FormatVersion=="2.2"&&loaded.Pipes.Single(p=>p.Id==branch.Id).StartConnection!.PipeId==downstream.Id&&loaded.Equipment.Single(x=>x.Id==source.Id).Function==source.Function&&loaded.ControlSteps.Single(s=>s.Id==step.Id).TextValues[text.Id]=="Befüllung läuft","JSON-Roundtrip: Pfade, Anschlüsse, Funktion, Medium und Schritttext");
             var cases=new[]{("scenario",scenario,(ControlStep?)null),("open",scenario,step),("closed",scenario,project.ControlSteps.Single(s=>s.Name=="Füllen beenden"))}.Select(c=>new{name=c.Item1,scenarioId=c.Item2.Id,stepId=c.Item3?.Id,expected=PipeNetwork.Evaluate(project,SceneValues.From(c.Item2,c.Item3))}).ToArray();
             File.WriteAllText(Path.Combine(output,"scene-cases.json"),JsonSerializer.Serialize(cases,ProjectServices.JsonOptions));
             await ExportService.ExportAsync(project,Path.Combine(output,"review"));Check(File.ReadAllText(Path.Combine(output,"review","viewer.html")).Contains("const ReviewScene")&&!File.ReadAllText(Path.Combine(output,"review","viewer.html")).Contains("__SCENE_SCRIPT__"),"Review-Paket bettet aktuelle Netzwerkdarstellung ein");

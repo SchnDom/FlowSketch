@@ -5,7 +5,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 namespace PID2Process;
 
-// Company statements are displayed from the supplied file, without deriving software credits.
+// Project license and third-party notices are embedded verbatim.
 internal sealed class InformationWindow : Window
 {
     internal static string ResourceText(string name)
@@ -23,18 +23,18 @@ internal sealed class InformationWindow : Window
         WindowStartupLocation=owner is null?WindowStartupLocation.CenterScreen:WindowStartupLocation.CenterOwner;
         DialogTheme.Apply(this);var root=new DockPanel{Margin=new Thickness(18),Background=PageVisual.Color("#20262E")};
         var header=new StackPanel{Orientation=Orientation.Horizontal,Margin=new Thickness(0,0,0,16)};
-        header.Children.Add(new Border{Background=Brushes.White,CornerRadius=new CornerRadius(6),Padding=new Thickness(8),Margin=new Thickness(0,0,18,0),Child=new Image{Source=new BitmapImage(new Uri("pack://application:,,,/Assets/logo.png")),Width=240,Height=75,Stretch=Stretch.Uniform}});
+        header.Children.Add(new Image{Source=IconImage(),Width=64,Height=64,Margin=new Thickness(0,0,18,0),Stretch=Stretch.Uniform});
         var heading=new StackPanel{VerticalAlignment=VerticalAlignment.Center};
         heading.Children.Add(new TextBlock{Text=BuildInfo.Name,FontSize=24,FontWeight=FontWeights.SemiBold});
-        heading.Children.Add(new TextBlock{Text="Version "+BuildInfo.Version+" · cs-systems GmbH",Margin=new Thickness(0,6,0,0)});
+        heading.Children.Add(new TextBlock{Text="Version "+BuildInfo.Version+" · Dominik Schneeberger · MIT-Lizenz",Margin=new Thickness(0,6,0,0)});
         heading.Children.Add(new TextBlock{Text="Engineering-Overlays auf unveränderten R&I-PDFs",Margin=new Thickness(0,6,0,0)});
         header.Children.Add(heading);DockPanel.SetDock(header,Dock.Top);root.Children.Add(header);
         var close=new Button{Content="Schließen",IsCancel=true,IsDefault=true,HorizontalAlignment=HorizontalAlignment.Right,MinWidth=95,Margin=new Thickness(0,12,0,0)};
         close.Click+=(_,_)=>Close();DockPanel.SetDock(close,Dock.Bottom);root.Children.Add(close);
         var tabs=new TabControl();
         if(help)tabs.Items.Add(new TabItem{Header="Bedienhilfe",Content=new HelpView()});
-        tabs.Items.Add(TextTab("Kontakt","cs-systems GmbH\nPlabutscherstrasse 115\n8051 Graz, Austria\n\nE-Mail: office@cs-systems.com\n\nFN 374959k\nUID: ATU67052805"));
-        tabs.Items.Add(TextTab("Firmenangaben",ResourceText("CompanyInfo.txt")));
+        tabs.Items.Add(TextTab("MIT-Lizenz",ResourceText("License.txt")));
+        tabs.Items.Add(TextTab("Drittanbieter",ResourceText("ThirdParty.txt")));
         root.Children.Add(tabs);Content=root;
     }
     private static TabItem TextTab(string title,string text)=>new()

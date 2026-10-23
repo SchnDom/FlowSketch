@@ -43,8 +43,8 @@ internal static class EditorSelfTest
                 timer.Tick+=(_,_)=>{timer.Stop();var dialog=System.Windows.Application.Current.Windows.OfType<EditorDialog>().Single();var controls=Descendants(dialog).OfType<FrameworkElement>().ToArray();visible=controls.Any(c=>Equals(c.Tag,visibleKey)&&c.IsVisible);hidden=!controls.Any(c=>Equals(c.Tag,hiddenKey)&&c.IsVisible);Capture(dialog,Path.Combine(output,device.Type+"-dialog.png"));dialog.Close();};
                 timer.Start();typeof(MainWindow).GetMethod("EditEquipment",BindingFlags.NonPublic|BindingFlags.Instance)!.Invoke(window,[device]);Check(visible&&hidden,"Passende Felder ohne unnötigen Dialograum: "+device.Type);
             }
-            DeviceFields(item,"Grundstellung","Motorantrieb");
-            DeviceFields(new EquipmentItem {Type=EquipmentType.PumpMotor,Variant="Motor",Tag="M-101"},"Motorantrieb","Nicht vorhanden");
+            DeviceFields(item,"Antriebsbauart","Motorantrieb");
+            DeviceFields(new EquipmentItem {Type=EquipmentType.PumpMotor,Variant="Motor",Tag="M-101"},"Farbe (#RRGGBB)","Motorantrieb");
             DeviceFields(new EquipmentItem {Type=EquipmentType.Instrument,Variant="Druck",Tag="P-101"},"Farbe (#RRGGBB)","Grundstellung");
             var priorPage=((TextBlock)window.FindName("PageLabel")).Text;
             var rightDown=new System.Windows.Input.MouseButtonEventArgs(System.Windows.Input.Mouse.PrimaryDevice,0,System.Windows.Input.MouseButton.Right) { RoutedEvent=System.Windows.Input.Mouse.PreviewMouseDownEvent };

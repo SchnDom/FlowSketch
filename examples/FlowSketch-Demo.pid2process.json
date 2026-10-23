@@ -1,5 +1,5 @@
 {
-  "formatVersion": "2.1",
+  "formatVersion": "2.2",
   "name": "FlowSketch – Prozess-Demo",
   "blankSheet": {
     "format": "A2",
@@ -247,78 +247,6 @@
       "mediumType": "Liquid"
     },
     {
-      "id": "0c1b42a6-abce-505f-aae9-162c7b64a036",
-      "tag": "REF-101",
-      "type": "Generic",
-      "variant": "Querverweis",
-      "page": 1,
-      "x": 0.4797979797979798,
-      "y": 0.1619047619047619,
-      "width": 0.006734006734006734,
-      "height": 0.009523809523809525,
-      "function": "Wasser / Querverweis",
-      "installationLocation": "+DEMO",
-      "description": "REF-101",
-      "actuator": "Manual",
-      "failPosition": "NC",
-      "color": "#007E87",
-      "backgroundColor": "#FFFFFF",
-      "opacity": 1,
-      "mediumId": "5fe6e61e-4b39-5ef0-ae7f-7c7df41b37ba",
-      "mediaName": "Wasser",
-      "mediumType": "Liquid",
-      "referenceId": "QV000001"
-    },
-    {
-      "id": "da24c6aa-419c-5dd3-848b-e804f0116969",
-      "tag": "REF-102",
-      "type": "Generic",
-      "variant": "Querverweis",
-      "page": 1,
-      "x": 0.5387205387205387,
-      "y": 0.1619047619047619,
-      "width": 0.006734006734006734,
-      "height": 0.009523809523809525,
-      "function": "Wasser / Querverweis",
-      "installationLocation": "+DEMO",
-      "description": "REF-102",
-      "actuator": "Manual",
-      "failPosition": "NC",
-      "color": "#007E87",
-      "backgroundColor": "#FFFFFF",
-      "opacity": 1,
-      "mediumId": "5fe6e61e-4b39-5ef0-ae7f-7c7df41b37ba",
-      "mediaName": "Wasser",
-      "mediumType": "Liquid",
-      "referenceId": "QV000001"
-    },
-    {
-      "id": "d266066d-e146-5dfa-90fa-96293431991d",
-      "tag": "REF-HINWEIS",
-      "type": "Drawing",
-      "variant": "Textfeld",
-      "page": 1,
-      "x": 0.4292929292929293,
-      "y": 0.05714285714285714,
-      "width": 0.2609427609427609,
-      "height": 0.02857142857142857,
-      "function": "Demo",
-      "installationLocation": "+DEMO",
-      "description": "REF-HINWEIS",
-      "actuator": "Manual",
-      "failPosition": "NC",
-      "color": "#203544",
-      "backgroundColor": "#FFFFFF",
-      "opacity": 1,
-      "mediumId": "5fe6e61e-4b39-5ef0-ae7f-7c7df41b37ba",
-      "mediaName": "Wasser",
-      "mediumType": "Liquid",
-      "textContent": "QV000001: gleicher Medienknoten. Zusatzrohr unten: Schleife, kein eigener Durchfluss.",
-      "drawing": {
-        "fontSize": 18
-      }
-    },
-    {
       "id": "08d46b0f-952f-5720-abd9-231b4e84231e",
       "tag": "XV-101",
       "type": "IsolationValve",
@@ -473,6 +401,80 @@
       "mediumType": "Liquid"
     },
     {
+      "id": "0c1b42a6-abce-505f-aae9-162c7b64a036",
+      "tag": "REF-101",
+      "type": "Generic",
+      "variant": "Querverweis",
+      "page": 1,
+      "x": 0.4797979797979798,
+      "y": 0.1619047619047619,
+      "width": 0.006734006734006734,
+      "height": 0.009523809523809525,
+      "function": "Wasser / Querverweis",
+      "installationLocation": "+DEMO",
+      "description": "REF-101",
+      "actuator": "Manual",
+      "failPosition": "NC",
+      "color": "#007E87",
+      "backgroundColor": "#FFFFFF",
+      "opacity": 1,
+      "mediumId": "5fe6e61e-4b39-5ef0-ae7f-7c7df41b37ba",
+      "mediaName": "Wasser",
+      "mediumType": "Liquid",
+      "referenceId": "QV000001",
+      "showTag": false
+    },
+    {
+      "id": "da24c6aa-419c-5dd3-848b-e804f0116969",
+      "tag": "REF-102",
+      "type": "Generic",
+      "variant": "Querverweis",
+      "page": 1,
+      "x": 0.5387205387205387,
+      "y": 0.1619047619047619,
+      "width": 0.006734006734006734,
+      "height": 0.009523809523809525,
+      "function": "Wasser / Querverweis",
+      "installationLocation": "+DEMO",
+      "description": "REF-102",
+      "actuator": "Manual",
+      "failPosition": "NC",
+      "color": "#007E87",
+      "backgroundColor": "#FFFFFF",
+      "opacity": 1,
+      "mediumId": "5fe6e61e-4b39-5ef0-ae7f-7c7df41b37ba",
+      "mediaName": "Wasser",
+      "mediumType": "Liquid",
+      "referenceId": "QV000001",
+      "showTag": false
+    },
+    {
+      "id": "d266066d-e146-5dfa-90fa-96293431991d",
+      "tag": "REF-HINWEIS",
+      "type": "Drawing",
+      "variant": "Textfeld",
+      "page": 1,
+      "x": 0.4292929292929293,
+      "y": 0.05714285714285714,
+      "width": 0.2609427609427609,
+      "height": 0.02857142857142857,
+      "function": "Demo",
+      "installationLocation": "+DEMO",
+      "description": "REF-HINWEIS",
+      "actuator": "Manual",
+      "failPosition": "NC",
+      "color": "#203544",
+      "backgroundColor": "#FFFFFF",
+      "opacity": 1,
+      "mediumId": "5fe6e61e-4b39-5ef0-ae7f-7c7df41b37ba",
+      "mediaName": "Wasser",
+      "mediumType": "Liquid",
+      "textContent": "QV000001: drei verbundene Wasserleitungen. QV000002: separates Druckluftpaar.",
+      "drawing": {
+        "fontSize": 18
+      }
+    },
+    {
       "id": "cfb21174-1cf1-5e60-8e33-c50af5351385",
       "tag": "Q-LUFT",
       "type": "MediaSource",
@@ -625,6 +627,54 @@
       "mediumId": "9cb332c5-7f3a-5efd-bc71-802c0cb7f3b9",
       "mediaName": "Druckluft",
       "mediumType": "Gas"
+    },
+    {
+      "id": "3749898e-0cf1-5989-b8d8-87526d927217",
+      "tag": "REF-201",
+      "type": "Generic",
+      "variant": "Querverweis",
+      "page": 1,
+      "x": 0.2441077441077441,
+      "y": 0.3761904761904762,
+      "width": 0.006734006734006734,
+      "height": 0.009523809523809525,
+      "function": "Druckluft / Querverweis",
+      "installationLocation": "+DEMO",
+      "description": "REF-201",
+      "actuator": "Manual",
+      "failPosition": "NC",
+      "color": "#007E87",
+      "backgroundColor": "#FFFFFF",
+      "opacity": 1,
+      "mediumId": "5fe6e61e-4b39-5ef0-ae7f-7c7df41b37ba",
+      "mediaName": "Wasser",
+      "mediumType": "Liquid",
+      "referenceId": "QV000002",
+      "showTag": false
+    },
+    {
+      "id": "51456053-d457-5317-b934-e82855b10828",
+      "tag": "REF-202",
+      "type": "Generic",
+      "variant": "Querverweis",
+      "page": 1,
+      "x": 0.28619528619528617,
+      "y": 0.3761904761904762,
+      "width": 0.006734006734006734,
+      "height": 0.009523809523809525,
+      "function": "Druckluft / Querverweis",
+      "installationLocation": "+DEMO",
+      "description": "REF-202",
+      "actuator": "Manual",
+      "failPosition": "NC",
+      "color": "#007E87",
+      "backgroundColor": "#FFFFFF",
+      "opacity": 1,
+      "mediumId": "5fe6e61e-4b39-5ef0-ae7f-7c7df41b37ba",
+      "mediaName": "Wasser",
+      "mediumType": "Liquid",
+      "referenceId": "QV000002",
+      "showTag": false
     },
     {
       "id": "671f7c9b-f967-58e7-a3eb-7cc422558af3",
@@ -889,6 +939,30 @@
       "mediumId": "9cb332c5-7f3a-5efd-bc71-802c0cb7f3b9",
       "mediaName": "Druckluft",
       "mediumType": "Gas"
+    },
+    {
+      "id": "f8308e95-af8b-511c-adcb-7fff75950e38",
+      "tag": "REF-103",
+      "type": "Generic",
+      "variant": "Querverweis",
+      "page": 1,
+      "x": 0.5925925925925926,
+      "y": 0.7452380952380953,
+      "width": 0.006734006734006734,
+      "height": 0.009523809523809525,
+      "function": "Wasser / Querverweis",
+      "installationLocation": "+DEMO",
+      "description": "REF-103",
+      "actuator": "Manual",
+      "failPosition": "NC",
+      "color": "#007E87",
+      "backgroundColor": "#FFFFFF",
+      "opacity": 1,
+      "mediumId": "5fe6e61e-4b39-5ef0-ae7f-7c7df41b37ba",
+      "mediaName": "Wasser",
+      "mediumType": "Liquid",
+      "referenceId": "QV000001",
+      "showTag": false
     },
     {
       "id": "2e0659ab-8558-5a32-9f5d-f6242adfa73f",
@@ -1228,38 +1302,7 @@
     },
     {
       "id": "5441d2e8-7c82-5fee-b8ba-dd6e577eca0e",
-      "tag": "L-REF-SCHLEIFE",
-      "page": 1,
-      "points": [
-        {
-          "x": 0.4831649831649832,
-          "y": 0.17142857142857143
-        },
-        {
-          "x": 0.4831649831649832,
-          "y": 0.20238095238095238
-        },
-        {
-          "x": 0.5420875420875421,
-          "y": 0.20238095238095238
-        },
-        {
-          "x": 0.5420875420875421,
-          "y": 0.17142857142857143
-        }
-      ],
-      "startConnection": {
-        "equipmentId": "0c1b42a6-abce-505f-aae9-162c7b64a036",
-        "port": "Bottom"
-      },
-      "endConnection": {
-        "equipmentId": "da24c6aa-419c-5dd3-848b-e804f0116969",
-        "port": "Bottom"
-      }
-    },
-    {
-      "id": "1beb23b1-fdfa-5a15-9aa5-2f0f757b348e",
-      "tag": "L-008",
+      "tag": "L-007",
       "page": 1,
       "points": [
         {
@@ -1281,8 +1324,8 @@
       }
     },
     {
-      "id": "8cf6090a-7faa-5f23-b0ad-28720e65b972",
-      "tag": "L-009",
+      "id": "1beb23b1-fdfa-5a15-9aa5-2f0f757b348e",
+      "tag": "L-008",
       "page": 1,
       "points": [
         {
@@ -1300,8 +1343,8 @@
       }
     },
     {
-      "id": "11c5d415-cd5d-55d0-bccb-2d4f2953d552",
-      "tag": "L-010",
+      "id": "8cf6090a-7faa-5f23-b0ad-28720e65b972",
+      "tag": "L-009",
       "page": 1,
       "points": [
         {
@@ -1327,8 +1370,8 @@
       }
     },
     {
-      "id": "71145a51-6830-5abe-ac42-90e4339ee3c1",
-      "tag": "L-011",
+      "id": "11c5d415-cd5d-55d0-bccb-2d4f2953d552",
+      "tag": "L-010",
       "page": 1,
       "points": [
         {
@@ -1346,8 +1389,54 @@
       }
     },
     {
+      "id": "71145a51-6830-5abe-ac42-90e4339ee3c1",
+      "tag": "L-011",
+      "page": 1,
+      "points": [
+        {
+          "x": 0.24074074074074073,
+          "y": 0.38095238095238104
+        },
+        {
+          "x": 0.2441077441077441,
+          "y": 0.38095238095238093
+        }
+      ],
+      "startConnection": {
+        "equipmentId": "a1e163e0-3e20-51b3-9fe9-3d4d14c8e0b7",
+        "port": "Right"
+      },
+      "endConnection": {
+        "equipmentId": "3749898e-0cf1-5989-b8d8-87526d927217",
+        "port": "Left"
+      }
+    },
+    {
       "id": "f4834af7-e98e-5291-b0d0-28bdb8c97eaf",
       "tag": "L-012",
+      "page": 1,
+      "points": [
+        {
+          "x": 0.29292929292929293,
+          "y": 0.38095238095238093
+        },
+        {
+          "x": 0.30303030303030304,
+          "y": 0.38095238095238093
+        }
+      ],
+      "startConnection": {
+        "equipmentId": "51456053-d457-5317-b934-e82855b10828",
+        "port": "Right"
+      },
+      "endConnection": {
+        "equipmentId": "19677d5a-e618-5124-a346-f8013e5cf517",
+        "port": "Left"
+      }
+    },
+    {
+      "id": "01a27b53-dc08-5e9d-8255-44b557772884",
+      "tag": "L-013",
       "page": 1,
       "points": [
         {
@@ -1369,8 +1458,8 @@
       }
     },
     {
-      "id": "01a27b53-dc08-5e9d-8255-44b557772884",
-      "tag": "L-013",
+      "id": "818be7b3-940e-57ea-8352-73ad8979dd1c",
+      "tag": "L-014",
       "page": 1,
       "points": [
         {
@@ -1388,29 +1477,6 @@
       },
       "endConnection": {
         "equipmentId": "a1e163e0-3e20-51b3-9fe9-3d4d14c8e0b7",
-        "port": "Left"
-      }
-    },
-    {
-      "id": "818be7b3-940e-57ea-8352-73ad8979dd1c",
-      "tag": "L-014",
-      "page": 1,
-      "points": [
-        {
-          "x": 0.24074074074074073,
-          "y": 0.38095238095238104
-        },
-        {
-          "x": 0.30303030303030304,
-          "y": 0.38095238095238093
-        }
-      ],
-      "startConnection": {
-        "equipmentId": "a1e163e0-3e20-51b3-9fe9-3d4d14c8e0b7",
-        "port": "Right"
-      },
-      "endConnection": {
-        "equipmentId": "19677d5a-e618-5124-a346-f8013e5cf517",
         "port": "Left"
       }
     },
@@ -1754,6 +1820,34 @@
       "page": 1,
       "points": [
         {
+          "x": 0.5993265993265993,
+          "y": 0.75
+        },
+        {
+          "x": 0.6262626262626263,
+          "y": 0.75
+        },
+        {
+          "x": 0.6262626262626263,
+          "y": 0.7976190476190477
+        }
+      ],
+      "startConnection": {
+        "equipmentId": "f8308e95-af8b-511c-adcb-7fff75950e38",
+        "port": "Right"
+      },
+      "endConnection": {
+        "pipeId": "e783b371-d8bc-5142-bb78-39015b5ab800",
+        "segment": 0,
+        "fraction": 0.352059925093633
+      }
+    },
+    {
+      "id": "3b4949bb-5aee-5a42-b898-257c2b51d569",
+      "tag": "L-030",
+      "page": 1,
+      "points": [
+        {
           "x": 0.2138047138047138,
           "y": 0.7261904761904762
         },
@@ -1776,8 +1870,8 @@
       }
     },
     {
-      "id": "3b4949bb-5aee-5a42-b898-257c2b51d569",
-      "tag": "L-030",
+      "id": "56ce52be-ef9c-5a1d-a201-3c8accfe606e",
+      "tag": "L-031",
       "page": 1,
       "points": [
         {
@@ -1803,8 +1897,8 @@
       }
     },
     {
-      "id": "56ce52be-ef9c-5a1d-a201-3c8accfe606e",
-      "tag": "L-031",
+      "id": "16eb9745-e702-5af0-9931-d56142bd11b2",
+      "tag": "L-032",
       "page": 1,
       "points": [
         {
@@ -2616,8 +2710,8 @@
       },
       "tankStates": {},
       "sensorValues": {
-        "2e0659ab-8558-5a32-9f5d-f6242adfa73f": 0,
-        "bf56a0aa-72a9-53d3-beb1-0a60b6a913c0": 0
+        "2e0659ab-8558-5a32-9f5d-f6242adfa73f": 0.0,
+        "bf56a0aa-72a9-53d3-beb1-0a60b6a913c0": 0.0
       }
     },
     {
@@ -2635,8 +2729,8 @@
       },
       "tankStates": {},
       "sensorValues": {
-        "2e0659ab-8558-5a32-9f5d-f6242adfa73f": 13824,
-        "bf56a0aa-72a9-53d3-beb1-0a60b6a913c0": 13824
+        "2e0659ab-8558-5a32-9f5d-f6242adfa73f": 50.0,
+        "bf56a0aa-72a9-53d3-beb1-0a60b6a913c0": 50.0
       }
     },
     {
@@ -2654,8 +2748,8 @@
       },
       "tankStates": {},
       "sensorValues": {
-        "2e0659ab-8558-5a32-9f5d-f6242adfa73f": 26542,
-        "bf56a0aa-72a9-53d3-beb1-0a60b6a913c0": 26542
+        "2e0659ab-8558-5a32-9f5d-f6242adfa73f": 95.99971064814815,
+        "bf56a0aa-72a9-53d3-beb1-0a60b6a913c0": 95.99971064814815
       }
     },
     {
@@ -2673,8 +2767,8 @@
       },
       "tankStates": {},
       "sensorValues": {
-        "2e0659ab-8558-5a32-9f5d-f6242adfa73f": 27648,
-        "bf56a0aa-72a9-53d3-beb1-0a60b6a913c0": 27648
+        "2e0659ab-8558-5a32-9f5d-f6242adfa73f": 100.0,
+        "bf56a0aa-72a9-53d3-beb1-0a60b6a913c0": 100.0
       }
     }
   ],
@@ -2716,5 +2810,5 @@
       ]
     }
   ],
-  "referenceNumber": 1
+  "referenceNumber": 2
 }

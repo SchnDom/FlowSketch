@@ -21,8 +21,8 @@ internal static class DemoSelfTest
         SceneValues Values(int scenario,int step)=>SceneValues.From(p.Scenarios[scenario-1],p.ControlSteps.Where(t=>t.ScenarioId==p.Scenarios[scenario-1].Id).ElementAt(step-1));
         var pump=p.Equipment.Single(e=>e.Tag=="P-101");var tank=p.Equipment.Single(e=>e.Tag=="B-101");var fan=p.Equipment.Single(e=>e.Tag=="V-201");var heat=p.Equipment.Single(e=>e.Tag=="WT-401");
         var filling=PipeNetwork.EvaluateScene(p,Values(2,2));check(filling.Pipes.Values.Any(a=>a.Flowing)&&!filling.Errors.ContainsKey(pump.Id),"Demo: Wasserfüllung läuft mit versorgter Pumpe");
-        var loop=p.Pipes.Single(x=>x.Tag=="L-REF-SCHLEIFE");
-        check(p.Equipment.Count(x=>x.Variant=="Querverweis"&&x.ReferenceId=="QV000001")==2&&filling.Pipes[loop.Id].State=="Befüllt"&&!filling.Pipes[loop.Id].Flowing,"Demo: Rohr zwischen gleichen Querverweis-IDs enthält Medium, erzeugt aber keinen künstlichen Kreisfluss");
+        var third=p.Equipment.Single(x=>x.Tag=="REF-103");var waterBranch=p.Pipes.Single(x=>x.StartConnection?.EquipmentId==third.Id);
+        check(p.Equipment.Count(x=>x.Variant=="Querverweis"&&x.ReferenceId=="QV000001")==3&&p.Equipment.Count(x=>x.Variant=="Querverweis"&&x.ReferenceId=="QV000002")==2&&filling.Pipes[waterBranch.Id].State=="Befüllt","Demo: drei Wasser-Querverweise und eigenes Druckluftpaar verteilen Medien über getrennte IDs");
         var mixed=PipeNetwork.EvaluateScene(p,Values(3,4));check(mixed.Pipes.Values.Any(a=>a.Flowing&&a.MediumType==MediumType.Mixed),"Demo: Behälter versorgt Ausgang mit Schrittmedium Emulsion");
         check(PipeNetwork.EvaluateScene(p,Values(4,4)).Errors.GetValueOrDefault(fan.Id)=="Störung: Medium ungeeignet","Demo: ungeeignetes Ventilatormedium wird als Störung gezeigt");
         check(PipeNetwork.EvaluateScene(p,Values(6,1)).HeatExchangers[heat.Id]==(true,false)&&PipeNetwork.EvaluateScene(p,Values(6,2)).HeatExchangers[heat.Id]==(true,true)&&PipeNetwork.EvaluateScene(p,Values(6,3)).HeatExchangers[heat.Id]==(false,true),"Demo: Wärmetauscher zeigt primären, beide und sekundären Durchfluss unabhängig");

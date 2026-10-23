@@ -15,9 +15,10 @@ internal static class PageVisual
         if(item.Type==EquipmentType.Legend)return LegendVisual.Symbol(item,pageWidth,pageHeight);
         var values=new SceneValues();if(state is not null)values.EquipmentStates[item.Id]=state;
         state=SymbolCatalog.State(item,values);if(SymbolCatalog.CheckValve(item))state=status=="Durchflossen"?"Durchflossen":"Gesperrt";var fault=status?.StartsWith("Störung")==true;
-        var color=Color(StateColor(item,fault?"Störung":state));
+        var color=item.LinesTransparent?Brushes.Transparent:Color(StateColor(item,fault?"Störung":state));
         var background=(fault?"Störung":state) switch{"Offen" or "Ein" or "Aktiv" or "A-B" or "A-C" or "B-C"=>"#CEF4DE","Geschlossen" or "Aus" or "Inaktiv"=>"#FFDF9A","Störung"=>"#FFC5C5",_=>item.BackgroundColor};
         if(SymbolCatalog.Colored(item))background=item.BackgroundColor=="#FFFFFF"?"#FFDF9A":item.BackgroundColor;
+        if(item.BackgroundTransparent)background="#00FFFFFF";
         var grid=new Grid{Width=Math.Max(item.Variant=="Querverweis"?2:18,item.Width*pageWidth),Height=Math.Max(item.Variant=="Querverweis"?2:18,item.Height*pageHeight),Opacity=state=="Ausgeblendet"?0:item.Opacity,ToolTip=item.Tag+" · "+item.Variant};
         // The border is an overlay background; the actual symbol is drawn from the shared catalog.
         grid.Children.Add(new Border{Background=Color(background),BorderBrush=color,BorderThickness=new Thickness(item.Type is EquipmentType.MediaSource or EquipmentType.Text?1:0)});
@@ -82,8 +83,8 @@ internal static class PageVisual
         foreach(var item in project.Equipment.Where(x=>x.Page==page))
         {
             if(item.Type is EquipmentType.Text or EquipmentType.Legend&&scenario?.EquipmentStates.GetValueOrDefault(item.Id)=="Ausgeblendet")continue;
-            var symbol=Symbol(Appearance(item,project,values),width,height,scenario?.EquipmentStates.GetValueOrDefault(item.Id),scenario?.TextValues.GetValueOrDefault(item.Id),Status(item,values,network),item.Type==EquipmentType.Instrument?SensorEvaluation.Display(item,values):null);Canvas.SetLeft(symbol,item.X*width);Canvas.SetTop(symbol,item.Y*height);canvas.Children.Add(symbol);if(item.Type==EquipmentType.Drawing||item.Variant=="Querverweis")continue;
-            var label=new TextBlock {Text=item.Tag,Background=Brushes.White,Foreground=Brushes.Black,FontSize=width/150};Canvas.SetLeft(label,item.X*width);Canvas.SetTop(label,item.Y*height+symbol.Height+CaptionOffset(item,width));canvas.Children.Add(label);
+            var symbol=Symbol(Appearance(item,project,values),width,height,scenario?.EquipmentStates.GetValueOrDefault(item.Id),scenario?.TextValues.GetValueOrDefault(item.Id),Status(item,values,network),item.Type==EquipmentType.Instrument?SensorEvaluation.Display(item,values):null);Canvas.SetLeft(symbol,item.X*width);Canvas.SetTop(symbol,item.Y*height);canvas.Children.Add(symbol);if(item.Type==EquipmentType.Drawing||!item.ShowTag)continue;
+            var label=new TextBlock {Text=item.Tag,Background=Brushes.White,Foreground=Brushes.Black,FontSize=width/150};Canvas.SetLeft(label,(item.X+item.TagOffsetX)*width);Canvas.SetTop(label,item.Y*height+symbol.Height+CaptionOffset(item,width)+item.TagOffsetY*height);canvas.Children.Add(label);
         }
         canvas.Measure(new Size(width,height));canvas.Arrange(new Rect(0,0,width,height));canvas.UpdateLayout();var image=new RenderTargetBitmap((int)Math.Ceiling(width),(int)Math.Ceiling(height),96,96,PixelFormats.Pbgra32);image.Render(canvas);image.Freeze();return image;
     }

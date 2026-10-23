@@ -21,7 +21,7 @@ internal static class BlankLayout
         var b=p.BlankSheet!;
         var oldWidth=b.WidthMm;var oldHeight=b.HeightMm;
         void Point(PipePoint q){q.X=(q.X*oldWidth+left)/width;q.Y=(q.Y*oldHeight+top)/height;}
-        foreach(var e in p.Equipment){if(e.Sensor.ConnectionEnd is {} endpoint)Point(endpoint);if(e.Drawing.Start is {} a)Point(a);if(e.Drawing.End is {} z)Point(z);e.Drawing.PageWidth=2000*width/297;e.X=(e.X*oldWidth+left)/width;e.Y=(e.Y*oldHeight+top)/height;e.Width*=oldWidth/width;e.Height*=oldHeight/height;}
+        foreach(var e in p.Equipment){if(e.Sensor.ConnectionEnd is {} endpoint)Point(endpoint);if(e.Drawing.Start is {} a)Point(a);if(e.Drawing.End is {} z)Point(z);e.Drawing.PageWidth=2000*width/297;e.X=(e.X*oldWidth+left)/width;e.Y=(e.Y*oldHeight+top)/height;e.Width*=oldWidth/width;e.Height*=oldHeight/height;e.TagOffsetX*=oldWidth/width;e.TagOffsetY*=oldHeight/height;}
         foreach(var pipe in p.Pipes)
         {
             foreach(var q in pipe.Points)Point(q);

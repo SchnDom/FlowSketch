@@ -7,7 +7,10 @@
     <Version>0.10.0</Version>
     <ApplicationIcon>../../_media/FlowSketch.ico</ApplicationIcon>
     <ApplicationManifest>app.manifest</ApplicationManifest>
-    <Company>cs-systems GmbH</Company>
+    <Company>Dominik Schneeberger</Company>
+    <Authors>Dominik Schneeberger</Authors>
+    <Copyright>Copyright (c) 2026 Dominik Schneeberger</Copyright>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <Product>FlowSketch</Product>
     <AssemblyName>FlowSketch</AssemblyName><RootNamespace>PID2Process</RootNamespace>
     <AssemblyVersion>$(Version).0</AssemblyVersion>
@@ -21,8 +24,8 @@
   <ItemGroup><EmbeddedResource Include="SymbolDefinitions.json" /></ItemGroup>
   <ItemGroup>
     <Resource Include="../../_media/FlowSketch.ico" Link="Assets/favicon.ico" />
-    <Resource Include="../../_media/CS26001-1-Logo-4c.png" Link="Assets/logo.png" />
-    <EmbeddedResource Include="../../_media/companyInfo.txt" LogicalName="PID2Process.CompanyInfo.txt" />
+    <EmbeddedResource Include="../../LICENSE" LogicalName="PID2Process.License.txt" />
+    <EmbeddedResource Include="../../THIRD-PARTY-NOTICES.md" LogicalName="PID2Process.ThirdParty.txt" />
     <EmbeddedResource Include="../../docs/Hilfe.md" LogicalName="PID2Process.HelpGuide.md" />
     <Resource Include="../../_media/help/*.png" Link="Help/%(Filename)%(Extension)" />
   </ItemGroup>

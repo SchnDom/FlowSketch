@@ -26,7 +26,7 @@ public partial class MainWindow
     private void ContinuePipeBranch(PipePoint point,PipeConnection? connection)
     {
         _drawingPipe=true;
-        if(_pipeDraft.Count>0&&(Pixel(point)-Pixel(_pipeDraft[0])).Length>5)_pipeDraft.Add(new(point.X,point.Y));
+        if(_pipeDraft.Count>0&&(Pixel(point)-Pixel(_pipeDraft[0])).Length>5)_pipeDraft.AddRange(OrthogonalPath.Continue(_pipeDraft[^1],point,Sheet.Width,Sheet.Height,Keyboard.Modifiers.HasFlag(ModifierKeys.Shift),connection is not null));
         if(_pipeDraft.Count>=2&&connection is not null)FinishPipe(connection);
         else{PlacementHint.Text="Abzweig: weitere Eckpunkte klicken · Doppelklick/Enter: Ende · Esc: Abbrechen";Draw();UpdatePipePreview(Pixel(point));}
     }
@@ -50,7 +50,8 @@ public partial class MainWindow
     private void AddPipePoint(Point p,bool finish)
     {
         var snap=Snap(Normal(p,Sheet.Width,Sheet.Height),equipmentOnly:_drawingSignal);if(_pipeDraft.Count==0)_draftStart=snap.Connection;
-        if(_pipeDraft.Count==0||(Pixel(_pipeDraft[^1])-Pixel(snap.Point)).Length>2)_pipeDraft.Add(snap.Point);
+        if(_pipeDraft.Count==0)_pipeDraft.Add(snap.Point);
+        else if((Pixel(_pipeDraft[^1])-Pixel(snap.Point)).Length>2)_pipeDraft.AddRange(OrthogonalPath.Continue(_pipeDraft[^1],snap.Point,Sheet.Width,Sheet.Height,Keyboard.Modifiers.HasFlag(ModifierKeys.Shift),snap.Connection is not null));
         if(_pipeDraft.Count>=2&&(finish||snap.Connection is not null)){FinishPipe(snap.Connection);return;}UpdatePipePreview(p);
     }
     private void FinishPipe(PipeConnection? end=null)
@@ -59,15 +60,16 @@ public partial class MainWindow
         if(_drawingSignal)
         {
             SignalConnection? Convert(PipeConnection? c)=>c?.EquipmentId is Guid id?new(){EquipmentId=id,Port=c.Port,Fraction=c.Fraction}:null;
-            var connection=end??Snap(_pipeDraft[^1],equipmentOnly:true).Connection;
+            var connection=end;
             d.Project.SignalLines.Add(new(){Tag="Wirklinie-"+(d.Project.SignalLines.Count+1),Page=d.Page+1,Points=_pipeDraft.Select(p=>new PipePoint(p.X,p.Y)).ToList(),StartConnection=Convert(_draftStart),EndConnection=Convert(connection)});CancelPlacement();Changed();Draw();return;
         }
-        d.Project.Pipes.Add(new PipeSegment{Tag="Rohr-"+(d.Project.Pipes.Count+1),Page=d.Page+1,Points=_pipeDraft.Select(p=>new PipePoint(p.X,p.Y)).ToList(),StartConnection=_draftStart,EndConnection=end??Snap(_pipeDraft[^1]).Connection});CancelPlacement();Changed();Draw();
+        d.Project.Pipes.Add(new PipeSegment{Tag="Rohr-"+(d.Project.Pipes.Count+1),Page=d.Page+1,Points=_pipeDraft.Select(p=>new PipePoint(p.X,p.Y)).ToList(),StartConnection=_draftStart,EndConnection=end});CancelPlacement();Changed();Draw();
     }
     private void UpdatePipePreview(Point cursor)
     {
         if(_pipePreview is null){_pipePreview=new Polyline{Stroke=_drawingSignal?Brushes.Red:Brushes.DeepSkyBlue,StrokeThickness=_drawingSignal?1.3:4,Opacity=.5,StrokeDashArray=_drawingSignal?null:new DoubleCollection([2,2]),IsHitTestVisible=false};Sheet.Children.Add(_pipePreview);}
-        var points=_pipeDraft.Select(Pixel).ToList();points.Add(Pixel(Snap(Normal(cursor,Sheet.Width,Sheet.Height),equipmentOnly:_drawingSignal).Point));_pipePreview.Points=new PointCollection(points);
+        var snap=Snap(Normal(cursor,Sheet.Width,Sheet.Height),equipmentOnly:_drawingSignal);var points=_pipeDraft.Select(Pixel).ToList();
+        if(_pipeDraft.Count>0)points.AddRange(OrthogonalPath.Continue(_pipeDraft[^1],snap.Point,Sheet.Width,Sheet.Height,Keyboard.Modifiers.HasFlag(ModifierKeys.Shift),snap.Connection is not null).Select(Pixel));else points.Add(Pixel(snap.Point));_pipePreview.Points=new PointCollection(points);
     }
     private void DrawPipes(SceneValues values)
     {
@@ -84,7 +86,7 @@ public partial class MainWindow
             {
                 var flow=new Polyline{Points=new PointCollection(PipeNetwork.Slice(PipeNetwork.Resolve(d.Project,pipe),span.Start,span.End).Select(Pixel)),Stroke=Brushes.White,StrokeThickness=line.StrokeThickness/2,StrokeDashArray=new DoubleCollection([3,2]),IsHitTestVisible=false,Opacity=pipe.Opacity*.8};
 
-                flow.BeginAnimation(Shape.StrokeDashOffsetProperty,new DoubleAnimation(0,span.Direction<0?5:-5,TimeSpan.FromSeconds(1)){RepeatBehavior=RepeatBehavior.Forever});
+                AnimateFlow(flow,span.Direction);
                 flows.Add((flow,span));
             }
             line.Opacity=pipe.Opacity;

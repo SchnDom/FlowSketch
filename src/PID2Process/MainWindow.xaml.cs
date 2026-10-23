@@ -44,7 +44,7 @@ public partial class MainWindow : Window
     public MainWindow()
     {
         InitializeComponent();InitializeWorkAreaBounds();StateChanged+=(_,_)=>UpdateChrome();UpdateChrome();Icon=InformationWindow.IconImage();Title=BuildInfo.Name+" · v"+BuildInfo.Version; Loaded += (_, _) => RefreshRecent();
-        InitializeInspector();InitializeCompositor();InitializeLibrary();Viewport.PreviewMouseLeftButtonDown+=(_,e)=>{if(e.OriginalSource is DependencyObject source&&!Sheet.IsAncestorOf(source)&&source!=Sheet)ClearSelection();};Viewport.ContextMenu=new ContextMenu();Viewport.ContextMenuOpening+=(_,_)=>Viewport.ContextMenu=PlanMenu();Viewport.ScrollChanged+=(_,_)=>UpdateOverview();Viewport.SizeChanged+=(_,_)=>UpdateOverview();
+        InitializeFlowAnimation();InitializeInspector();InitializeCompositor();InitializeLibrary();Viewport.PreviewMouseLeftButtonDown+=(_,e)=>{if(e.OriginalSource is DependencyObject source&&!Sheet.IsAncestorOf(source)&&source!=Sheet)ClearSelection();};Viewport.ContextMenu=new ContextMenu();Viewport.ContextMenuOpening+=(_,_)=>Viewport.ContextMenu=PlanMenu();Viewport.ScrollChanged+=(_,_)=>UpdateOverview();Viewport.SizeChanged+=(_,_)=>UpdateOverview();
         Sheet.PreviewMouseLeftButtonDown+=(_,e)=>{if(_selectExportWindow)Sheet_Down(Sheet,e);};
         PreviewKeyDown+=Window_KeyDown;
         Viewport.AddHandler(System.Windows.Input.Mouse.PreviewMouseDownEvent,new MouseButtonEventHandler(Viewport_Down),true);
@@ -156,7 +156,7 @@ public partial class MainWindow : Window
     private void DrawCore()
     {
         if(Current is {} active)DrawingGeometry.Normalize(active.Project);
-        Sheet.Children.Clear(); _ghost = null;_pipePreview=null; if (Current is not { } d) return;
+        ClearFlowAnimation();Sheet.Children.Clear(); _ghost = null;_pipePreview=null; if (Current is not { } d) return;
         Sheet.Width = (d.Project.BlankSheet is {} sheet?LogicalPageWidth*sheet.WidthMm/297:LogicalPageWidth) * d.Zoom; Sheet.Height = Sheet.Width * (d.Project.BlankSheet is {} blank?blank.HeightMm/blank.WidthMm:d.Raster.PageCount>0?d.Raster.AspectRatio(d.Page):.708);
         if (d.Image is not null) Sheet.Children.Add(new Image { Source = d.Image, Width = Sheet.Width, Height = Sheet.Height, IsHitTestVisible = false });
         var scenario = _previewProject is not null?_previewScenario:ScenarioBox.SelectedItem as Scenario;
@@ -176,7 +176,7 @@ public partial class MainWindow : Window
         appearance.TextContent=scenario?.TextValues.GetValueOrDefault(item.Id)??item.TextContent;
         var values=SceneValues.From(scenario,null);var network=_networkScene??PipeNetwork.EvaluateScene(Current!.Project,values);appearance=PageVisual.Appearance(appearance,Current!.Project,values);var element = PageVisual.Symbol(appearance,Sheet.Width,Sheet.Height,state,status:PageVisual.Status(item,values,network),sensorView:item.Type==EquipmentType.Instrument?SensorEvaluation.Display(item,values):null);
         Canvas.SetLeft(element, item.X * Sheet.Width); Canvas.SetTop(element, item.Y * Sheet.Height);
-        var label = new TextBlock { Text = item.Tag, Background = Brushes.White, Foreground = Brushes.Black, IsHitTestVisible = false }; Canvas.SetLeft(label, item.X * Sheet.Width); Canvas.SetTop(label, item.Y * Sheet.Height + element.Height + PageVisual.CaptionOffset(item,Sheet.Width)); Sheet.Children.Add(element); if(item.Type!=EquipmentType.Drawing&&item.Variant!="Querverweis")Sheet.Children.Add(label);
+        var label = new TextBlock { Text = item.Tag, Background = Brushes.White, Foreground = Brushes.Black };PositionTag(item,label);AttachTag(item,label);Sheet.Children.Add(element);if(item.Type!=EquipmentType.Drawing&&item.ShowTag)Sheet.Children.Add(label);
         bool dragging=false,moved=false,copyPending=false,copyStarted=false;Point mouseStart=new();element.Tag=item.Id;label.Tag=item.Id;
         element.MouseLeftButtonDown+=(_,e)=>
         {
@@ -251,7 +251,7 @@ public partial class MainWindow : Window
         if (Current?.Image is null) { StatusText.Text = "Zuerst ein Zeichenblatt öffnen oder eine PDF importieren."; return; }
         CancelPlacement();
         var parts = ((string)((Button)sender).Tag).Split('|'); _pending = new EquipmentItem { Type = Enum.Parse<EquipmentType>(parts[0]), Variant = parts[1], Actuator = ActuatorType.Manual, Actuation = "Manuell", Tag = parts[1] + "-" + (Current.Project.Equipment.Count + 1), States = [new() { Name = "Normal" }, new() { Name = "Störung", Color = "#C62828" }] };if(_pending.Type==EquipmentType.Instrument)_pending.Color="#000000";if(_pending.Type==EquipmentType.MediaSource){_pending.Width=.085;_pending.Height=.07;} if(_pending.Type!=EquipmentType.Text&&_pending.Type!=EquipmentType.MediaSource)_pending.Height=_pending.Width*Sheet.Width/Sheet.Height;if(_pending.Type==EquipmentType.Legend){_pending.AutomaticLegend=true;_pending.Width=.25;_pending.Height=.22;_pending.Color="#303030";_pending.Opacity=1;MediaSettings.Normalize(Current.Project);_pending.LegendEntries=Current.Project.Media.Select(m=>new LegendEntry{MediumId=m.Id,Text=m.Name,Color=m.Color}).ToList();}
-        if(_pending.Type==EquipmentType.Vessel){_pending.Width=.05;_pending.Height=.09;} if(Current.Project.BlankSheet is {} sheet){var factor=297/sheet.WidthMm;_pending.Width*=factor;_pending.Height*=_pending.Type is EquipmentType.Vessel or EquipmentType.Text or EquipmentType.MediaSource or EquipmentType.Legend?210/sheet.HeightMm:factor;} if(_pending.Type==EquipmentType.Drawing){_pending.Tag="Zeichnung-"+Guid.NewGuid().ToString("N")[..8];_pending.Color="#000000";_pending.Opacity=1;_pending.TextContent="Text";ApplyDrawingPreset(_pending,string.Join("|",parts));} if(_pending.Variant=="Querverweis"){CrossReferences.DefaultSize(_pending,Sheet.Width/Current.Zoom,Sheet.Height/Current.Zoom);_pending.ReferenceId=CrossReferences.SuggestId(Current.Project);_pending.Tag=_pending.ReferenceId;} _drawingPipe = false; PlacementHint.Text = parts[1] + " platzieren · Esc: Abbrechen"; Sheet.Focus();
+        if(_pending.Type==EquipmentType.Vessel){_pending.Width=.05;_pending.Height=.09;} if(Current.Project.BlankSheet is {} sheet){var factor=297/sheet.WidthMm;_pending.Width*=factor;_pending.Height*=_pending.Type is EquipmentType.Vessel or EquipmentType.Text or EquipmentType.MediaSource or EquipmentType.Legend?210/sheet.HeightMm:factor;} if(_pending.Type==EquipmentType.Drawing){_pending.Tag="Zeichnung-"+Guid.NewGuid().ToString("N")[..8];_pending.Color="#000000";_pending.Opacity=1;_pending.TextContent="Text";ApplyDrawingPreset(_pending,string.Join("|",parts));} if(_pending.Variant=="Querverweis"){_pending.ShowTag=false;CrossReferences.DefaultSize(_pending,Sheet.Width/Current.Zoom,Sheet.Height/Current.Zoom);_pending.ReferenceId=CrossReferences.SuggestId(Current.Project);_pending.Tag=_pending.ReferenceId;} _drawingPipe = false; PlacementHint.Text = parts[1] + " platzieren · Esc: Abbrechen"; Sheet.Focus();
     }
     private void Pipe_Click(object sender, RoutedEventArgs e) { if (Current?.Image is null) return; CancelPlacement();ClearSelection(); _drawingPipe = true; _drawingSignal=false; PlacementHint.Text = "Rohrpfad: klicken · Doppelklick/Enter: Ende · STRG+Ziehen: Abzweig";Draw(); }
     private void EditPipe(PipeSegment pipe)
@@ -313,40 +313,65 @@ public partial class MainWindow : Window
     {
         if(item.Type==EquipmentType.Drawing)return EditAnnotation(item);
         if(item.Type==EquipmentType.Legend)return new LegendEditor(this,item,Current!.Project).ShowDialog()==true;
-        SourceMediaFields? mediaFields=null;
-        var dialog = new EditorDialog(this, "Gerätedaten · " + item.Variant); dialog.Text("Tag", item.Tag); dialog.Text("Beschreibung", item.Description, true);
-        if(item.Variant=="Querverweis")dialog.Choice("Querverweis-ID",item.ReferenceId.Length>0?item.ReferenceId:CrossReferences.SuggestId(Current!.Project),Current!.Project.Equipment.Where(x=>x.Variant=="Querverweis").Select(x=>x.ReferenceId).Where(x=>!string.IsNullOrWhiteSpace(x)).Distinct().ToArray());
+        var resetTag=false;var project=Current!.Project;var mediaProject=DocumentExport.Snapshot(project);SourceMediaFields? mediaFields=null;
+        var dialog=new EditorDialog(this,"Gerätedaten – "+item.Tag);dialog.Text("Tag",item.Tag);dialog.Text("Beschreibung",item.Description,true);
+        ((TextBox)dialog.Control("Tag")).TextChanged+=(_,_)=>dialog.Title="Gerätedaten – "+dialog.Value("Tag");
+        dialog.Choice("Funktion",item.Function,project.Equipment.Select(x=>x.Function).Where(x=>x.Length>0).Distinct().Order().ToArray());
+        dialog.ActionBeside("Funktion","+",()=>{var edit=new EditorDialog(dialog,"Funktion hinzufügen");edit.Text("Funktion","");edit.Validation=()=>edit.Value("Funktion").Length==0?"Funktion eingeben.":null;if(edit.ShowDialog()==true)((ComboBox)dialog.Control("Funktion")).Text=edit.Value("Funktion");});
+        dialog.Text("Einbauort (+)",item.InstallationLocation);
+        if(item.Variant=="Querverweis")dialog.Choice("Querverweis-ID",item.ReferenceId.Length>0?item.ReferenceId:CrossReferences.SuggestId(project),project.Equipment.Where(x=>x.Variant=="Querverweis").Select(x=>x.ReferenceId).Distinct().ToArray());
         SensorEditor? sensorEditor=item.Type==EquipmentType.Instrument?new SensorEditor(dialog,item.Sensor):null;
-        dialog.Text("Temperatur (°C)",item.TemperatureCelsius?.ToString()??"");dialog.Text("Druck (bar)",item.PressureBar?.ToString()??"");dialog.Text("Durchflussgeschwindigkeit (m/s)",item.FlowVelocityMetersPerSecond?.ToString()??"");
-        if(item.Type!=EquipmentType.MediaSource)foreach(var field in new[]{"Temperatur (°C)","Druck (bar)","Durchflussgeschwindigkeit (m/s)"})dialog.Hide(field);
-        dialog.Validation=()=>{if(string.IsNullOrWhiteSpace(dialog.Value("Tag"))||Current!.Project.Equipment.Any(x=>x.Id!=item.Id&&x.Tag==dialog.Value("Tag")))return "Ein eindeutiger, nicht leerer Tag ist erforderlich.";if(SymbolCatalog.Valve(item)&&!SymbolCatalog.CheckValve(item)&&dialog.Value("Antriebsbauart")=="Antrieb auswählen")return "Bitte eine Antriebsbauart auswählen.";if(!ColorPicker.IsValid(dialog.Value("Farbe (#RRGGBB)"))||!ColorPicker.IsValid(dialog.Value("Hintergrundfarbe (#RRGGBB)")))return "Farben als #RRGGBB eingeben.";if(dialog.Number("Breite (px)",0)<=0||dialog.Number("Höhe (px)",0)<=0)return "Breite und Höhe in px müssen positiv sein.";if(sensorEditor?.Validate(dialog) is {} error)return error;if(item.Type==EquipmentType.MediaSource)return mediaFields?.Validate();if(item.Type==EquipmentType.Vessel){if(!Current!.Project.Media.Any(m=>m.Name==dialog.Value("Name des Mediums")&&MediaUi.Types.First(t=>t.Label==dialog.Value("Mediumtyp")).Value==m.Type))return "Ein zum Typ passendes Medium unter Projekt / Medien anlegen und auswählen.";}return null;};
-        var validateDevice=dialog.Validation;dialog.Validation=()=>item.Variant=="Querverweis"&&dialog.Value("Querverweis-ID").Length is <1 or >8?"Eine editierbare Querverweis-ID mit 1 bis 8 Zeichen ist erforderlich. Gleiche IDs verbinden die Anschlüsse im gesamten Projekt.":validateDevice?.Invoke();
-        dialog.Choice("Funktion",item.Function,Current!.Project.Equipment.Select(x=>x.Function).Where(x=>x.Length>0).Distinct().Order().ToArray());dialog.Text("Einbauort (+)",item.InstallationLocation);
         var tankStep=item.Type==EquipmentType.Vessel?StepBox.SelectedItem as ControlStep:null;
-        var assigned=tankStep?.TankStates.GetValueOrDefault(item.Id)?.MediumId??item.MediumId;
-        var initialMedium=Current!.Project.Media.FirstOrDefault(m=>m.Id==assigned)??Current.Project.Media.FirstOrDefault(m=>m.Type==item.MediumType);
-        if(item.Type==EquipmentType.MediaSource){mediaFields=new SourceMediaFields(dialog,Current.Project,item);dialog.SourceMedia=mediaFields;}else MediaUi.AddSelection(dialog,Current.Project,initialMedium?.Type??item.MediumType,initialMedium?.Name??item.MediaName);
-        dialog.Text("Textinhalt",item.TextContent,true);dialog.Color("Hintergrundfarbe (#RRGGBB)",item.BackgroundColor);dialog.Check("Zustandstext anzeigen",item.ShowStateText);if(!SymbolCatalog.Colored(item))dialog.Hide("Zustandstext anzeigen");
-        if(item.Type is not (EquipmentType.MediaSource or EquipmentType.Vessel)){dialog.Hide("Name des Mediums");dialog.Hide("Mediumtyp");}if(item.Type!=EquipmentType.Text)dialog.Hide("Textinhalt");
-        dialog.Choice("Mechanischer Aufbau / Messgröße", item.Variant, VariantOptions(item));if(item.Type==EquipmentType.MediaSource)dialog.Hide("Mechanischer Aufbau / Messgröße");
-        dialog.FixedChoice("Zugelassene Flussrichtung",item.CheckValveReversed?"Rechts → links":"Links → rechts","Links → rechts","Rechts → links");if(!SymbolCatalog.CheckValve(item))dialog.Hide("Zugelassene Flussrichtung");
-        dialog.FixedChoice("Antriebsbauart",item.Actuator switch{ActuatorType.Manual=>"Handbetätigt",ActuatorType.ElectricMotor=>"Elektromotor",ActuatorType.Piston=>"Kolben",ActuatorType.Diaphragm=>"Membran",_=>"Antrieb auswählen"},"Antrieb auswählen","Handbetätigt","Elektromotor","Kolben","Membran");if(!SymbolCatalog.Valve(item)||SymbolCatalog.CheckValve(item))dialog.Hide("Antriebsbauart");
-        dialog.Choice("Betätigung", item.Actuation, "Pneumatisch", "Elektrisch", "Hydraulisch", "Manuell");dialog.Hide("Betätigung"); dialog.Choice("Grundstellung", item.FailPosition, "NC", "NO", "AB", "Letzte Position", "Nicht zutreffend");
-        dialog.Check("Rückmeldung geöffnet", item.FeedbackOpen); dialog.Text("Tag Rückmeldung geöffnet", item.FeedbackOpenTag); dialog.Check("Rückmeldung geschlossen", item.FeedbackClosed); dialog.Text("Tag Rückmeldung geschlossen", item.FeedbackClosedTag);
-        dialog.Choice("Motorantrieb", item.MotorDrive, "DOL", "SS", "FU", "Nicht zutreffend"); dialog.Color("Farbe (#RRGGBB)", item.Color); dialog.Text("Deckkraft (0 bis 1)", item.Opacity.ToString()); dialog.Text("Breite (px)", (item.Width*Sheet.Width/Current!.Zoom).ToString()); dialog.Text("Höhe (px)", (item.Height*Sheet.Height/Current!.Zoom).ToString());
-        if(item.Type is not (EquipmentType.PumpMotor or EquipmentType.Compressor or EquipmentType.Fan)) dialog.Hide("Motorantrieb");
-        if(!SymbolCatalog.Valve(item)||SymbolCatalog.CheckValve(item)) foreach(var field in new[]{"Betätigung","Grundstellung","Rückmeldung geöffnet","Tag Rückmeldung geöffnet","Rückmeldung geschlossen","Tag Rückmeldung geschlossen"}) dialog.Hide(field);
-        if ((EquipmentDialogResult?.Invoke(dialog)??dialog.ShowDialog()) != true) return false;
-        if(dialog.Validation?.Invoke() is not null)return false;
-        mediaFields?.Commit(Current!.Project);
-        if(item.Variant=="Querverweis")CrossReferences.Assign(Current!.Project,item,dialog.Value("Querverweis-ID"));
+        var initialMedium=project.Media.FirstOrDefault(m=>m.Id==(tankStep?.TankStates.GetValueOrDefault(item.Id)?.MediumId??item.MediumId))??project.Media.FirstOrDefault(m=>m.Type==item.MediumType);
+        if(item.Type==EquipmentType.MediaSource)
+        {
+            dialog.Text("Temperatur (°C)",item.TemperatureCelsius?.ToString()??"");dialog.Text("Druck (bar)",item.PressureBar?.ToString()??"");dialog.Text("Durchflussgeschwindigkeit (m/s)",item.FlowVelocityMetersPerSecond?.ToString()??"");
+            mediaFields=new SourceMediaFields(dialog,project,item);dialog.SourceMedia=mediaFields;
+        }
+        else if(item.Type==EquipmentType.Vessel)MediaUi.AddSelection(dialog,mediaProject,initialMedium?.Type??item.MediumType,initialMedium?.Name??item.MediaName);
+        if(item.Type==EquipmentType.Text)dialog.Text("Textinhalt",item.TextContent,true);
+        if(SymbolCatalog.CheckValve(item))dialog.FixedChoice("Zugelassene Flussrichtung",item.CheckValveReversed?"Rechts → links":"Links → rechts","Links → rechts","Rechts → links");
+        if(SymbolCatalog.Valve(item)&&!SymbolCatalog.CheckValve(item))dialog.FixedChoice("Antriebsbauart",item.Actuator switch{ActuatorType.Manual=>"Handbetätigt",ActuatorType.ElectricMotor=>"Elektromotor",ActuatorType.Piston=>"Kolben",ActuatorType.Diaphragm=>"Membran",_=>"Antrieb auswählen"},"Antrieb auswählen","Handbetätigt","Elektromotor","Kolben","Membran");
+        dialog.Check("Tag anzeigen",item.ShowTag);dialog.ActionBeside("Tag anzeigen","Position zurücksetzen",()=>{resetTag=true;});
+        dialog.Check("Zustandstext anzeigen",item.ShowStateText);if(!SymbolCatalog.Colored(item))dialog.Hide("Zustandstext anzeigen");
+        dialog.Color("Hintergrundfarbe (#RRGGBB)",item.BackgroundColor);dialog.Label("Hintergrundfarbe (#RRGGBB)","Block-Hintergrund");dialog.TransparencyBeside("Hintergrundfarbe (#RRGGBB)","Transparent Hintergrund",item.BackgroundTransparent);
+        dialog.Color("Farbe (#RRGGBB)",item.Color);dialog.Label("Farbe (#RRGGBB)","Symbol-Linien");dialog.TransparencyBeside("Farbe (#RRGGBB)","Transparent Linien",item.LinesTransparent);
+        dialog.Text("Deckkraft (%)",(item.Opacity*100).ToString("0.###"));
+        var initialWidth=(item.Width*Sheet.Width/Current.Zoom).ToString("0.0");var initialHeight=(item.Height*Sheet.Height/Current.Zoom).ToString("0.0");
+        dialog.Text("Breite (px)",initialWidth);dialog.Text("Höhe (px)",initialHeight);
+        dialog.Validation=()=>
+        {
+            if(dialog.Value("Tag").Length==0||project.Equipment.Any(x=>x.Id!=item.Id&&x.Tag==dialog.Value("Tag")))return "Ein eindeutiger, nicht leerer Tag ist erforderlich.";
+            if(item.Variant=="Querverweis"&&dialog.Value("Querverweis-ID").Length is <1 or >8)return "Querverweis-ID mit 1 bis 8 Zeichen eingeben.";
+            if(SymbolCatalog.Valve(item)&&!SymbolCatalog.CheckValve(item)&&dialog.Value("Antriebsbauart")=="Antrieb auswählen")return "Bitte eine Antriebsbauart auswählen.";
+            if(!ColorPicker.IsValid(dialog.Value("Farbe (#RRGGBB)"))||!ColorPicker.IsValid(dialog.Value("Hintergrundfarbe (#RRGGBB)")))return "Farben als #RRGGBB eingeben.";
+            if(dialog.Number("Breite (px)",0)<=0||dialog.Number("Höhe (px)",0)<=0)return "Breite und Höhe müssen positiv sein.";
+            var opacity=dialog.Number("Deckkraft (%)",-1);if(opacity<0||opacity>100)return "Deckkraft zwischen 0 und 100 % eingeben.";
+            if(sensorEditor?.Validate(dialog) is {} error)return error;
+            if(mediaFields is not null)return mediaFields.Validate();
+            if(item.Type==EquipmentType.Vessel&&!mediaProject.Media.Any(m=>m.Name==dialog.Value("Name des Mediums")&&MediaUi.Types.First(t=>t.Label==dialog.Value("Mediumtyp")).Value==m.Type))return "Bitte ein definiertes Medium wählen oder über + hinzufügen.";
+            return null;
+        };
+        if((EquipmentDialogResult?.Invoke(dialog)??dialog.ShowDialog())!=true||dialog.Validation?.Invoke() is not null)return false;
+        if(mediaFields is not null)mediaFields.Commit(project);else if(item.Type==EquipmentType.Vessel){project.Media=mediaProject.Media;project.MediaColors=mediaProject.MediaColors;}
+        if(item.Variant=="Querverweis")CrossReferences.Assign(project,item,dialog.Value("Querverweis-ID"));
         if(item.Type==EquipmentType.MediaSource){MediaDisplay.TryOptional(dialog.Value("Temperatur (°C)"),out var t);MediaDisplay.TryOptional(dialog.Value("Druck (bar)"),out var p);MediaDisplay.TryOptional(dialog.Value("Durchflussgeschwindigkeit (m/s)"),out var v);item.TemperatureCelsius=t;item.PressureBar=p;item.FlowVelocityMetersPerSecond=v;}
-
-        item.Function=dialog.Value("Funktion");item.InstallationLocation=dialog.Value("Einbauort (+)");if(item.Type is EquipmentType.MediaSource or EquipmentType.Vessel){var chosen=mediaFields?.Selected??Current!.Project.Media.First(m=>m.Name==dialog.Value("Name des Mediums")&&m.Type==MediaUi.Types.First(t=>t.Label==dialog.Value("Mediumtyp")).Value);if(tankStep is not null){var assignment=tankStep.TankStates.GetValueOrDefault(item.Id)??new TankAssignment();assignment.MediumId=chosen.Id;tankStep.TankStates[item.Id]=assignment;}else{item.MediumId=chosen.Id;item.MediaName=chosen.Name;item.MediumType=chosen.Type;}}if(sensorEditor is not null){var oldSide=item.Sensor.ConnectionSide;item.Sensor=sensorEditor.Result(dialog);if(oldSide!=item.Sensor.ConnectionSide&&Current is {} sensorDoc)SensorConnections.BindNearest(sensorDoc.Project,item);}item.TextContent=dialog.Value("Textinhalt");item.ShowStateText=dialog.Checked("Zustandstext anzeigen");item.BackgroundColor=dialog.Value("Hintergrundfarbe (#RRGGBB)");
-        item.Actuator=dialog.Value("Antriebsbauart") switch{"Handbetätigt"=>ActuatorType.Manual,"Elektromotor"=>ActuatorType.ElectricMotor,"Kolben"=>ActuatorType.Piston,"Membran"=>ActuatorType.Diaphragm,_=>item.Actuator};
-        item.Actuation=item.Actuator switch{ActuatorType.Manual=>"Manuell",ActuatorType.ElectricMotor=>"Elektrisch",ActuatorType.Piston=>"Kolben",ActuatorType.Diaphragm=>"Membran",_=>item.Actuation};
-        item.CheckValveReversed=dialog.Value("Zugelassene Flussrichtung")=="Rechts → links";item.Tag = dialog.Value("Tag"); item.Description = dialog.Value("Beschreibung"); item.Variant = dialog.Value("Mechanischer Aufbau / Messgröße"); item.FailPosition = dialog.Value("Grundstellung"); item.FeedbackOpen = dialog.Checked("Rückmeldung geöffnet"); item.FeedbackClosed = dialog.Checked("Rückmeldung geschlossen"); item.FeedbackOpenTag = dialog.Value("Tag Rückmeldung geöffnet"); item.FeedbackClosedTag = dialog.Value("Tag Rückmeldung geschlossen"); item.MotorDrive = dialog.Value("Motorantrieb"); item.Color = dialog.Value("Farbe (#RRGGBB)"); item.Opacity = Math.Clamp(dialog.Number("Deckkraft (0 bis 1)", .85), 0, 1); item.Width = Math.Clamp(dialog.Number("Breite (px)",90)/(Sheet.Width/Current!.Zoom),.001,Math.Max(.001,1-item.X)); MediaSettings.Synchronize(Current!.Project);item.Height = Math.Clamp(dialog.Number("Höhe (px)",90)/(Sheet.Height/Current!.Zoom),.001,Math.Max(.001,1-item.Y)); return true;
+        if(item.Type is EquipmentType.MediaSource or EquipmentType.Vessel)
+        {
+            var chosen=mediaFields?.Selected??project.Media.First(m=>m.Name==dialog.Value("Name des Mediums")&&m.Type==MediaUi.Types.First(t=>t.Label==dialog.Value("Mediumtyp")).Value);
+            if(tankStep is not null){var assignment=tankStep.TankStates.GetValueOrDefault(item.Id)??new TankAssignment();assignment.MediumId=chosen.Id;tankStep.TankStates[item.Id]=assignment;}
+            else{item.MediumId=chosen.Id;item.MediaName=chosen.Name;item.MediumType=chosen.Type;}
+        }
+        if(sensorEditor is not null){var oldSide=item.Sensor.ConnectionSide;item.Sensor=sensorEditor.Result(dialog);if(oldSide!=item.Sensor.ConnectionSide)SensorConnections.BindNearest(project,item);}
+        if(SymbolCatalog.Valve(item)&&!SymbolCatalog.CheckValve(item)){item.Actuator=dialog.Value("Antriebsbauart") switch{"Handbetätigt"=>ActuatorType.Manual,"Elektromotor"=>ActuatorType.ElectricMotor,"Kolben"=>ActuatorType.Piston,"Membran"=>ActuatorType.Diaphragm,_=>item.Actuator};item.Actuation=item.Actuator switch{ActuatorType.Manual=>"Manuell",ActuatorType.ElectricMotor=>"Elektrisch",ActuatorType.Piston=>"Kolben",ActuatorType.Diaphragm=>"Membran",_=>item.Actuation};}
+        if(SymbolCatalog.CheckValve(item))item.CheckValveReversed=dialog.Value("Zugelassene Flussrichtung")=="Rechts → links";
+        item.Tag=dialog.Value("Tag");item.Description=dialog.Value("Beschreibung");item.Function=dialog.Value("Funktion");item.InstallationLocation=dialog.Value("Einbauort (+)");
+        if(item.Type==EquipmentType.Text)item.TextContent=dialog.Value("Textinhalt");
+        item.ShowTag=dialog.Checked("Tag anzeigen");if(resetTag){item.TagOffsetX=0;item.TagOffsetY=0;}item.ShowStateText=dialog.Checked("Zustandstext anzeigen");item.BackgroundColor=dialog.Value("Hintergrundfarbe (#RRGGBB)");item.Color=dialog.Value("Farbe (#RRGGBB)");item.BackgroundTransparent=dialog.Checked("Transparent Hintergrund");item.LinesTransparent=dialog.Checked("Transparent Linien");item.Opacity=dialog.Number("Deckkraft (%)",85)/100;
+        if(dialog.Value("Breite (px)")!=initialWidth)item.Width=Math.Clamp(dialog.Number("Breite (px)",90)/(Sheet.Width/Current.Zoom),.001,Math.Max(.001,1-item.X));
+        if(dialog.Value("Höhe (px)")!=initialHeight)item.Height=Math.Clamp(dialog.Number("Höhe (px)",90)/(Sheet.Height/Current.Zoom),.001,Math.Max(.001,1-item.Y));MediaSettings.Synchronize(project);return true;
     }
+
     private void Project_Click(object sender, RoutedEventArgs e)
     {
         if (Current is not { } d) return; var dialog = new EditorDialog(this, "Projekt"); dialog.Text("Projektname", d.Project.Name); dialog.Text("Planrevision", d.Project.Pdf.Revision); if (dialog.ShowDialog() != true) return; d.Project.Name = dialog.Value("Projektname"); d.Project.Pdf.Revision = dialog.Value("Planrevision"); Changed();

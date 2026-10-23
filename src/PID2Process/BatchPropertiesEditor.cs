@@ -19,7 +19,7 @@ internal sealed class BatchPropertiesEditor : Window
         void Field(string name,FrameworkElement input,bool enabled=true){var toggle=new CheckBox{Content=name,IsEnabled=enabled,Margin=new Thickness(0,6,0,4)};input.IsEnabled=false;input.Tag=name;toggle.Checked+=(_,_)=>input.IsEnabled=true;toggle.Unchecked+=(_,_)=>input.IsEnabled=false;var target=name is "Funktion" or "Einbauort (+)"?identity:appearance;target.Children.Add(toggle);target.Children.Add(input);_fields.Add(name,(toggle,input));}
         Field("Funktion",new TextBox{Text=Common(devices.Select(x=>x.Function).Concat(pipes.Select(x=>x.Function)).Concat(signals.Select(x=>x.Function)))});Field("Einbauort (+)",new TextBox{Text=Common(devices.Select(x=>x.InstallationLocation).Concat(pipes.Select(x=>x.InstallationLocation)).Concat(signals.Select(x=>x.InstallationLocation)))});
         var initial=Common(devices.Select(x=>x.Color).Concat(pipes.Select(x=>x.Color??"#007E87")).Concat(signals.Select(x=>x.Color)));Field("Farbe",new ColorPicker(ColorPicker.IsValid(initial)?initial:"#007E87"));
-        Field("Deckkraft (0 bis 1)",new TextBox{Text="1"});Field("Breite je Symbol (px)",new TextBox{Text=devices.FirstOrDefault()?.Width is double w?(w*_pageWidth).ToString():""},devices.Length>0);Field("Höhe je Symbol (px)",new TextBox{Text=devices.FirstOrDefault()?.Height is double h?(h*_pageHeight).ToString():""},devices.Length>0);
+        Field("Deckkraft (%)",new TextBox{Text="100"});Field("Breite je Symbol (px)",new TextBox{Text=devices.FirstOrDefault()?.Width is double w?(w*_pageWidth).ToString("0.0"):""},devices.Length>0);Field("Höhe je Symbol (px)",new TextBox{Text=devices.FirstOrDefault()?.Height is double h?(h*_pageHeight).ToString("0.0"):""},devices.Length>0);
         stack.Children.Add(new TextBlock{Text="Zustandsfarben der Symbole bleiben vorrangig. Bei Rohren gilt die gewählte Farbe statt der Medienfarbe. Breite/Höhe ändern nur Symbole, nicht Rohrpfade oder Wirklinien.",TextWrapping=TextWrapping.Wrap,Foreground=PageVisual.Color("#A9BCD0"),Margin=new Thickness(0,12,0,0)});root.Children.Add(new ScrollViewer{Content=stack,VerticalScrollBarVisibility=ScrollBarVisibility.Auto});Content=root;
     }
     internal void SetField(string name,string value){var f=_fields[name];f.Toggle.IsChecked=true;if(f.Input is ColorPicker c)c.Hex.Text=value;else ((TextBox)f.Input).Text=value;}
@@ -27,8 +27,8 @@ internal sealed class BatchPropertiesEditor : Window
     {
         string? Value(string name){var f=_fields[name];return f.Toggle.IsChecked==true?(f.Input is ColorPicker c?c.Value:((TextBox)f.Input).Text.Trim()):null;}
         error="";var color=Value("Farbe");if(color is not null&&!ColorPicker.IsValid(color)){error="Farbe als #RRGGBB eingeben oder über das Farbrad wählen.";return false;}
-        bool Numeric(string name,double max,out double? number){var text=Value(name);number=null;if(text is null)return true;if(!MediaDisplay.TryOptional(text,out number)||number is null||number<0||number>max||(max==100&&number==0))return false;return true;}
-        if(!Numeric("Deckkraft (0 bis 1)",1,out var opacity)||!Numeric("Breite je Symbol (px)",_pageWidth,out var width)||!Numeric("Höhe je Symbol (px)",_pageHeight,out var height)){error="Deckkraft: 0–1; Breite/Höhe: positive Pixelmaße innerhalb der Seite.";return false;}
-        Patch=new SelectionPatch(Value("Funktion"),Value("Einbauort (+)"),color,opacity,width/_pageWidth,height/_pageHeight);return true;
+        bool Numeric(string name,double max,out double? number){var text=Value(name);number=null;if(text is null)return true;if(!MediaDisplay.TryOptional(text,out number)||number is null||number<0||number>max||(name!="Deckkraft (%)"&&number==0))return false;return true;}
+        if(!Numeric("Deckkraft (%)",100,out var opacity)||!Numeric("Breite je Symbol (px)",_pageWidth,out var width)||!Numeric("Höhe je Symbol (px)",_pageHeight,out var height)){error="Deckkraft: 0–100 %; Breite/Höhe: positive Pixelmaße innerhalb der Seite.";return false;}
+        Patch=new SelectionPatch(Value("Funktion"),Value("Einbauort (+)"),color,opacity/100,width/_pageWidth,height/_pageHeight);return true;
     }
 }

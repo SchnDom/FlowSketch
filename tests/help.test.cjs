@@ -16,6 +16,6 @@ for(const chapter of chapters)assert.ok(decodedHtml.includes(chapter[1]));
 assert.ok(html.includes('toLocaleLowerCase'));
 for(const text of ['Szenario- und Schrittauswahl in aktueller Ansicht anzeigen','Aktoren als Excel-Tabelle','Im Szenario','Gasförmig']) assert.ok(decodedHtml.includes(text));
 assert.ok(decodedHtml.includes('<title>FlowSketch – Hilfe</title>'));
-assert.ok(html.includes('src="images/company-logo.png"'));
-assert.deepEqual(fs.readFileSync(path.join(directory,'images/company-logo.png')),fs.readFileSync('_media/CS26001-1-Logo-4c.png'));
+assert.ok(html.includes('src="images/flowsketch-icon.png"'));
+assert.deepEqual(fs.readFileSync(path.join(directory,'images/flowsketch-icon.png')),fs.readFileSync('_media/favicon-256x256.png'));
 console.log('PASS: Offline-Hilfe mit 19 Kapiteln, Inhaltsverzeichnis, Suche und vierzehn vorhandenen Bildern');

@@ -14,7 +14,7 @@ New-Item -ItemType Directory -Path $documentationFolder, $diagnosticsFolder -For
 foreach ($documentName in @('README.md', 'ProjektZustand.md')) {
     Copy-Item -LiteralPath (Join-Path $projectRoot $documentName) -Destination $documentationFolder
 }
-Copy-Item -LiteralPath (Join-Path $projectRoot '_media/companyInfo.txt') -Destination $documentationFolder
+foreach ($licenseName in @('LICENSE','THIRD-PARTY-NOTICES.md','CHANGELOG.md')) { Copy-Item -LiteralPath (Join-Path $projectRoot $licenseName) -Destination $documentationFolder }
 $symbolsFile = Join-Path $releaseFolder 'FlowSketch.pdb'
 if (Test-Path -LiteralPath $symbolsFile) {
     Move-Item -LiteralPath $symbolsFile -Destination (Join-Path $diagnosticsFolder 'FlowSketch.pdb') -Force

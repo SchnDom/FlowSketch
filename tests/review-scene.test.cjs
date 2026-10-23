@@ -149,3 +149,16 @@ for(const c of pipeStyleCases.cases){
  assert.equal(line.attrs.stroke,c.color);assert.equal(line.attrs['stroke-width'],c.width);assert.equal(line.attrs['stroke-dasharray'],c.dash?.join(' '));assert.equal(line.attrs['vector-effect'],undefined);
 }
 console.log('PASS: Tatsächlich exportiertes SVG verwendet neue Rohrfarben, Breiten und Strichtypen in beiden Zuständen');
+for(const shown of [false,true]){
+ const project=JSON.parse(JSON.stringify(p)),item=project.equipment.find(x=>x.type==='Instrument');
+ Object.assign(item,{page:1,showTag:shown,tagOffsetX:.01,tagOffsetY:.02,backgroundTransparent:true,linesTransparent:true});
+ project.equipment=[item];project.pipes=[];project.signalLines=[];project.alarms=[];project.scenarios=[];project.controlSteps=[];
+ const displayScript=script.replace(/const PROJECT=[\s\S]*?;\s*const SYMBOLS=/,'const PROJECT='+JSON.stringify(project)+';\nconst SYMBOLS=');
+ for(const element of Object.values(elements))element.replaceChildren();elements.stage.append(elements.background);
+ vm.runInNewContext(displayScript,{document,Option:class{constructor(text,value){this.text=text;this.value=value;}},console});
+ const device=elements.stage.children.find(x=>x.className==='device');assert.equal(device.style.background,'transparent');
+ const symbol=device.children.find(x=>x.name==='svg');assert.ok(symbol.children.filter(x=>x.name!=='text').every(x=>x.attrs.stroke==='transparent'));
+ const label=device.children.find(x=>x.name==='span'&&x.textContent===item.tag);assert.equal(Boolean(label),shown);
+ if(shown){assert.equal(label.style.left,(.01/item.width*100)+'%');assert.ok(label.style.top.includes(String(.02/item.height*100)+'%'));}
+}
+console.log('PASS: Tatsächlich exportierter Viewer berücksichtigt Taganzeige, normierten Versatz und unabhängige Transparenz');
