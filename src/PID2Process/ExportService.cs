@@ -7,10 +7,25 @@ public static class ExportService
 {
     public static async Task ExportAsync(EngineeringProject project, string targetDirectory)
     {
+        project=DocumentExport.Snapshot(project);
         ProjectServices.ApplyApprovalStatus(project);
         project=BlankLayout.ExportSnapshot(project);
         if (project.BlankSheet is null && !File.Exists(project.Pdf.FilePath)) throw new FileNotFoundException("Referenz-PDF fehlt.");
         Directory.CreateDirectory(targetDirectory);
+        var staging=Path.Combine(Path.GetFullPath(targetDirectory),".flowsketch-export-"+Guid.NewGuid());
+        Directory.CreateDirectory(staging);
+        var cleanup=true;
+        try
+        {
+        await WritePackage(project,staging);
+        cleanup=false; // Retain recovery files if publishing or rollback fails.
+        CommitPackage(staging,Path.GetFullPath(targetDirectory),project.BlankSheet is null?project.Pdf.FilePath:null);
+        cleanup=true;
+        }
+        finally {if(cleanup)Directory.Delete(staging,true);}
+    }
+    private static async Task WritePackage(EngineeringProject project,string targetDirectory)
+    {
         var raster = new DocumentBackground(project); await raster.OpenAsync();
         project.Pdf.PageAspectRatios=Enumerable.Range(0,raster.PageCount).Select(raster.AspectRatio).ToList();
         for (var i = 0; i < raster.PageCount; i++)
@@ -20,10 +35,40 @@ public static class ExportService
         }
         var json = JsonSerializer.Serialize(project, ProjectServices.JsonOptions);
         File.WriteAllText(Path.Combine(targetDirectory,"project-data.json"),json);
-        var destination = Path.Combine(targetDirectory,project.Pdf.FileName);
+        // Derive the copy name from the actual reference, never from untrusted
+        // project metadata. Keep package filenames (viewer, images, JSON) reserved.
+        var pdfName="reference.pdf";
+        var destination = Path.Combine(targetDirectory,pdfName);
         if (project.BlankSheet is null && !Path.GetFullPath(destination).Equals(Path.GetFullPath(project.Pdf.FilePath),StringComparison.OrdinalIgnoreCase)) File.Copy(project.Pdf.FilePath,destination,true);
-        File.WriteAllText(Path.Combine(targetDirectory,"viewer.html"),Html.Replace("__DATA__",json.Replace("</","<\\/")).Replace("__SYMBOLS__",SymbolCatalog.Json).Replace("__SCENE_SCRIPT__",ReviewScript));
+        File.WriteAllText(Path.Combine(targetDirectory,"viewer.html"),BuildHtml(json));
     }
+    private static void CommitPackage(string staging,string target,string? reference)
+    {
+        var backups=Path.Combine(staging,"previous");Directory.CreateDirectory(backups);
+        var installed=new List<string>();var preserved=new List<string>();
+        try
+        {
+            foreach(var file in Directory.GetFiles(staging))
+            {
+                var name=Path.GetFileName(file);var destination=Path.Combine(target,name);
+                if(reference is not null&&Path.GetFullPath(reference).Equals(destination,StringComparison.OrdinalIgnoreCase))
+                {
+                    if(ProjectServices.HashFile(file)!=ProjectServices.HashFile(reference))throw new IOException("Exportziel würde die Referenz-PDF überschreiben. Einen anderen Ordner wählen.");
+                    continue;
+                }
+                if(File.Exists(destination)){File.Move(destination,Path.Combine(backups,name));preserved.Add(name);}
+                File.Move(file,destination);installed.Add(name);
+            }
+        }
+        catch
+        {
+            foreach(var name in installed)File.Delete(Path.Combine(target,name));
+            foreach(var name in preserved)File.Move(Path.Combine(backups,name),Path.Combine(target,name));
+            throw;
+        }
+    }
+    internal static string BuildHtml(string json)=>System.Text.RegularExpressions.Regex.Replace(Html,"__DATA__|__SYMBOLS__|__SCENE_SCRIPT__",match=>match.Value switch
+    {"__DATA__"=>json.Replace("</","<\\/"),"__SYMBOLS__"=>SymbolCatalog.Json,_=>ReviewScript});
     private static string ReviewScript { get { using var stream=typeof(ExportService).Assembly.GetManifestResourceStream("PID2Process.ReviewScene.js")!; using var reader=new StreamReader(stream);using var zoomStream=typeof(ExportService).Assembly.GetManifestResourceStream("PID2Process.ReviewZoom.js")!;using var zoomReader=new StreamReader(zoomStream);return zoomReader.ReadToEnd()+"\n"+reader.ReadToEnd(); } }
     private const string Html = """
 <!doctype html><html lang="de"><meta charset="utf-8"><title>FlowSketch Review</title>

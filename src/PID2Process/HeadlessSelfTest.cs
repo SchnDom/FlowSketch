@@ -16,6 +16,7 @@ internal static class HeadlessSelfTest
         try
         {
             IconAssetBuilder.Write(Path.Combine(Environment.CurrentDirectory,"_media"));
+            await AnalysisRegression.Run(output,Check);
             await CompositionSelfTest.Run(output,Check);
             CrossReferenceSelfTest.Run(output,Check);
             await CompositionExportSelfTest.Run(output,Check);

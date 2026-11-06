@@ -28,7 +28,7 @@ public sealed class PdfRasterizer
         {
             using var page=_document.GetPage((uint)(fragment.Page-1));
             var aspect=page.Size.Height*fragment.CropHeight/(page.Size.Width*fragment.CropWidth);
-            var width=(uint)Math.Clamp(requestedWidth,64,Math.Min(12000,(int)Math.Sqrt(48_000_000/aspect)));
+            var width=(uint)RasterWidth(requestedWidth,aspect,64);
             using var stream=new InMemoryRandomAccessStream();
             await page.RenderToStreamAsync(stream,new PdfPageRenderOptions{SourceRect=new Windows.Foundation.Rect(fragment.CropX*page.Size.Width,fragment.CropY*page.Size.Height,fragment.CropWidth*page.Size.Width,fragment.CropHeight*page.Size.Height),DestinationWidth=width,DestinationHeight=(uint)Math.Max(1,Math.Round(width*aspect))});
             stream.Seek(0);using var reader=new DataReader(stream.GetInputStreamAt(0));await reader.LoadAsync((uint)stream.Size);var bytes=new byte[(int)stream.Size];reader.ReadBytes(bytes);
@@ -46,7 +46,7 @@ public sealed class PdfRasterizer
         // Bound memory for large portrait pages while rendering from the original
         // PDF at the resolution required by the current display zoom.
         var aspect = page.Size.Height / page.Size.Width;
-        var width = (uint)Math.Clamp(requestedWidth, 500, Math.Min(12000, (int)Math.Sqrt(48_000_000 / aspect)));
+        var width = (uint)RasterWidth(requestedWidth,aspect,500);
         using var stream = new InMemoryRandomAccessStream();
         await page.RenderToStreamAsync(stream, new PdfPageRenderOptions { DestinationWidth = width });
         stream.Seek(0); using var reader = new DataReader(stream.GetInputStreamAt(0));
@@ -56,5 +56,11 @@ public sealed class PdfRasterizer
         image.Freeze(); return image;
         }
         finally { _renderLock.Release(); }
+    }
+    internal static int RasterWidth(int requested,double aspect,int minimum)
+    {
+        if(!double.IsFinite(aspect)||aspect<=0)throw new InvalidDataException("Ungültiges PDF-Seitenverhältnis.");
+        var maximum=(int)Math.Clamp(Math.Sqrt(48_000_000/aspect),1,12000);
+        return Math.Clamp(requested,Math.Min(minimum,maximum),maximum);
     }
 }

@@ -43,11 +43,11 @@ public partial class MainWindow
     }
     private void ShowSignalHandles(SignalLine signal)
     {
-        if(Current is not {} d)return;foreach(var old in Sheet.Children.OfType<Thumb>().ToArray())Sheet.Children.Remove(old);signal.Points=SignalGeometry.Resolve(d.Project,signal);
-        for(var i=0;i<signal.Points.Count;i++)
+        if(Current is not {} d)return;foreach(var old in Sheet.Children.OfType<Thumb>().ToArray())Sheet.Children.Remove(old);var points=SignalGeometry.Resolve(d.Project,signal);
+        for(var i=0;i<points.Count;i++)
         {
-            var index=i;var handle=new Thumb{Width=10,Height=10,Background=Brushes.OrangeRed,Cursor=Cursors.SizeAll};Canvas.SetLeft(handle,signal.Points[i].X*Sheet.Width-5);Canvas.SetTop(handle,signal.Points[i].Y*Sheet.Height-5);var origin=new Point();var total=new Vector();var axis=0;
-            handle.DragStarted+=(_,_)=>{origin=Pixel(signal.Points[index]);total=new();axis=0;};
+            var index=i;var handle=new Thumb{Width=10,Height=10,Background=Brushes.OrangeRed,Cursor=Cursors.SizeAll};Canvas.SetLeft(handle,points[i].X*Sheet.Width-5);Canvas.SetTop(handle,points[i].Y*Sheet.Height-5);var origin=new Point();var total=new Vector();var axis=0;
+            handle.DragStarted+=(_,_)=>{signal.Points=SignalGeometry.Resolve(d.Project,signal);origin=Pixel(signal.Points[index]);total=new();axis=0;};
             handle.DragDelta+=(_,e)=>{if(index==0)signal.StartConnection=null;if(index==signal.Points.Count-1)signal.EndConnection=null;total+=new Vector(e.HorizontalChange,e.VerticalChange);var delta=OverlayTransforms.Direction(total,Keyboard.Modifiers.HasFlag(ModifierKeys.Shift),ref axis);signal.Points[index]=Normal(origin+delta,Sheet.Width,Sheet.Height);Canvas.SetLeft(handle,signal.Points[index].X*Sheet.Width-5);Canvas.SetTop(handle,signal.Points[index].Y*Sheet.Height-5);RefreshSignalGeometry();};
             handle.DragCompleted+=(_,_)=>{var snap=Snap(signal.Points[index],equipmentOnly:true);SignalConnection? connection=snap.Connection?.EquipmentId is Guid id?new(){EquipmentId=id,Port=snap.Connection.Port,Fraction=snap.Connection.Fraction}:null;if(index==0)signal.StartConnection=connection;if(index==signal.Points.Count-1)signal.EndConnection=connection;Changed();Draw();ShowSignalHandles(signal);};Sheet.Children.Add(handle);
         }

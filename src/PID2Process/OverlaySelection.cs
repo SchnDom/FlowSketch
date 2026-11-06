@@ -44,8 +44,19 @@ internal static class OverlaySelection
         foreach(var sensor in p.Equipment.Where(x=>x.Type==EquipmentType.Instrument&&x.Sensor.Connection?.PipeId is Guid pipeId&&ids.Contains(pipeId))){var points=SensorConnections.Resolve(p,sensor);sensor.Sensor.ConnectionEnd=points.LastOrDefault();sensor.Sensor.Connection=null;}
         p.SignalLines.RemoveAll(x=>ids.Contains(x.Id));
         var tags=p.Equipment.Where(x=>ids.Contains(x.Id)).Select(x=>x.Tag).ToHashSet();p.Equipment.RemoveAll(x=>ids.Contains(x.Id));p.Pipes.RemoveAll(x=>ids.Contains(x.Id));
+        // Preserve the alarm and its scenario assignments; only detach its
+        // equipment reference when the last device with this tag was removed.
+        tags.ExceptWith(p.Equipment.Select(x=>x.Tag));
+        foreach(var alarm in p.Alarms.Where(a=>tags.Contains(a.Tag)))alarm.Tag="";
         foreach(var s in p.Scenarios)foreach(var id in ids){s.EquipmentStates.Remove(id);s.PipeStates.Remove(id);s.TextValues.Remove(id);s.TankStates.Remove(id);s.SensorValues.Remove(id);}
         foreach(var s in p.ControlSteps){foreach(var id in ids){s.EquipmentStates.Remove(id);s.PipeStates.Remove(id);s.TextValues.Remove(id);s.TankStates.Remove(id);s.SensorValues.Remove(id);}s.Tags.RemoveAll(tags.Contains);}
+    }
+    internal static void Rename(EngineeringProject project,EquipmentItem item,string tag)
+    {
+        var previous=item.Tag;item.Tag=tag;
+        if(previous==tag||project.Equipment.Any(x=>x.Id!=item.Id&&x.Tag==previous))return;
+        foreach(var alarm in project.Alarms.Where(a=>a.Tag==previous))alarm.Tag=tag;
+        foreach(var step in project.ControlSteps)for(var i=0;i<step.Tags.Count;i++)if(step.Tags[i]==previous)step.Tags[i]=tag;
     }
     internal static void Move(EngineeringProject p,ISet<Guid> ids,double dx,double dy)
     {

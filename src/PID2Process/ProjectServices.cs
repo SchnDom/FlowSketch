@@ -25,13 +25,6 @@ public static class ProjectServices
         return Convert.ToHexString(sha.ComputeHash(stream));
     }
 
-    // A lightweight count is sufficient for revision metadata; rendering remains the browser's responsibility.
-    public static int CountPdfPages(string path)
-    {
-        var bytes = File.ReadAllBytes(path);
-        return Math.Max(1, Encoding.Latin1.GetString(bytes).Split("/Type /Page", StringSplitOptions.None).Length - 1);
-    }
-
     public static bool ValidatePdf(EngineeringProject project, out string reason)
     {
         if(project.BlankSheet is {} sheet)
@@ -71,15 +64,83 @@ public static class ProjectServices
 
     public static void Save(string path, EngineeringProject project)
     {
+        ValidateVersion(project.FormatVersion);
+        ValidateRequiredValues(project,"Projekt");
         Normalize(project);project.FormatVersion="2.2";
-        File.WriteAllText(path, JsonSerializer.Serialize(project, JsonOptions));
+        var destination=Path.GetFullPath(path);
+        var temporary=Path.Combine(Path.GetDirectoryName(destination)!,"."+Guid.NewGuid()+".tmp");
+        try
+        {
+            var bytes=JsonSerializer.SerializeToUtf8Bytes(project,JsonOptions);
+            using(var stream=new FileStream(temporary,FileMode.CreateNew,FileAccess.Write,FileShare.None))
+            {stream.Write(bytes);stream.Flush(true);}
+            if(File.Exists(destination))File.Replace(temporary,destination,destination+".bak");
+            else File.Move(temporary,destination);
+        }
+        finally {if(File.Exists(temporary))File.Delete(temporary);}
     }
 
-    public static EngineeringProject Load(string path)
+    public static EngineeringProject Load(string path)=>Load(path,out _);
+    internal static EngineeringProject Load(string path,out bool normalized)
     {
-        var json=File.ReadAllText(path);var project=JsonSerializer.Deserialize<EngineeringProject>(json,JsonOptions)??throw new InvalidDataException("Ungültige PID2Process-Projektdatei.");
-        using var data=JsonDocument.Parse(json);project.FormatVersion=data.RootElement.TryGetProperty("formatVersion",out var version)?version.GetString()??"2.0":"2.0";
-        Normalize(project);return project;
+        var json=File.ReadAllText(path);
+        using var data=JsonDocument.Parse(json);
+        if(data.RootElement.ValueKind!=JsonValueKind.Object)throw new InvalidDataException("Die Projektdatei muss ein JSON-Objekt enthalten.");
+        var format="2.0";
+        if(data.RootElement.TryGetProperty("formatVersion",out var version))
+        {
+            if(version.ValueKind!=JsonValueKind.String)throw new InvalidDataException("formatVersion muss eine Versionszeichenfolge sein, z. B. 2.2.");
+            format=version.GetString()!;
+        }
+        ValidateVersion(format);
+        var project=JsonSerializer.Deserialize<EngineeringProject>(json,JsonOptions)??throw new InvalidDataException("Ungültige FlowSketch-Projektdatei.");
+        project.FormatVersion=format;
+        ValidateRequiredValues(project,"Projekt");
+        var before=JsonSerializer.Serialize(project,JsonOptions);
+        Normalize(project);normalized=before!=JsonSerializer.Serialize(project,JsonOptions);
+        if(normalized&&project.Approval.IsApproved)
+        {
+            project.Approval.IsApproved=false;project.Approval.IsBlocked=true;
+            project.Approval.BlockReason="Projektangaben beim Laden aktualisiert. Änderungen prüfen und erneut freigeben.";
+        }
+        return project;
+    }
+    private static void ValidateVersion(string format)
+    {
+        if(format is not ("2.0" or "2.1" or "2.2"))
+            throw new InvalidDataException($"Projektformat '{format}' wird nicht unterstützt. Unterstützt werden 2.0, 2.1 und 2.2. Bitte die passende FlowSketch-Version verwenden.");
+    }
+    // Reject malformed required fields before migrations access them. Optional
+    // connections and assignments may still explicitly contain null.
+    private static readonly System.Reflection.NullabilityInfoContext Nullability=new();
+    private static void ValidateRequiredValues(object value,string path)
+    {
+        if(value is System.Collections.IDictionary dictionary)
+        {
+            foreach(System.Collections.DictionaryEntry entry in dictionary)
+            {
+                if(entry.Value is null)throw new InvalidDataException($"{path}[{entry.Key}] darf nicht null sein.");
+                ValidateRequiredValues(entry.Value,$"{path}[{entry.Key}]");
+            }
+        }
+        else if(value is System.Collections.IEnumerable sequence && value is not string)
+        {
+            var index=0;foreach(var entry in sequence)
+            {
+                if(entry is null)throw new InvalidDataException($"{path}[{index}] darf nicht null sein.");
+                ValidateRequiredValues(entry,$"{path}[{index++}]");
+            }
+        }
+        else if(value.GetType().Namespace==typeof(EngineeringProject).Namespace && !value.GetType().IsEnum)
+        {
+            foreach(var property in value.GetType().GetProperties().Where(p=>p.CanRead&&p.CanWrite))
+            {
+                var child=property.GetValue(value);var childPath=path+"."+JsonNamingPolicy.CamelCase.ConvertName(property.Name);
+                if(child is not null)ValidateRequiredValues(child,childPath);
+                else if(Nullability.Create(property).ReadState==System.Reflection.NullabilityState.NotNull)
+                    throw new InvalidDataException(childPath+" darf nicht null sein.");
+            }
+        }
     }
     internal static void Normalize(EngineeringProject project)
     {
@@ -96,6 +157,7 @@ public static class ProjectServices
     }
     internal static bool ValidateEngineering(EngineeringProject project,out string reason)
     {
+        if(project.Alarms.Any(a=>!a.IsDerived&&!project.Equipment.Any(x=>x.Type!=EquipmentType.Drawing&&x.Tag==a.Tag))){reason="Alarme ohne vorhandenes Betriebsmittel vor der Freigabe neu zuordnen.";return false;}
         if(project.Pipes.Any(p=>p.StartConnection?.NeedsReview==true||p.EndConnection?.NeedsReview==true)){reason="Markierte Rohranschlüsse vor der Freigabe prüfen und neu verbinden.";return false;}
         if(project.Equipment.Any(x=>SymbolCatalog.Valve(x)&&!SymbolCatalog.CheckValve(x)&&x.Actuator==ActuatorType.Unspecified)){reason="Antriebsbauart der markierten Armaturen vor der Freigabe auswählen.";return false;}
         reason="Engineering-Angaben vollständig.";return true;

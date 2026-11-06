@@ -40,8 +40,8 @@ const ReviewScene = (() => {
     for(const x of p.equipment){const ps=ports(x),s=state(x,v);function pair(a,b,opts={}){if(ps.includes(a)&&ps.includes(b))add(dev(x.id,a),dev(x.id,b),opts);}
       if(x.variant==='Querverweis'&&x.referenceId?.trim())continue;
       if(x.type==='Vessel'){for(const port of ps)targets.set(dev(x.id,port),x.id);for(const port of ps.slice(1))pair(ps[0],port);continue;}if(['MediaSource','Text'].includes(x.type))continue;
-      if(x.type==='HeatExchanger'){pair('PrimaryIn','PrimaryOut',{heat:x.id,primary:true});pair('SecondaryIn','SecondaryOut',{heat:x.id,primary:false});continue;}
       if(s==='Störung'||closed(x,v)||x.type==='Filter'&&s==='Verstopft')continue;
+      if(x.type==='HeatExchanger'){pair('PrimaryIn','PrimaryOut',{heat:x.id,primary:true});pair('SecondaryIn','SecondaryOut',{heat:x.id,primary:false});continue;}
       if(conveyor(x)){if(s==='Ein')pair('Left','Right',{directed:true,conveyor:x.id});continue;}if(check(x)){pair(x.checkValveReversed?'Right':'Left',x.checkValveReversed?'Left':'Right',{directed:true,checkValve:x.id});continue;}
       if(three(x)){if(['Offen','A-B'].includes(s))pair('Left','Right');if(['Offen','A-C'].includes(s))pair('Left','Bottom');if(['Offen','B-C'].includes(s))pair('Right','Bottom');continue;}for(const port of ps.slice(1))pair(ps[0],port);
     }
@@ -55,13 +55,16 @@ const ReviewScene = (() => {
       let changed=false;for(const[id,x]of conveyors){if(state(x,v)!=='Ein')continue;const supply=media.get(dev(id,'Left')),expected=x.type==='PumpMotor'?'Liquid':'Gas';if(supply&&[...supply].some(s=>sources.get(s).mediumType!==expected)&&!disabled.has(id)){disabled.add(id);changed=true;}}if(!changed)break;
     }
     for(const[id,x]of conveyors)if(state(x,v)==='Ein'){const supply=media.get(dev(id,'Left'));if(!supply?.size)result.errors[id]='Störung: Medium fehlt';else if(disabled.has(id))result.errors[id]='Störung: Medium ungeeignet';}
-    const flowing=new Set(),directions=new Map();
+    const flowing=new Set(),directions=new Map();let searchVisits=0,searchLimited=false;
     for(const source of sources.values()){const reachable=seenBySource.get(source.id),target=n=>targets.has(n)&&targets.get(n)!==source.id&&(source.type!=='Vessel'||targets.get(n)==null);if(![...reachable].some(target))continue;
       for(let required=0;required<edges.length;required++){const requiredEdge=edges[required];if(flowing.has(required)||!reachable.has(requiredEdge.a)||!reachable.has(requiredEdge.b)||!allowed(requiredEdge,source))continue;const visited=new Set(),path=[];
-        function search(n,included){if(visited.has(n))return false;visited.add(n);if(target(n)&&included){for(const part of path){flowing.add(part.index);if(!directions.has(part.index))directions.set(part.index,edges[part.index].a===part.from?1:-1);}visited.delete(n);return true;}if(source.type==='Vessel'&&targets.has(n)&&targets.get(n)!=null&&targets.get(n)!==source.id){visited.delete(n);return false;}for(const i of links.get(n)||[]){const e=edges[i],next=other(e,n);if(visited.has(next)||!allowed(e,source))continue;path.push({index:i,from:n});if(search(next,included||i===required)){visited.delete(n);return true;}path.pop();}visited.delete(n);return false;}
+        function search(n,included){if(searchLimited)return false;if(++searchVisits>200000||path.length>=512){searchLimited=true;return false;}if(visited.has(n))return false;visited.add(n);if(target(n)&&included){for(const part of path){flowing.add(part.index);if(!directions.has(part.index))directions.set(part.index,edges[part.index].a===part.from?1:-1);}visited.delete(n);return true;}if(source.type==='Vessel'&&targets.has(n)&&targets.get(n)!=null&&targets.get(n)!==source.id){visited.delete(n);return false;}for(const i of links.get(n)||[]){if(searchLimited)break;const e=edges[i],next=other(e,n);if(visited.has(next)||!allowed(e,source))continue;path.push({index:i,from:n});if(search(next,included||i===required)){visited.delete(n);return true;}path.pop();}visited.delete(n);return false;}
         for(const port of ports(source))if(search(dev(source.id,port),false))break;
+        if(searchLimited)break;
       }
+      if(searchLimited)break;
     }
+    if(searchLimited){flowing.clear();directions.clear();for(const id of sources.keys())result.errors[id]='Durchfluss ungeprüft: Netz zu komplex. Netz aufteilen; Animation ausgesetzt.';}
     for(const x of p.pipes){const indices=edges.map((e,i)=>e.pipe===x.id?i:-1).filter(i=>i>=0),supply=[...new Set(indices.flatMap(i=>[...(media.get(edges[i].a)||[])]))].map(id=>sources.get(id));
       const blocked=[x.startConnection,x.endConnection].some(c=>{const d=p.equipment.find(d=>d.id===c?.equipmentId);return c?.needsReview===true||!!d&&(closed(d,v)||d.type==='Filter'&&state(d,v)==='Verstopft'||conveyor(d)&&(state(d,v)!=='Ein'||!!result.errors[d.id]));});
       const types=[...new Set(supply.map(x=>x.mediumType))],type=types.length===0?null:types.length===1?types[0]:'Mixed';
@@ -114,7 +117,7 @@ if(typeof document!=='undefined'){
     for(const x of p.equipment.filter(x=>x.page===page&&x.type==='Instrument')){const line=document.createElementNS(svg.namespaceURI,'polyline');line.setAttribute('points',ReviewScene.sensorConnection(p,x).map(q=>q.x*1000+','+q.y*1000).join(' '));line.setAttribute('stroke','black');line.setAttribute('stroke-width',1);line.setAttribute('fill','none');line.setAttribute('vector-effect','non-scaling-stroke');line.setAttribute('class','sensor-connection');svg.append(line);}
     stage.append(svg);
     for(const x of p.equipment.filter(x=>x.page===page)){
-      let state=ReviewScene.state(x,v),caption=ReviewScene.status(x,v,networkScene);if(ReviewScene.check(x))state=caption;if(networkScene.errors[x.id])state='Störung';
+      let state=ReviewScene.state(x,v),caption=ReviewScene.status(x,v,networkScene);if(ReviewScene.check(x))state=caption;if(networkScene.errors[x.id]?.startsWith('Störung'))state='Störung';
       if(['Text','Legend'].includes(x.type)&&state==='Ausgeblendet')continue;
       let color=ReviewScene.colored(x)?'#909090':state==='Störung'?'#c62828':['Offen','Ein','A-B','A-C','B-C'].includes(state)?'#20a05a':['Aus','Geschlossen'].includes(state)?'#6c757d':x.color||'#007e87';
       let background=state==='Störung'?'#ffc5c5':['Offen','Ein','Aktiv','A-B','A-C','B-C'].includes(state)?'#cef4de':['Aus','Geschlossen','Inaktiv'].includes(state)?'#ffdf9a':x.backgroundColor||'#fff';

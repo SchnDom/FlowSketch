@@ -26,10 +26,26 @@ internal static class ActuatorExcelSelfTest
             foreach(var entry in zip.Entries){using var stream=entry.Open();XDocument.Load(stream);}
             var sheet=Read("xl/worksheets/sheet1.xml");
             check(sheet.Descendants(ns+"row").Count()==13&&sheet.Descendants(ns+"t").First().Value=="Szenario"&&sheet.Descendants(ns+"t").Any(x=>x.Value==motor.Tag)&&!sheet.Descendants(ns+"f").Any(),"Excel: gültiges XML, vier Textspalten und sichere Sonderzeichen ohne Formeln");
-            check(Read("xl/tables/table1.xml").Root!.Attribute("ref")!.Value=="A1:D13"&&sheet.Descendants(ns+"pane").Single().Attribute("state")!.Value=="frozen","Excel: filterbare Tabelle und fixierte Kopfzeile");
+            check(Read("xl/tables/table1.xml").Root!.Attribute("ref")!.Value=="A1:H13"&&sheet.Descendants(ns+"pane").Single().Attribute("state")!.Value=="frozen","Excel: filterbare erweiterte Tabelle und fixierte Kopfzeile");
         }
         ActuatorExcelExport.Export(new EngineeringProject(),Path.Combine(output,"aktoren-leer.xlsx"));
         using(var zip=ZipFile.OpenRead(Path.Combine(output,"aktoren-leer.xlsx")))check(zip.GetEntry("xl/tables/table1.xml") is null,"Excel: leeres Projekt exportiert nur Kopfzeile ohne ungültige Tabelle");
         check(before==JsonSerializer.Serialize(p,ProjectServices.JsonOptions),"Excel-Export verändert weder Projektzustände noch Freigabe");
+        v2.Function="Füllen";v2.InstallationLocation="+B1";v2.Description="Ventil\u0001 mit 😀";s2.Description="Beschreibung einmal vor den Schritten";
+        var texts=Enumerable.Range(0,22).Select(i=>new EquipmentItem{Type=EquipmentType.Text,Tag="TXT-"+i,TextContent="Grundtext"}).ToArray();p.Equipment.AddRange(texts);
+        s2.TextValues[texts[0].Id]="Nicht erben";t2.TextValues[texts[0].Id]="Eigener Schritttext";t2.TextValues[texts[1].Id]="";
+        var extended=Path.Combine(output,"aktoren-erweitert.xlsx");ActuatorExcelExport.Export(p,extended);
+        using(var zip=ZipFile.OpenRead(extended))
+        {
+            XNamespace ns="http://schemas.openxmlformats.org/spreadsheetml/2006/main";
+            XDocument Read(string part){using var stream=zip.GetEntry(part)!.Open();return XDocument.Load(stream);}
+            var sheet=Read("xl/worksheets/sheet1.xml");var table=Read("xl/tables/table1.xml");var sequence=Read("xl/worksheets/sheet2.xml");
+            check(table.Root!.Attribute("ref")!.Value=="A1:AD13"&&table.Descendants(ns+"tableColumn").Count()==30&&sheet.Descendants(ns+"c").Any(x=>x.Attribute("r")!.Value=="AD2"),"Excel: dynamische Textspalten über Z hinaus korrekt adressiert");
+            var cells=sheet.Descendants(ns+"row").Skip(2).First().Descendants(ns+"t").Select(x=>x.Value).ToArray();
+            check(cells[4]=="Füllen"&&cells[5]=="+B1"&&cells[6]=="Ventil mit 😀"&&cells[7]=="1","Excel: Funktion, Einbauort, Beschreibung und Seite; XML-Steuerzeichen entfernt, Unicode erhalten");
+            check(sheet.Descendants(ns+"t").Any(x=>x.Value=="Eigener Schritttext")&&sheet.Descendants(ns+"t").Any(x=>x.Value=="n/a")&&!sheet.Descendants(ns+"t").Any(x=>x.Value is "Nicht erben" or "Grundtext"),"Excel: eigene Schritttexte, fehlende Werte n/a ohne Vererbung");
+            var sequenceRows=sequence.Descendants(ns+"row").ToArray();var index=Array.FindIndex(sequenceRows,x=>x.Descendants(ns+"t").Any(t=>t.Value==s2.Description));
+            check(index>0&&sequence.Descendants(ns+"t").Count(x=>x.Value==s2.Description)==1&&sequenceRows[index+1].Descendants(ns+"t").Any(x=>x.Value==t2.Name),"Excel: Szenariobeschreibung einmal oberhalb ihrer Schritte im Blatt Abläufe");
+        }
     }
 }

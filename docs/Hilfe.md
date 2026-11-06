@@ -1,6 +1,6 @@
 # FlowSketch – Hilfe
 
-Version 0.10.0 · Dominik Schneeberger · MIT-Lizenz
+Version 0.11.0 · Dominik Schneeberger · MIT-Lizenz
 
 FlowSketch zeichnet funktionelle Prozessdarstellungen auf leeren Blättern oder auf R&I-/P&ID-PDFs. Symbole, Rohrleitungen, Wirklinien, Szenarien und Schritte werden in einer eigenen Projektdatei gespeichert. Die importierte PDF bleibt unverändert. Diese Hilfe ist im Programm unter Hilfe → Bedienhilfe und offline als Hilfe.html im Dokumentationsordner verfügbar.
 
@@ -17,7 +17,7 @@ Beim Start erscheint sofort ein leeres A4-Blatt im Querformat. Links befindet si
 
 Zum Ausprobieren Hilfe → Demo öffnen wählen. Die Demo ist zusätzlich in der EXE enthalten und benötigt keinen Beispiele-Ordner. Die Demo wird als Arbeitskopie auf einem A2-Blatt geöffnet; beim Speichern einen eigenen Dateinamen vergeben. Sie benötigt keine PDF und enthält 43 Symbole, 32 rechtwinklige Rohrpfade, sieben Szenarien und 26 Schritte. Die Bereiche zeigen Wasser, Druckluft, Feststoff und zwei unabhängige Wärmetauscherkreise. REF-101, REF-102 und REF-103 verbinden über QV000001 drei Wasserleitungen einschließlich des Wärmetauscher-Ausgangs. REF-201 und REF-202 bilden mit QV000002 ein unabhängiges Paar im Druckluftweg. Die gelben Hervorhebungen einer Planungsvorlage gehören nicht zur Demo. Rechts unter Abläufe einen Ablauf doppelklicken und danach die Schritte wechseln.
 
-Die Demoabläufe zeigen Stillstand, Wasserfüllung, Tankversorgung mit Mediumwechsel, Verdichter und Ventilator, Filterverstopfung und Ablass, getrennte Wärmetauscherkreise sowie skalierte Sensorwerte mit Grenzwertalarmen. Die Schritte sind manuelle Vorgaben und laufen nicht automatisch ab. Eine Erläuterung, eine große PNG-Vorschau und die Excel-Aktorenliste liegen im Programmordner unter Beispiele.
+Die Demoabläufe zeigen Stillstand, Wasserfüllung, Tankversorgung mit Mediumwechsel, Verdichter und Ventilator, Filterverstopfung und Ablass, getrennte Wärmetauscherkreise sowie Sensor-Prozesswerte mit Grenzwertalarmen. Die Schritte sind manuelle Vorgaben und laufen nicht automatisch ab. Eine Erläuterung, eine große PNG-Vorschau und die Excel-Aktorenliste liegen im Programmordner unter Beispiele.
 
 ![Editor mit Abläufen und Planübersicht](images/blank-editor.png)
 
@@ -267,7 +267,7 @@ Eine geänderte Referenz-PDF ist kein automatisch akzeptierter Planstand. Prüfe
 
 ## 16. Export, Review und Drucken
 
-**Datei → Exportieren... → Aktoren als Excel-Tabelle...** schreibt eine .xlsx-Datei mit den Spalten Szenario, Schritt, Aktor und Zustand. Das gesamte Projekt wird exportiert, unabhängig von der aktuellen Seite oder Szenarioauswahl; Medienangaben werden nicht ausgegeben. Ventile mit Antrieb (auch handbetätigt), Pumpen, Motoren, Kompressoren und Ventilatoren werden berücksichtigt; passive Rückschlagarmaturen und Sensoren nicht.
+**Datei → Exportieren... → Aktoren als Excel-Tabelle...** schreibt eine .xlsx-Datei mit den Spalten Szenario, Schritt, Aktor, Zustand, Funktion, Einbauort, Beschreibung und Seite. Jedes dynamische Textfeld erhält eine eigene Spalte mit seinem eigenen Schritttext. Ohne eigene Schrittzuweisung steht dort „n/a“; Szenario- und Grundtexte werden in dieser Tabelle nicht geerbt. Ein bewusst leerer Schritttext bleibt leer. Im zusätzlichen Blatt „Abläufe“ steht die Szenariobeschreibung einmal oberhalb der zugehörigen Schritte, gefolgt von Schrittbeschreibung, Voraussetzungen, Aktionen, Übergang und den eigenen Schritttexten. Das gesamte Projekt wird exportiert, unabhängig von der aktuellen Seite oder Szenarioauswahl; Medienangaben werden nicht ausgegeben. Ventile mit Antrieb (auch handbetätigt), Pumpen, Motoren, Kompressoren und Ventilatoren werden berücksichtigt; passive Rückschlagarmaturen und Sensoren nicht.
 
 Jeder Schritt erhält eine Zeile je Aktor. Schrittzustände überschreiben Szenariowerte; fehlende Vorgaben verwenden den Gerätegrundzustand. Szenarien, ihre Schritte und die Aktornamen werden natürlich aufsteigend sortiert (2 vor 10). Alte Szenarien ohne Schritte erhalten Schritt 1. Schritte ohne gültige Szenariozuordnung erscheinen separat als „Ohne zugeordnetes Szenario“ und erben keine Szenariowerte.
 

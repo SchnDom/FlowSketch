@@ -131,12 +131,12 @@ public partial class MainWindow
     private void ShowPipeHandles(PipeSegment pipe)
     {
         if(Current is not {} d)return;foreach(var handle in Sheet.Children.OfType<Thumb>().ToArray())Sheet.Children.Remove(handle);
-        var points=PipeNetwork.Resolve(d.Project,pipe);pipe.Points=points;
+        var points=PipeNetwork.Resolve(d.Project,pipe);
         for(var i=0;i<points.Count;i++)
         {
             var index=i;var handle=new Thumb{Width=12,Height=12,Background=Brushes.DarkOrange,Cursor=Cursors.SizeAll};Canvas.SetLeft(handle,points[i].X*Sheet.Width-6);Canvas.SetTop(handle,points[i].Y*Sheet.Height-6);
             var origin=new Point(points[i].X*Sheet.Width,points[i].Y*Sheet.Height);var total=new Vector();var axis=0;
-            handle.DragStarted+=(_,_)=>{origin=new(pipe.Points[index].X*Sheet.Width,pipe.Points[index].Y*Sheet.Height);total=new();axis=0;};
+            handle.DragStarted+=(_,_)=>{pipe.Points=PipeNetwork.Resolve(d.Project,pipe);origin=new(pipe.Points[index].X*Sheet.Width,pipe.Points[index].Y*Sheet.Height);total=new();axis=0;};
             handle.DragDelta+=(_,e)=>{if(index==0)pipe.StartConnection=null;if(index==points.Count-1)pipe.EndConnection=null;total+=new Vector(e.HorizontalChange,e.VerticalChange);var constrained=OverlayTransforms.Direction(total,Keyboard.Modifiers.HasFlag(ModifierKeys.Shift),ref axis);pipe.Points[index].X=Math.Clamp((origin.X+constrained.X)/Sheet.Width,0,1);pipe.Points[index].Y=Math.Clamp((origin.Y+constrained.Y)/Sheet.Height,0,1);Canvas.SetLeft(handle,pipe.Points[index].X*Sheet.Width-6);Canvas.SetTop(handle,pipe.Points[index].Y*Sheet.Height-6);RefreshPipeGeometry();};
             handle.DragCompleted+=(_,_)=>{var snap=Snap(pipe.Points[index],pipe.Id);if(index==0)pipe.StartConnection=snap.Connection;if(index==points.Count-1)pipe.EndConnection=snap.Connection;Changed();Draw();ShowPipeHandles(pipe);};Sheet.Children.Add(handle);
         }

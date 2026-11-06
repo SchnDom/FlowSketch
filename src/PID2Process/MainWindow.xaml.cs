@@ -62,7 +62,7 @@ public partial class MainWindow : Window
     {
         UpdateHistoryCommands();
         if (Current is not { } d) return; ProjectTitle.Text=d.Project.Name+(d.Dirty?" *":"");Title=d.Project.Name+" · FlowSketch v"+BuildInfo.Version;var activeTab=(TabItem)DocumentTabs.SelectedItem;activeTab.Header=TabHeader(d,activeTab);
-        PageLabel.Text = $"{d.Page + 1} / {Math.Max(1, d.Project.Pdf.PageCount)}"+(d.Project.BlankSheet is {} b?" · "+b.Format+(b.Format=="Formfrei"?"":b.Landscape?" quer":" hoch"):""); StatusText.Text = d.Project.Approval.IsApproved ? "Freigegeben" : "Entwurf · " + d.Project.Approval.BlockReason;
+        PageLabel.Text = $"{d.Page + 1} / {Math.Max(1, d.Project.Pdf.PageCount)}"+(d.Project.BlankSheet is {} b?" · "+b.Format+(b.Format=="Formfrei"?"":b.Landscape?" quer":" hoch"):""); StatusText.Text = d.Project.Approval.IsApproved && !d.Project.Approval.IsBlocked ? "Freigegeben" : "Entwurf · " + d.Project.Approval.BlockReason;
     }
     private void AddDocument(Document d)
     {
@@ -96,18 +96,20 @@ public partial class MainWindow : Window
         var picker = new Microsoft.Win32.OpenFileDialog { Filter = "FlowSketch-Projekt|*.pid2process.json" };
         if (picker.ShowDialog(this) == true) await OpenProject(picker.FileName);
     }
-    private async Task OpenProject(string file)
+    internal async Task OpenProject(string file)
     {
         try
         {
-            var d = new Document { Project = ProjectServices.Load(file), SavePath = file };
+            var project=ProjectServices.Load(file,out var normalized);
+            var d = new Document { Project = project, SavePath = file,Dirty=normalized };
             if (d.Project.BlankSheet is null && !File.Exists(d.Project.Pdf.FilePath))
             {
                 var locate = new Microsoft.Win32.OpenFileDialog { Title = "Referenz-PDF zuordnen", Filter = "PDF|*.pdf" };
-                if (locate.ShowDialog(this) != true) return; d.Project.Pdf.FilePath = locate.FileName;
+                if (locate.ShowDialog(this) != true) return; d.Project.Pdf.FilePath = locate.FileName;d.Dirty=true;
             }
             if(d.Project.BlankSheet is not null)d.Image=WhiteBackground();
             if(d.Project.BlankSheet is null){await d.Raster.OpenAsync(d.Project.Pdf.FilePath); d.Project.Pdf.PageCount = d.Raster.PageCount;} ProjectServices.ApplyApprovalStatus(d.Project); AddDocument(d); Remember(file);
+            if(normalized)PlacementHint.Text="Projektangaben beim Laden aktualisiert. Bitte prüfen und speichern; die Originaldatei bleibt bis zum Speichern unverändert.";
         }
         catch (Exception ex) { MessageBox.Show(this, ex.Message, "Projekt öffnen"); }
     }
@@ -200,11 +202,11 @@ public partial class MainWindow : Window
         };
         element.MouseLeftButtonUp+=(_,e)=>
         {
-            if(!dragging)return;dragging=false;_selectionDrag=null;_dragCopy=null;element.ReleaseMouseCapture();
+            if(!dragging)return;dragging=false;CompleteSelectionDrag();_dragCopy=null;element.ReleaseMouseCapture();
             if(copyPending&&!copyStarted)SelectObject(item.Id,true);
             _dragCopy=null;if(moved)Changed();Draw();if(_selection.Count==1&&_selected is {} selected)ShowHandles(selected);e.Handled=true;
         };
-        element.LostMouseCapture+=(_,_)=>{dragging=false;_selectionDrag=null;if(_dragCopy is not null){_dragCopy=null;Changed();Draw();}};
+        element.LostMouseCapture+=(_,_)=>{dragging=false;if(_dragSnapshot is not null){CancelSelectionDrag();Draw();}};
         element.ContextMenu = PlanMenu();
         element.ContextMenuOpening+=(_,_)=>{SelectObject(item.Id);element.ContextMenu=PlanMenu();};
         if(_drawingSignal){var frame=new Rectangle{Width=item.Width*Sheet.Width,Height=item.Height*Sheet.Height,Stroke=Brushes.IndianRed,StrokeThickness=1,StrokeDashArray=new DoubleCollection([2,3]),IsHitTestVisible=false};Canvas.SetLeft(frame,item.X*Sheet.Width);Canvas.SetTop(frame,item.Y*Sheet.Height);Sheet.Children.Add(frame);}
@@ -365,7 +367,7 @@ public partial class MainWindow : Window
         if(sensorEditor is not null){var oldSide=item.Sensor.ConnectionSide;item.Sensor=sensorEditor.Result(dialog);if(oldSide!=item.Sensor.ConnectionSide)SensorConnections.BindNearest(project,item);}
         if(SymbolCatalog.Valve(item)&&!SymbolCatalog.CheckValve(item)){item.Actuator=dialog.Value("Antriebsbauart") switch{"Handbetätigt"=>ActuatorType.Manual,"Elektromotor"=>ActuatorType.ElectricMotor,"Kolben"=>ActuatorType.Piston,"Membran"=>ActuatorType.Diaphragm,_=>item.Actuator};item.Actuation=item.Actuator switch{ActuatorType.Manual=>"Manuell",ActuatorType.ElectricMotor=>"Elektrisch",ActuatorType.Piston=>"Kolben",ActuatorType.Diaphragm=>"Membran",_=>item.Actuation};}
         if(SymbolCatalog.CheckValve(item))item.CheckValveReversed=dialog.Value("Zugelassene Flussrichtung")=="Rechts → links";
-        item.Tag=dialog.Value("Tag");item.Description=dialog.Value("Beschreibung");item.Function=dialog.Value("Funktion");item.InstallationLocation=dialog.Value("Einbauort (+)");
+        OverlaySelection.Rename(project,item,dialog.Value("Tag"));item.Description=dialog.Value("Beschreibung");item.Function=dialog.Value("Funktion");item.InstallationLocation=dialog.Value("Einbauort (+)");
         if(item.Type==EquipmentType.Text)item.TextContent=dialog.Value("Textinhalt");
         item.ShowTag=dialog.Checked("Tag anzeigen");if(resetTag){item.TagOffsetX=0;item.TagOffsetY=0;}item.ShowStateText=dialog.Checked("Zustandstext anzeigen");item.BackgroundColor=dialog.Value("Hintergrundfarbe (#RRGGBB)");item.Color=dialog.Value("Farbe (#RRGGBB)");item.BackgroundTransparent=dialog.Checked("Transparent Hintergrund");item.LinesTransparent=dialog.Checked("Transparent Linien");item.Opacity=dialog.Number("Deckkraft (%)",85)/100;
         if(dialog.Value("Breite (px)")!=initialWidth)item.Width=Math.Clamp(dialog.Number("Breite (px)",90)/(Sheet.Width/Current.Zoom),.001,Math.Max(.001,1-item.X));
@@ -395,7 +397,7 @@ public partial class MainWindow : Window
     private void Approve_Click(object sender, RoutedEventArgs e)
     {
         if(Current is {} current&&!ProjectServices.ValidateEngineering(current.Project,out var engineeringReason)){MessageBox.Show(this,engineeringReason,"Engineering prüfen");return;}
-        if (Current is not { } d) return; if (!ProjectServices.ValidatePdf(d.Project, out var reason)) { MessageBox.Show(this, reason); return; } var dialog = new EditorDialog(this, "Freigeben"); dialog.Text("Freigegeben durch", ""); if (dialog.ShowDialog() != true || dialog.Value("Freigegeben durch") == "") return; d.Project.Approval = new Approval { IsApproved = true, ApprovedBy = dialog.Value("Freigegeben durch"), ApprovedAt = DateTimeOffset.Now, ApprovedPdfHash = ProjectServices.ReferenceHash(d.Project), BlockReason = "Freigegeben" }; d.Dirty = true; UpdateHeader();
+        if (Current is not { } d) return; if (!ProjectServices.ValidatePdf(d.Project, out var reason)||!ProjectServices.ValidateEngineering(d.Project,out reason)) { MessageBox.Show(this, reason); return; } var dialog = new EditorDialog(this, "Freigeben"); dialog.Text("Freigegeben durch", ""); if (dialog.ShowDialog() != true || dialog.Value("Freigegeben durch") == "") return; d.Project.Approval = new Approval { IsApproved = true, ApprovedBy = dialog.Value("Freigegeben durch"), ApprovedAt = DateTimeOffset.Now, ApprovedPdfHash = ProjectServices.ReferenceHash(d.Project), BlockReason = "Freigegeben" }; d.Dirty = true; UpdateHeader();
     }
     private async void Export_Click(object sender, RoutedEventArgs e) { if (Current is not { } d) return; var picker = new Microsoft.Win32.OpenFolderDialog { Title = "Review-Paket exportieren" }; if (picker.ShowDialog(this) == true) { try { await ExportService.ExportAsync(d.Project, picker.FolderName); StatusText.Text = "Review-Paket exportiert."; } catch (Exception ex) { MessageBox.Show(this, ex.Message); } } }
     private async void DocumentExport_Click(object sender,RoutedEventArgs e)

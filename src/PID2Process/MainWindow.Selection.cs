@@ -17,9 +17,20 @@ public partial class MainWindow
     private Vector _dragApplied;
     private int _dragAxis;
     private EquipmentItem? _dragCopy;
-    private void BeginSelectionDrag(Point point){_selectionDrag=point;_dragOrigin=point;_dragApplied=new();_dragAxis=0;}
+    private EngineeringProject? _dragSnapshot;
+    private Document? _dragDocument;
+    private void BeginSelectionDrag(Point point){if(_dragSnapshot is null&&Current is {} doc){_dragDocument=doc;_dragSnapshot=DocumentExport.Snapshot(doc.Project);}_selectionDrag=point;_dragOrigin=point;_dragApplied=new();_dragAxis=0;}
+    private void CompleteSelectionDrag(){_dragSnapshot=null;_dragDocument=null;_selectionDrag=null;}
+    private void CancelSelectionDrag()
+    {
+        var snapshot=_dragSnapshot;var doc=_dragDocument;CompleteSelectionDrag();_dragCopy=null;
+        if(snapshot is null||doc is null)return;doc.Project=snapshot;
+        if(Mouse.Captured is UIElement captured&&IsAncestorOf(captured))captured.ReleaseMouseCapture();
+        if(doc==Current){ClearSelection();RefreshInspector();UpdateHeader();}
+    }
     private void CancelCopyDrag()
     {
+        if(_dragSnapshot is not null){CancelSelectionDrag();return;}
         if(_dragCopy is null||Current is not {} d)return;OverlaySelection.Delete(d.Project,new HashSet<Guid>{_dragCopy.Id});_dragCopy=null;_selectionDrag=null;
         if(Mouse.Captured is UIElement captured&&IsAncestorOf(captured))captured.ReleaseMouseCapture();
         ClearSelection();

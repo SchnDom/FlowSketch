@@ -34,6 +34,6 @@ internal sealed partial class StateEditor
     private bool ValidateAlarms()
     {
         if(!AlarmGrid.CommitEdit(DataGridEditingUnit.Cell,true)||!AlarmGrid.CommitEdit(DataGridEditingUnit.Row,true))return false;
-        if(Working.Alarms.Any(a=>string.IsNullOrWhiteSpace(a.Name)||!Working.Equipment.Any(e=>e.Type!=EquipmentType.Drawing&&e.Tag==a.Tag))){if(IsVisible)MessageBox.Show(this,"Alarme benötigen einen Namen und ein vorhandenes Betriebsmittel.");return false;}return true;
+        if(Working.Alarms.Any(a=>string.IsNullOrWhiteSpace(a.Name)||!string.IsNullOrWhiteSpace(a.Tag)&&!Working.Equipment.Any(e=>e.Type!=EquipmentType.Drawing&&e.Tag==a.Tag))){if(IsVisible)MessageBox.Show(this,"Alarme benötigen einen Namen; angegebene Tags müssen auf vorhandene Betriebsmittel verweisen. Nicht zugeordnete Alarme vor der Freigabe neu zuordnen.");return false;}return true;
     }
 }

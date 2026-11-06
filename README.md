@@ -6,7 +6,7 @@
 
 FlowSketch ist ein deutschsprachiger Windows-Editor mit WPF und .NET 10. Zeichnungen entstehen auf einem leeren Blatt oder als funktionelles Overlay auf einem R&I-/P&ID-PDF. Die Referenz-PDF bleibt unverändert; Verbindungen und Zustände werden in einer separaten Projektdatei gespeichert.
 
-**Version 0.10.0** · [Bedienhilfe](docs/Hilfe.md) · [Projektstand und Prüfnachweise](ProjektZustand.md)
+**Version 0.11.0** · [Bedienhilfe](docs/Hilfe.md) · [Projektstand und Prüfnachweise](ProjektZustand.md)
 
 Copyright (c) 2026 Dominik Schneeberger · [MIT-Lizenz](LICENSE) · [Drittanbieterhinweise](THIRD-PARTY-NOTICES.md) · [Changelog](CHANGELOG.md)
 
@@ -24,7 +24,7 @@ Copyright (c) 2026 Dominik Schneeberger · [MIT-Lizenz](LICENSE) · [Drittanbiet
 - Sensorkennungen, Prozesswertgrenzen und direkte Prozesswerte und LL/L/H/HH-Alarme.
 - Mehrfachauswahl, Gruppen, gemeinsame Eigenschaften, projektübergreifendes Kopieren, Wildcard-Suche und bis zu 100 Undo-/Redo-Schritte je Dokument.
 - Zoom zur Mausposition, Pan und navigierbare Planübersicht.
-- PDF-/JPG-Export, Offline-Review-Paket mit Zoom und Excel-Aktorenliste nach Szenario, Schritt und Aktor.
+- PDF-/JPG-Export, Offline-Review-Paket mit Zoom und Excel-Aktorenliste mit Funktion, Einbauort, Beschreibung, Seite und eigenen Schritttexten; zusätzliches Blatt für Ablaufbeschreibungen.
 - PDF-Hashprüfung und Engineering-Freigabe; Änderungen widerrufen die Freigabe.
 
 FlowSketch stellt funktionelle Verbindungen dar. Es berechnet keine Hydraulik, Drücke oder Wärmeleistungen und verbindet sich nicht mit SPS oder HMI.
@@ -58,12 +58,14 @@ Die internen Solution-/Quellnamen `PID2Process` und die Dateiendung `.pid2proces
 ./scripts/Publish-Release.ps1
 ```
 
-Die Version stammt aus [PID2Process.csproj](src/PID2Process/PID2Process.csproj). Die Ausgabe liegt unter `bin/<Version>/FlowSketch.exe`, aktuell `bin/0.10.0/FlowSketch.exe`. Beispiele, Dokumentation und Diagnoseinformationen besitzen eigene Unterordner. Frühere Versionsordner bleiben erhalten; Builds sind nicht Bestandteil des Git-Repositories.
+Die Version stammt aus [PID2Process.csproj](src/PID2Process/PID2Process.csproj). Die Ausgabe liegt unter `bin/<Version>/FlowSketch.exe`, aktuell `bin/0.11.0/FlowSketch.exe`. Beispiele, Dokumentation und Diagnoseinformationen besitzen eigene Unterordner. Frühere Versionsordner bleiben erhalten; Builds sind nicht Bestandteil des Git-Repositories.
 
 ## Prüfen
 
 ```powershell
 # Ohne Fensteranzeige oder Maus-/Tastatureingaben:
+./scripts/Test.ps1
+# Oder die Prüfungen einzeln (Modelltest erzeugt die Viewer-Prüfdaten):
 dotnet run --project src/PID2Process/PID2Process.csproj -c Release -- --model-test
 node tests/review-scene.test.cjs
 node tests/review-zoom.test.cjs

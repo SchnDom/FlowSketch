@@ -59,12 +59,22 @@ internal static class SymbolSelfTest
         foreach(var variant in new[]{"Kondensator","M-Form"})foreach(var primary in new[]{false,true})foreach(var secondary in new[]{false,true})
         {
             var p=new EngineeringProject();var hx=Item(p,EquipmentType.HeatExchanger,variant);var a=Item(p,EquipmentType.MediaSource,medium:MediumType.Gas);var b=Item(p,EquipmentType.MediaSource,medium:MediumType.Liquid);Pipe(p,a,"Right",hx,"PrimaryIn");var po=Pipe(p,hx,"PrimaryOut",null,"");Pipe(p,b,"Right",hx,"SecondaryIn");var so=Pipe(p,hx,"SecondaryOut",null,"");var v=new SceneValues();v.EquipmentStates[a.Id]=primary?"Aktiv":"Inaktiv";v.EquipmentStates[b.Id]=secondary?"Aktiv":"Inaktiv";var n=Capture("Wärmetauscher "+variant+" "+primary+"/"+secondary,p,v);check(n.HeatExchangers[hx.Id]==(primary,secondary)&&n.Pipes[po.Id].MediumType==(primary?MediumType.Gas:null)&&n.Pipes[so.Id].MediumType==(secondary?MediumType.Liquid:null),"Wärmetauscher "+variant+": unabhängige Kreise "+primary+"/"+secondary);
+            v.EquipmentStates[hx.Id]="Störung";n=Capture("Wärmetauscher gestört "+variant+" "+primary+"/"+secondary,p,v);
+            check(n.HeatExchangers[hx.Id]==(false,false)&&n.Pipes[po.Id].MediumType is null&&n.Pipes[so.Id].MediumType is null,"Gestörter Wärmetauscher sperrt beide Kreise: "+variant+" "+primary+"/"+secondary);
         }
         {
             var p=new EngineeringProject();var s=Item(p,EquipmentType.MediaSource);var a=Pipe(p,s,"Right",null,"");var b=Pipe(p,null,"",null,"");b.StartConnection=new(){PipeId=a.Id,Segment=0,Fraction=.3};b.EndConnection=new(){PipeId=a.Id,Segment=0,Fraction=.7};var n=Capture("Ring mit freiem Auslass",p,new());check(n.Pipes[a.Id].Flowing&&n.Pipes[b.Id].Flowing,"Ring mit Versorgung und freiem Auslass durchflossen");a.EndConnection=new(){EquipmentId=Item(p,EquipmentType.IsolationValve,"2-Wege").Id,Port="Left"};n=Capture("Ring ohne Ziel",p,new());check(n.Pipes.Values.All(x=>!x.Flowing),"Ring ohne erreichbares Ziel bleibt statisch");
         }
         {
             var p=new EngineeringProject{FormatVersion="2.0"};var tank=Item(p,EquipmentType.Vessel);var valve=Item(p,EquipmentType.IsolationValve,"2-Wege");valve.Actuator=ActuatorType.Unspecified;valve.Actuation="Elektrisch";var pipe=Pipe(p,tank,"Left",valve,"Top");var id=pipe.Id;var old=PipeNetwork.Port(tank,"Left");var file=Path.Combine(output,"legacy-symbols.pid2process.json");File.WriteAllText(file,JsonSerializer.Serialize(p,ProjectServices.JsonOptions));var loaded=ProjectServices.Load(file);check(loaded.Pipes[0].StartConnection!.NeedsReview&&PipeNetwork.Resolve(loaded,loaded.Pipes[0])[0].X==old.X&&loaded.Pipes[0].Id==id,"Altanschlüsse werden geometrisch erhalten und markiert");check(loaded.Equipment[1].Actuator==ActuatorType.ElectricMotor,"Alter elektrischer Antrieb wird eindeutig übernommen");check(!ProjectServices.ValidateEngineering(loaded,out _)&&!loaded.Approval.IsApproved,"Ungeklärte Altanschlüsse sperren Freigabe");ProjectServices.Save(file,loaded);check(ProjectServices.Load(file).FormatVersion=="2.2","Format 2.0 lesen, Format 2.2 speichern");
+        }
+        {
+            var p=new EngineeringProject();var source=Item(p,EquipmentType.MediaSource);var hub=Item(p,EquipmentType.Generic,"Allgemein");
+            Pipe(p,source,"Right",hub,"Left");Pipe(p,hub,"Right",null,"");
+            var nodes=Enumerable.Range(0,9).Select(_=>Item(p,EquipmentType.Generic,"Allgemein")).ToArray();Pipe(p,hub,"Bottom",nodes[0],"Left");
+            for(var a=0;a<nodes.Length;a++)for(var b=a+1;b<nodes.Length;b++)Pipe(p,nodes[a],"Right",nodes[b],"Left");
+            var timer=System.Diagnostics.Stopwatch.StartNew();var n=Capture("Vermaschtes Sacknetz begrenzt",p,new());
+            check(n.Errors.GetValueOrDefault(source.Id)?.StartsWith("Durchfluss ungeprüft")==true&&n.Pipes.Values.All(x=>!x.Flowing)&&n.Pipes.Values.Any(x=>x.MediumType is not null)&&timer.Elapsed.TotalSeconds<10,"Vermaschtes Sacknetz: begrenzte Suche, Versorgung erhalten, keine teilweise geprüfte Animation");
         }
         File.WriteAllText(Path.Combine(output,"symbol-network-cases.json"),JsonSerializer.Serialize(cases,ProjectServices.JsonOptions));
         var window=new MainWindow();foreach(var method in new[]{"CanvasMenu","SelectionMenu"}){var menu=(ContextMenu)typeof(MainWindow).GetMethod(method,BindingFlags.NonPublic|BindingFlags.Instance)!.Invoke(window,null)!;check(menu.Items.OfType<MenuItem>().Any(x=>x.Header?.ToString()=="Rohrleitung einfügen"),"Kontextmenü "+method+" enthält Rohrleitung einfügen");}

@@ -64,8 +64,8 @@ internal static class PipeNetwork
             if(x.Variant=="Querverweis"&&!string.IsNullOrWhiteSpace(x.ReferenceId))continue; // The shared hub already joins all ports.
             void Pair(string a,string b,bool directed=false,Guid? conveyor=null,bool? primary=null){if(ports.Contains(a)&&ports.Contains(b))Add(Device(x.Id,a),Device(x.Id,b),directed,conveyor:conveyor,heat:primary.HasValue?x.Id:null,primary:primary??false,check:SymbolCatalog.CheckValve(x)?x.Id:null);}
             if(x.Type==EquipmentType.Vessel){foreach(var port in ports)targets[Device(x.Id,port)]=x.Id;foreach(var port in ports.Skip(1))Pair(ports[0],port);continue;}if(x.Type is EquipmentType.MediaSource or EquipmentType.Text)continue;
-            if(x.Type==EquipmentType.HeatExchanger){Pair("PrimaryIn","PrimaryOut",primary:true);Pair("SecondaryIn","SecondaryOut",primary:false);continue;}
             if(state=="Störung"||Closed(x,v)||x.Type==EquipmentType.Filter&&state=="Verstopft")continue;
+            if(x.Type==EquipmentType.HeatExchanger){Pair("PrimaryIn","PrimaryOut",primary:true);Pair("SecondaryIn","SecondaryOut",primary:false);continue;}
             if(SymbolCatalog.Conveyor(x)){if(state=="Ein")Pair("Left","Right",true,x.Id);continue;}if(SymbolCatalog.CheckValve(x)){Pair(x.CheckValveReversed?"Right":"Left",x.CheckValveReversed?"Left":"Right",true);continue;}
             if(SymbolCatalog.ThreeWay(x)){if(state is "Offen" or "A-B")Pair("Left","Right");if(state is "Offen" or "A-C")Pair("Left","Bottom");if(state is "Offen" or "B-C")Pair("Right","Bottom");continue;}foreach(var port in ports.Skip(1))Pair(ports[0],port);
         }
@@ -83,13 +83,19 @@ internal static class PipeNetwork
         }
         foreach(var (id,x) in conveyors)if(SymbolCatalog.State(x,v)=="Ein"){var supply=media.GetValueOrDefault(Device(id,"Left"));if(supply is null||supply.Count==0)result.Errors[id]="Störung: Medium fehlt";else if(disabled.Contains(id))result.Errors[id]="Störung: Medium ungeeignet";}
         var flowing=new HashSet<int>();var directions=new Dictionary<int,int>();
+        var searchVisits=0;var searchLimited=false;
         foreach(var source in sources.Values){var reachable=seenBySource[source.Id];bool Target(string n)=>targets.TryGetValue(n,out var tank)&&tank!=source.Id&&(source.Type!=EquipmentType.Vessel||tank is null);if(!reachable.Any(Target))continue;
             // Each edge must belong to a simple source-to-target path: no dead-end backtracking.
             foreach(var required in Enumerable.Range(0,edges.Count).Where(i=>!flowing.Contains(i)&&reachable.Contains(edges[i].A)&&reachable.Contains(edges[i].B)&&Allowed(edges[i],source))){var visited=new HashSet<string>();var path=new List<(int Index,string From)>();
-                bool Search(string n,bool included){if(!visited.Add(n))return false;if(Target(n)&&included){foreach(var part in path){flowing.Add(part.Index);directions.TryAdd(part.Index,edges[part.Index].A==part.From?1:-1);}visited.Remove(n);return true;}if(source.Type==EquipmentType.Vessel&&targets.TryGetValue(n,out var otherTank)&&otherTank is not null&&otherTank!=source.Id){visited.Remove(n);return false;}if(links.TryGetValue(n,out var adjacent))foreach(var i in adjacent){var edge=edges[i];var next=Other(edge,n);if(visited.Contains(next)||!Allowed(edge,source))continue;path.Add((i,n));if(Search(next,included||i==required)){visited.Remove(n);return true;}path.RemoveAt(path.Count-1);}visited.Remove(n);return false;}
+                bool Search(string n,bool included){if(searchLimited)return false;if(++searchVisits>200_000||path.Count>=512){searchLimited=true;return false;}if(!visited.Add(n))return false;if(Target(n)&&included){foreach(var part in path){flowing.Add(part.Index);directions.TryAdd(part.Index,edges[part.Index].A==part.From?1:-1);}visited.Remove(n);return true;}if(source.Type==EquipmentType.Vessel&&targets.TryGetValue(n,out var otherTank)&&otherTank is not null&&otherTank!=source.Id){visited.Remove(n);return false;}if(links.TryGetValue(n,out var adjacent))foreach(var i in adjacent){if(searchLimited)break;var edge=edges[i];var next=Other(edge,n);if(visited.Contains(next)||!Allowed(edge,source))continue;path.Add((i,n));if(Search(next,included||i==required)){visited.Remove(n);return true;}path.RemoveAt(path.Count-1);}visited.Remove(n);return false;}
                 foreach(var port in Ports(source))if(Search(Device(source.Id,port),false))break;
+                if(searchLimited)break;
             }
+            if(searchLimited)break;
         }
+        // Availability remains valid. Never present partially searched paths as
+        // complete flow results, and never let a meshed graph freeze the editor.
+        if(searchLimited){flowing.Clear();directions.Clear();foreach(var id in sources.Keys)result.Errors[id]="Durchfluss ungeprüft: Netz zu komplex. Netz aufteilen; Animation ausgesetzt.";}
         foreach(var pipe in p.Pipes){var indices=Enumerable.Range(0,edges.Count).Where(i=>edges[i].Pipe==pipe.Id).ToArray();var supply=indices.SelectMany(i=>media.GetValueOrDefault(edges[i].A)??[]).Distinct().Select(id=>sources[id]).ToArray();var blocked=new[]{pipe.StartConnection,pipe.EndConnection}.Any(c=>c?.NeedsReview==true||c?.EquipmentId is Guid id&&p.Equipment.FirstOrDefault(x=>x.Id==id) is {} x&&(Closed(x,v)||x.Type==EquipmentType.Filter&&SymbolCatalog.State(x,v)=="Verstopft"||SymbolCatalog.Conveyor(x)&&(SymbolCatalog.State(x,v)!="Ein"||result.Errors.ContainsKey(id))));
             var type=supply.Length==0?(MediumType?)null:supply.Select(x=>x.MediumType).Distinct().Count()==1?supply[0].MediumType:MediumType.Mixed;var state=type switch{MediumType.Gas=>"Druckbeschlagen",MediumType.Liquid=>"Befüllt",MediumType.Solid=>"Materialführung",MediumType.Mixed=>"Gemisch",_=>pipe.StartConnection is null&&pipe.EndConnection is null?v.PipeStates.GetValueOrDefault(pipe.Id)??"Leer":"Leer"};result.Pipes[pipe.Id]=new(state,type,string.Join(" / ",supply.Select(x=>x.MediaName).Distinct()),blocked){Flowing=indices.Any(flowing.Contains),Spans=indices.Select(i=>new PipeSpan(edges[i].Start,edges[i].End,flowing.Contains(i),directions.GetValueOrDefault(i))).ToList()};
         }

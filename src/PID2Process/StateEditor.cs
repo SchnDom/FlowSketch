@@ -111,11 +111,18 @@ internal sealed partial class StateEditor : Window
         if(Step is null&&_activeScenario is null)return true;
         if(string.IsNullOrWhiteSpace(_name.Text)){if(IsVisible&&commitGrid)MessageBox.Show(this,"Name eingeben.");return false;}
         if(commitGrid&&(!AlarmGrid.CommitEdit(DataGridEditingUnit.Cell,true)||!AlarmGrid.CommitEdit(DataGridEditingUnit.Row,true)))return false;
+        var parsedSamples=new Dictionary<Guid,double>();
+        foreach(var row in Rows.Where(r=>r.IsSensor&&!string.IsNullOrWhiteSpace(r.RawValue)))
+        {
+            if(!double.TryParse(row.RawValue.Replace(',','.'),System.Globalization.NumberStyles.Float,System.Globalization.CultureInfo.InvariantCulture,out var raw)||!double.IsFinite(raw))
+            {if(IsVisible&&commitGrid)MessageBox.Show(this,$"Ungültiger Sensorwert bei {row.Tag}. Eine endliche Zahl eingeben (Komma oder Punkt als Dezimaltrennzeichen).");return false;}
+            parsedSamples[row.Id]=raw;
+        }
         if(_activeScenario is not null){if(string.IsNullOrWhiteSpace(_scenarioName.Text)){if(IsVisible&&commitGrid)MessageBox.Show(this,"Szenarionamen eingeben.");return false;}_activeScenario.Name=_scenarioName.Text.Trim();_activeScenario.Description=_description.Text;}
         if(Step is not null){Step.Name=_name.Text.Trim();Step.Description=_stepDescription.Text;Step.ScenarioId=_activeScenario?.Id??Step.ScenarioId;Step.Preconditions=_pre.Text;Step.Actions=_actions.Text;Step.Transition=_transition.Text;Step.Tags=_tags.Text.Split(',',StringSplitOptions.RemoveEmptyEntries|StringSplitOptions.TrimEntries).Distinct().ToList();}
         var states=Step?.EquipmentStates??Scenario!.EquipmentStates;var pipeStates=Step?.PipeStates??Scenario!.PipeStates;var texts=Step?.TextValues??Scenario!.TextValues;
         var samples=Step?.SensorValues??Scenario!.SensorValues;
-        foreach(var row in Rows.Where(r=>r.IsSensor)){if(string.IsNullOrWhiteSpace(row.RawValue))samples.Remove(row.Id);else if(double.TryParse(row.RawValue,out var raw)&&double.IsFinite(raw))samples[row.Id]=raw;else return false;}
+        samples.Clear();foreach(var pair in parsedSamples)samples[pair.Key]=pair.Value;
         foreach(var row in Rows){var target=row.IsPipe?pipeStates:states;if(row.State=="Szenario übernehmen")target.Remove(row.Id);else target[row.Id]=row.State;if(row.IsText){if(row.OverrideText)texts[row.Id]=row.TextValue;else texts.Remove(row.Id);}}
         var tanks=Step?.TankStates??Scenario!.TankStates;
         foreach(var row in Rows.Where(r=>r.IsTank)){var old=tanks.GetValueOrDefault(row.Id);var medium=Working.Media.FirstOrDefault(m=>m.Name==row.Medium);var assignment=new TankAssignment{Filled=row.State=="Szenario übernehmen"?null:row.State=="Befüllt",MediumId=medium?.Id,Pressurized=old?.Pressurized};if(assignment.Filled is null&&assignment.MediumId is null&&assignment.Pressurized is null)tanks.Remove(row.Id);else tanks[row.Id]=assignment;}

@@ -32,7 +32,7 @@ public partial class MainWindow
     private void Media_Click(object sender,RoutedEventArgs e)
     {
         if(Current is not {} d)return;var dialog=new MediaEditor(this,d.Project);if(dialog.ShowDialog()!=true)return;
-        d.Project.Media=dialog.Working.Media;d.Project.MediaColors=dialog.Working.MediaColors;foreach(var legend in d.Project.Equipment.Where(x=>x.Type==EquipmentType.Legend))legend.AutomaticLegend=true;MediaSettings.Synchronize(d.Project);Changed();Draw();
+        d.Project.Media=dialog.Working.Media;d.Project.MediaColors=dialog.Working.MediaColors;MediaSettings.Synchronize(d.Project);Changed();Draw();
     }
     private void Legend_Click(object sender,RoutedEventArgs e)
     {

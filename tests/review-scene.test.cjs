@@ -46,7 +46,9 @@ console.log('PASS: Exportierter Viewer behält Zoom bei Szenario-/Schrittwechsel
 console.log('PASS: Exportiertes HTML schaltet Szenarien, zugehörige Schritte, Ventilfarben und Schritttexte');
 const symbolCases=JSON.parse(fs.readFileSync('test-results/symbol-network-cases.json','utf8'));
 for(const c of symbolCases){assert.deepEqual(scene.evaluateScene(c.project,scene.values(c.scenario,null)),c.expected,c.name);}
-assert.equal(symbolCases.length,69);
+assert.ok(symbolCases.length>=69);
+assert.ok(symbolCases.some(c=>c.name==='Vermaschtes Sacknetz begrenzt'));
+assert.equal(symbolCases.filter(c=>c.name.startsWith('Wärmetauscher gestört ')).length,8);
 console.log('PASS: '+symbolCases.length+' Symbol-/Netzwerkfälle stimmen zwischen C# und Viewer überein');
 const catalog=scene.catalog;
 assert.equal(Object.keys(catalog.Vessel.ports).length,8);

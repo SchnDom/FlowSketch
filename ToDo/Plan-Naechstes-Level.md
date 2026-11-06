@@ -8,7 +8,7 @@ Das ist keine Roadmap zu einem vollwertigen CAD-, Simulations- oder Leitsystem. 
 
 ## Ausgangslage
 
-Der dokumentierte Stand ist Version 0.8.1. Bereits vorhanden sind unter anderem normierte Overlay-Geometrie, Geräte und Rohranschlüsse, Medienwege, Szenarien und Schritte, PDF-/JPG-Exporte, ein Offline-Review-Paket, Aktorenlisten sowie eine Freigabe, die an den PDF-Hash gebunden ist. Die Tag-, Funktions- und Ortsangaben sind getrennte Felder, Tags sind jedoch Freitext. Der Excel-Export ist eine Aktorenliste und kein vollständiger Projektimport/-export.
+Der dokumentierte Stand ist Version 0.11.0. Bereits vorhanden sind unter anderem normierte Overlay-Geometrie, Geräte und Rohranschlüsse, Medienwege, Szenarien und Schritte, PDF-Komposition, Querverweise, PDF-/JPG-Exporte, ein Offline-Review-Paket, erweiterte Aktoren-/Ablauflisten sowie eine Freigabe, die an den PDF-Hash gebunden ist. Die Tag-, Funktions- und Ortsangaben sind getrennte Felder, Tags sind jedoch Freitext. Der Excel-Export enthält Aktoren-Metadaten, eigene Schritttexte und ein Ablaufblatt; er ist kein vollständiger Projektimport/-export. Aktuelle Nachweise und verbleibende technische Befunde stehen in `ProjektZustand.md` und `docs/Analyse-Abgleich.md`.
 
 Die folgenden Arbeitspakete bauen darauf auf. Sie sind nach Abhängigkeit und Nutzen geordnet; größere Integrationen stehen unter einem Entscheidungsvorbehalt.
 
